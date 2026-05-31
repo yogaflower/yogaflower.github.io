@@ -1,0 +1,585 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yoga Flower｜古民家ヨガ教室</title>
+  <meta name="description" content="古民家の一室で行う、少人数制のやさしいヨガ教室です。" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;600;700&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --ink: #1f150c;
+      --sub: #6f6257;
+      --bg: #fbf7ef;
+      --paper: #fffdf8;
+      --line: #e6dccd;
+      --accent: #b88b6b;
+      --accent-soft: #ead8c8;
+      --green: #7d8b6f;
+      --shadow: 0 18px 45px rgba(31, 21, 12, 0.08);
+      --radius: 24px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(234,216,200,.7), transparent 34%),
+        linear-gradient(180deg, #fffdf8 0%, var(--bg) 52%, #f5eee3 100%);
+      font-family: 'Zen Maru Gothic', sans-serif;
+      line-height: 1.8;
+    }
+
+    a { color: inherit; }
+
+    img { max-width: 100%; display: block; }
+
+    .container {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(255, 253, 248, 0.84);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(230, 220, 205, .7);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 0;
+      gap: 18px;
+    }
+
+    .logo {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.25;
+      text-decoration: none;
+      letter-spacing: .04em;
+    }
+
+    .logo-main {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .logo-sub {
+      font-size: 11px;
+      color: var(--sub);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-size: 14px;
+      color: var(--sub);
+    }
+
+    nav a {
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .insta-btn,
+    .primary-btn,
+    .ghost-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 0 20px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 700;
+      letter-spacing: .04em;
+      transition: .2s ease;
+    }
+
+    .insta-btn,
+    .primary-btn {
+      background: var(--ink);
+      color: #fffdf8;
+      box-shadow: 0 12px 24px rgba(31,21,12,.16);
+    }
+
+    .ghost-btn {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.5);
+      color: var(--ink);
+    }
+
+    .insta-btn:hover,
+    .primary-btn:hover,
+    .ghost-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .hero {
+      padding: 72px 0 56px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 44px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 16px;
+      padding: 6px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--sub);
+      background: rgba(255,253,248,.72);
+      font-size: 13px;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Noto Serif JP', serif;
+      line-height: 1.45;
+      margin: 0;
+      letter-spacing: .04em;
+    }
+
+    h1 {
+      font-size: clamp(34px, 5vw, 58px);
+      margin-bottom: 22px;
+    }
+
+    .lead {
+      font-size: 17px;
+      color: var(--sub);
+      margin: 0 0 28px;
+      max-width: 620px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .hero-card {
+      position: relative;
+      min-height: 430px;
+      border-radius: 34px;
+      background:
+        linear-gradient(160deg, rgba(255,253,248,.7), rgba(234,216,200,.55)),
+        url('images/yoga-main.jpg');
+      background-size: cover;
+      background-position: center;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .hero-card::after {
+      content: '';
+      position: absolute;
+      inset: 18px;
+      border: 1px solid rgba(255,253,248,.75);
+      border-radius: 26px;
+      pointer-events: none;
+    }
+
+    .hero-note {
+      position: absolute;
+      left: 26px;
+      bottom: 26px;
+      right: 26px;
+      padding: 18px;
+      border-radius: 20px;
+      background: rgba(255,253,248,.86);
+      backdrop-filter: blur(10px);
+      color: var(--sub);
+      font-size: 14px;
+    }
+
+    section {
+      padding: 64px 0;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 24px;
+      margin-bottom: 26px;
+    }
+
+    .section-title {
+      font-size: clamp(26px, 3vw, 38px);
+    }
+
+    .section-copy {
+      color: var(--sub);
+      margin: 8px 0 0;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      background: rgba(255,253,248,.82);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .news-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .news-item {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 18px;
+      align-items: start;
+      padding: 18px;
+      border-radius: 18px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+    }
+
+    .date {
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .price {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 28px;
+      font-weight: 700;
+      margin: 10px 0 4px;
+    }
+
+    .small {
+      color: var(--sub);
+      font-size: 14px;
+    }
+
+    .calendar-box {
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .calendar-preview {
+      min-height: 420px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--paper);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .calendar-preview iframe {
+      width: 100%;
+      height: 520px;
+      border: 0;
+      display: block;
+      background: #fff;
+    }
+
+    .calendar-side {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 16px;
+      background: rgba(125,139,111,.12);
+      border: 1px solid rgba(125,139,111,.24);
+      border-radius: var(--radius);
+      padding: 26px;
+    }
+
+    .access-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+    }
+
+    .map-placeholder {
+      min-height: 320px;
+      border-radius: var(--radius);
+      background: linear-gradient(135deg, #e9dfd0, #fffaf1);
+      border: 1px solid var(--line);
+      display: grid;
+      place-items: center;
+      color: var(--sub);
+      text-align: center;
+      padding: 24px;
+    }
+
+    .contact-band {
+      text-align: center;
+      padding: 54px 24px;
+      border-radius: 34px;
+      background: var(--ink);
+      color: #fffdf8;
+      box-shadow: var(--shadow);
+    }
+
+    .contact-band p {
+      color: rgba(255,253,248,.78);
+      margin: 14px auto 24px;
+      max-width: 620px;
+    }
+
+    footer {
+      padding: 36px 0 48px;
+      color: var(--sub);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .edit-note {
+      margin-top: 18px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(184,139,107,.12);
+      color: var(--sub);
+      font-size: 13px;
+    }
+
+    @media (max-width: 860px) {
+      nav { display: none; }
+      .hero { padding-top: 48px; }
+      .hero-grid,
+      .calendar-box,
+      .access-grid {
+        grid-template-columns: 1fr;
+      }
+      .hero-card { min-height: 340px; }
+      .cards { grid-template-columns: 1fr; }
+      .section-head { display: block; }
+      .news-item { grid-template-columns: 1fr; gap: 4px; }
+      .calendar-preview iframe { height: 460px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!--
+    =========================================================
+    更新しやすくするためのデータ欄
+    知人が後から触る場合は、まずこの辺だけ変更すればOKです。
+    本格運用では Googleスプレッドシート連携にするとさらに簡単です。
+    =========================================================
+  -->
+  <script>
+    const siteData = {
+      news: [
+        { date: '2026.06.01', title: '6月のレッスン予定を公開しました。' },
+        { date: '2026.05.20', title: '体験レッスンの受付を開始しました。' },
+        { date: '2026.05.10', title: 'ホームページを準備中です。' }
+      ],
+      menus: [
+        { name: '体験レッスン', price: '1,000円', note: '初めての方限定。ゆっくり雰囲気を感じていただけます。' },
+        { name: '1回レッスン', price: '1,500円', note: '都度払いで気軽にご参加いただけます。' },
+        { name: '月4回チケット', price: '5,000円', note: '定期的に通いたい方向け。料金は仮です。' }
+      ],
+      access: {
+        name: 'Yoga Flower',
+        address: '三重県〇〇市〇〇町 〇〇-〇〇',
+        parking: '駐車場あり／詳しい場所はご予約時にご案内します。'
+      },
+      instagram: 'https://www.instagram.com/mika.satou.17/',
+      calendarUrl: 'https://sanshi6453.github.io/memo-app/yoga-calendar.html'
+    };
+  </script>
+
+  <header>
+    <div class="container header-inner">
+      <a href="#top" class="logo">
+        <span class="logo-main">Yoga Flower</span>
+        <span class="logo-sub">Kominka yoga studio</span>
+      </a>
+      <nav>
+        <a href="#news">お知らせ</a>
+        <a href="#menu">メニュー</a>
+        <a href="#calendar">予約状況</a>
+        <a href="#access">アクセス</a>
+        <a class="insta-btn" id="headerInstagram" href="#" target="_blank" rel="noopener">Instagram</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow">古民家の一室で、ゆったり整えるヨガ時間</span>
+          <h1>深呼吸したくなる、<br>小さなヨガ教室。</h1>
+          <p class="lead">
+            慌ただしい毎日の中で、少しだけ自分に戻る時間を。少人数制で、初めての方にもやさしいレッスンを行っています。
+          </p>
+          <div class="hero-actions">
+            <a class="primary-btn" href="#calendar">予約状況を見る</a>
+            <a class="ghost-btn" href="#menu">料金を見る</a>
+          </div>
+        </div>
+        <div class="hero-card" aria-label="ヨガ教室のイメージ写真">
+          <div class="hero-note">
+            ※ここに古民家・ヨガマット・お花などの写真を入れると、一気に雰囲気が出ます。<br>
+            画像ファイル名：images/yoga-main.jpg
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="news">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">お知らせ</h2>
+            <p class="section-copy">レッスン予定や大切なお知らせを掲載します。</p>
+          </div>
+        </div>
+        <div class="news-list" id="newsList"></div>
+      </div>
+    </section>
+
+    <section id="menu">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">メニュー・料金</h2>
+            <p class="section-copy">料金は仮入力です。後から変更できます。</p>
+          </div>
+        </div>
+        <div class="cards" id="menuCards"></div>
+        <div class="edit-note">
+          将来的には Googleスプレッドシートや簡単な管理画面と連携して、知人がスマホから料金表を変更できる仕様にできます。
+        </div>
+      </div>
+    </section>
+
+    <section id="calendar">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">予約状況カレンダー</h2>
+            <p class="section-copy">空き状況を確認して、Instagramからお問い合わせください。</p>
+          </div>
+        </div>
+
+        <div class="calendar-box">
+          <div class="calendar-preview">
+            <iframe id="calendarFrame" title="予約状況カレンダー"></iframe>
+          </div>
+          <div class="calendar-side">
+            <h3>ご予約について</h3>
+            <p class="small">
+              現在は既存の予約カレンダーを表示しています。後から「表示専用デザイン」に整える、または知人がスマホで更新できる管理ページを別で作る形がおすすめです。
+            </p>
+            <a class="primary-btn" id="calendarLink" href="#" target="_blank" rel="noopener">カレンダーを開く</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="access">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">アクセス</h2>
+            <p class="section-copy">詳しい住所や駐車場情報を掲載します。</p>
+          </div>
+        </div>
+        <div class="access-grid">
+          <div class="card">
+            <h3 id="accessName">Yoga Flower</h3>
+            <p id="accessAddress"></p>
+            <p id="accessParking" class="small"></p>
+          </div>
+          <div class="map-placeholder">
+            <div>
+              Googleマップ埋め込み予定<br>
+              <span class="small">※住所確定後に地図を入れます</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="contact-band">
+          <h2 class="section-title">お問い合わせ・ご予約</h2>
+          <p>
+            レッスンのご予約やご質問は、InstagramのDMよりお願いいたします。
+          </p>
+          <a class="primary-btn" id="mainInstagram" href="#" target="_blank" rel="noopener">Instagramで問い合わせる</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      © <span id="year"></span> Yoga Flower
+    </div>
+  </footer>
+
+  <script>
+    function escapeHtml(text) {
+      return String(text)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    document.getElementById('newsList').innerHTML = siteData.news.map(item => `
+      <article class="news-item">
+        <div class="date">${escapeHtml(item.date)}</div>
+        <div>${escapeHtml(item.title)}</div>
+      </article>
+    `).join('');
+
+    document.getElementById('menuCards').innerHTML = siteData.menus.map(item => `
+      <article class="card">
+        <h3>${escapeHtml(item.name)}</h3>
+        <div class="price">${escapeHtml(item.price)}</div>
+        <p class="small">${escapeHtml(item.note)}</p>
+      </article>
+    `).join('');
+
+    document.getElementById('accessName').textContent = siteData.access.name;
+    document.getElementById('accessAddress').textContent = siteData.access.address;
+    document.getElementById('accessParking').textContent = siteData.access.parking;
+
+    document.getElementById('headerInstagram').href = siteData.instagram;
+    document.getElementById('mainInstagram').href = siteData.instagram;
+    document.getElementById('calendarLink').href = siteData.calendarUrl;
+    document.getElementById('calendarFrame').src = siteData.calendarUrl;
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
