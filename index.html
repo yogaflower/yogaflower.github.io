@@ -495,30 +495,43 @@
       font-size:13px;
     }
 
-    .page-top{
-      position:fixed;
-      right:18px;
-      bottom:18px;
-      z-index:60;
-      width:48px;
-      height:48px;
-      border-radius:50%;
-      border:1px solid rgba(125,155,132,.35);
-      background:rgba(125,155,132,.88);
-      color:#fffdf8;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      text-decoration:none;
-      font-size:20px;
-      line-height:1;
-      box-shadow:0 12px 28px rgba(31,21,12,.18);
-      opacity:0;
-      pointer-events:none;
-      transform:translateY(8px);
-      transition:.2s ease;
-    }
+.page-top{
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  z-index:60;
+  width:48px;
+  height:48px;
+  border-radius:50%;
 
+  background:rgba(255,253,248,.94);
+  border:1px solid rgba(31,21,12,.14);
+
+  color:#1f150c;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  text-decoration:none;
+
+  font-size:20px;
+  font-weight:700;
+  line-height:1;
+
+  box-shadow:0 12px 28px rgba(31,21,12,.18);
+
+  opacity:0;
+  pointer-events:none;
+
+  transform:translateY(8px);
+  transition:.2s ease;
+}
+
+.page-top:hover{
+  background:#1f150c;
+  color:#fffdf8;
+}
     .page-top.show{
       opacity:1;
       pointer-events:auto;
