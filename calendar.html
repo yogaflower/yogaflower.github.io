@@ -9,26 +9,172 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;700&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#1f150c;--sub:#6f6257;--paper:rgba(255,253,248,.88);--line:rgba(31,21,12,.14);--accent:#b88b6b;--red:#b75c5c;--blue:#6f8fa8;--shadow:0 14px 34px rgba(31,21,12,.10)}
-*{box-sizing:border-box}body{margin:0;font-family:'Zen Maru Gothic',sans-serif;color:var(--ink);background:url('images/bg.png') center top/cover fixed;padding:24px 12px}body:before{content:'';position:fixed;inset:0;background:rgba(255,253,248,.36);z-index:-1}.wrap{width:min(980px,100%);margin:0 auto;background:var(--paper);border:1px solid var(--line);border-radius:28px;box-shadow:var(--shadow);padding:22px}.logo{width:180px;margin:0 auto 12px}h1{font-family:'Noto Serif JP',serif;text-align:center;margin:0 0 8px;font-size:28px}.lead{text-align:center;color:var(--sub);margin:0 0 18px;font-size:14px}.period{text-align:center;color:var(--sub);margin-bottom:16px}.period-calendar{display:grid;grid-template-columns:repeat(7,1fr);border:1px solid var(--line);border-radius:18px;overflow:hidden;background:#fffdf8;margin-bottom:18px}.period-month{grid-column:1/-1;text-align:center;font-family:'Noto Serif JP',serif;font-weight:700;font-size:22px;padding:10px;background:rgba(255,253,248,.88);border-bottom:1px solid var(--line)}.dow,.cell{min-height:92px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:8px}.dow{min-height:auto;text-align:center;font-weight:700;color:var(--sub);background:rgba(255,253,248,.74)}.date{font-weight:700;font-size:14px}.sun .date{color:#b76f78}.sat .date{color:#5f7f99}.mark{margin-top:6px;font-size:12px;line-height:1.45}.circle-num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fffdf8;font-weight:700;margin-right:4px}.badge{display:inline-block;border-radius:999px;padding:3px 8px;font-weight:700}.badge.empty{background:rgba(111,143,168,.15);color:#4d6d86}.badge.full{background:rgba(183,92,92,.13);color:#9a4545}.badge.off{background:rgba(111,98,87,.13);color:#6f6257}.night{color:var(--accent);font-weight:700}.text{color:var(--sub);margin-top:4px}@media(max-width:700px){.wrap{padding:14px;border-radius:22px}.cell{min-height:76px;padding:5px}.date{font-size:12px}.mark{font-size:10px}.circle-num{width:21px;height:21px}.badge{padding:2px 6px}.logo{width:150px}.period-month{font-size:20px}}
+:root{
+  --ink:#1f150c;
+  --sub:#6f6257;
+  --paper:rgba(255,253,248,.88);
+  --line:rgba(31,21,12,.14);
+  --accent:#b88b6b;
+  --shadow:0 14px 34px rgba(31,21,12,.10);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Zen Maru Gothic',sans-serif;color:var(--ink);background:url('images/bg.png') center top/cover fixed;padding:24px 12px}
+body::before{content:'';position:fixed;inset:0;background:rgba(255,253,248,.36);z-index:-1}
+.wrap{width:min(980px,100%);margin:0 auto;background:var(--paper);border:1px solid var(--line);border-radius:28px;box-shadow:var(--shadow);padding:22px}
+.logo{display:block;width:180px;margin:0 auto 12px}
+h1{font-family:'Noto Serif JP',serif;text-align:center;margin:0 0 8px;font-size:28px;letter-spacing:.04em}
+.lead{text-align:center;color:var(--sub);margin:0 0 8px;font-size:14px}
+.period{text-align:center;color:var(--sub);margin:0 0 16px;font-size:14px}
+.period-table{width:100%;border-collapse:separate;border-spacing:0;table-layout:fixed;overflow:hidden;border:1px solid var(--line);border-radius:18px;background:#fffdf8}
+.period-table th,.period-table td{border-right:1px solid var(--line);border-bottom:1px solid var(--line);vertical-align:top}
+.period-table th:last-child,.period-table td:last-child{border-right:0}
+.period-table tr:last-child td{border-bottom:0}
+.period-title-cell{font-family:'Noto Serif JP',serif;font-size:22px;padding:10px;text-align:center;background:rgba(255,253,248,.88)}
+.period-dow{padding:7px 4px;text-align:center;color:var(--sub);font-weight:700;background:rgba(255,253,248,.74)}
+.period-cell{height:88px;padding:7px;background:#fffdf8}
+.period-cell.empty{background:rgba(255,253,248,.45)}
+.period-date{font-weight:700;font-size:13px}
+.period-cell.sun .period-date{color:#b76f78}
+.period-cell.sat .period-date{color:#5f7f99}
+.mark{margin-top:5px;font-size:12px;line-height:1.35}
+.circle-num{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fffdf8;font-weight:700;font-size:13px;padding:0;margin-right:4px}
+.badge{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;font-weight:700;font-size:13px;padding:0}
+.badge.full{background:#b66b73;color:#fff}
+.badge.empty{background:#6f8fa8;color:#fff}
+.badge.off{background:#e3e3e3;color:#5f5f5f}
+.night{color:var(--accent);font-weight:700}
+.text{color:var(--sub);margin-top:4px}
+@media(max-width:700px){
+  body{padding:12px 8px}
+  .wrap{padding:14px;border-radius:22px}
+  .logo{width:150px}
+  h1{font-size:22px}
+  .period-title-cell{font-size:19px;padding:8px 4px}
+  .period-dow{font-size:12px;padding:5px 2px}
+  .period-cell{height:66px;padding:4px}
+  .period-date{font-size:12px}
+  .mark{font-size:10px}
+  .circle-num{width:24px;height:24px;font-size:12px}
+  .badge{width:24px;height:24px;font-size:12px}
+}
 </style>
 </head>
 <body>
-<div class="wrap"><img class="logo" src="images/logo.png" alt="Yoga Flower"><h1>予約状況カレンダー</h1><p class="lead">空き状況をご確認のうえ、LINEよりお問い合わせください。</p><div class="period" id="period"></div><div id="calendar"></div></div>
+<div class="wrap">
+  <img class="logo" src="images/logo.png" alt="Yoga Flower">
+  <h1>予約状況カレンダー</h1>
+  <p class="lead">空き状況をご確認のうえ、LINEよりお問い合わせください。</p>
+  <div class="period" id="periodText"></div>
+  <div id="calendar"></div>
+</div>
 <script>
-const API_URL='https://script.google.com/macros/s/AKfycbzlyU2DNJtiQNL5gQ9Lex55qsXyxQ4mI9bghM3bhjcQX5adCDmAcahI_v5RzBuYDi4T/exec';let rows=[],settings={};
-function esc(t){return String(t??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;')}
-function isVisible(r){return r.visible===undefined||r.visible===''||String(r.visible).toUpperCase()==='TRUE'}
-function parseDate(s){if(!s)return null;const d=new Date(s+'T00:00:00');return isNaN(d)?null:d}
-function calKey(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
-function jp(s){const d=parseDate(s);return d?`${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日`:''}
-function settingsRowsToObj(r){const o={};(r||[]).forEach(x=>{if(x.key)o[x.key]=x.value||''});return o}
-function load(){const cb='calCb_'+Date.now();const s=document.createElement('script');window[cb]=res=>{rows=(res&&res.data&&res.data.calendar)||[];settings=settingsRowsToObj((res&&res.data&&res.data.settings)||[]);render();s.remove();delete window[cb]};s.src=API_URL+'?action=getData&callback='+cb+'&t='+Date.now();s.onerror=()=>render();document.body.appendChild(s)}
-function mark(r){if(!r||!isVisible(r))return'';let h='<div class="mark">';if(r.number)h+=`<span class="circle-num">${esc(r.number)}</span>`;if(r.status)h+=`<span class="badge ${r.status==='満'?'full':r.status==='空'?'empty':r.status==='休'?'off':''}">${esc(r.status)}</span>`;if(String(r.night).toUpperCase()==='TRUE')h+=' <span class="night">夜🌙</span>';if(r.text)h+=`<div class="text">${esc(r.text)}</div>`;return h+'</div>'}
-function render(){let start=parseDate(settings.calendarStart),end=parseDate(settings.calendarEnd);if(!start||!end||start>end){const now=new Date();start=new Date(now.getFullYear(),now.getMonth(),15);end=new Date(now.getFullYear(),now.getMonth()+1,0)}period.textContent=`${jp(calKey(start))} 〜 ${jp(calKey(end))}`;const map={};rows.forEach(r=>{if(r.date)map[r.date]=r});calendar.innerHTML=renderContinuous(start,end,map)}
-function eachDate(start,end,cb){let d=new Date(start);while(d<=end){cb(new Date(d));d.setDate(d.getDate()+1)}}
-function formatPeriodTitle(start,end){if(start.getFullYear()===end.getFullYear())return `${start.getFullYear()}年${start.getMonth()+1}月${start.getDate()}日〜${end.getMonth()+1}月${end.getDate()}日`;return `${start.getFullYear()}年${start.getMonth()+1}月${start.getDate()}日〜${end.getFullYear()}年${end.getMonth()+1}月${end.getDate()}日`}
-function renderContinuous(start,end,map){let html=`<div class="period-calendar"><div class="period-month">${formatPeriodTitle(start,end)}</div>`;html+=['日','月','火','水','木','金','土'].map(d=>`<div class="dow">${d}</div>`).join('');for(let i=0;i<start.getDay();i++)html+='<div class="cell"></div>';eachDate(start,end,obj=>{const date=calKey(obj),dow=obj.getDay(),cls=dow===0?' sun':dow===6?' sat':'';html+=`<div class="cell${cls}"><div class="date">${obj.getMonth()+1}/${obj.getDate()}</div>${mark(map[date])}</div>`});html+='</div>';return html}
+const API_URL='https://script.google.com/macros/s/AKfycbzlyU2DNJtiQNL5gQ9Lex55qsXyxQ4mI9bghM3bhjcQX5adCDmAcahI_v5RzBuYDi4T/exec';
+let rows=[];
+let settings={};
+
+function esc(t){
+  return String(t??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');
+}
+function isVisible(row){
+  return row.visible===undefined || row.visible==='' || String(row.visible).toUpperCase()==='TRUE';
+}
+function parseDate(s){
+  if(!s)return null;
+  const d=new Date(s+'T00:00:00');
+  return isNaN(d)?null:d;
+}
+function calKey(d){
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+function jp(s){
+  const d=parseDate(s);
+  return d?`${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日`:'';
+}
+function settingsRowsToObj(rows){
+  const obj={};
+  (rows||[]).forEach(row=>{ if(row.key)obj[row.key]=row.value||''; });
+  return obj;
+}
+function eachDate(start,end,callback){
+  const d=new Date(start);
+  while(d<=end){
+    callback(new Date(d));
+    d.setDate(d.getDate()+1);
+  }
+}
+function mark(row){
+  if(!row || !isVisible(row))return '';
+  let html='<div class="mark">';
+  if(row.number)html+=`<span class="circle-num">${esc(row.number)}</span>`;
+  if(row.status){
+    html+=`<span class="badge ${row.status==='満'?'full':row.status==='空'?'empty':row.status==='休'?'off':''}">${esc(row.status)}</span>`;
+  }
+  if(String(row.night).toUpperCase()==='TRUE')html+=' <span class="night">夜🌙</span>';
+  if(row.text)html+=`<div class="text">${esc(row.text)}</div>`;
+  html+='</div>';
+  return html;
+}
+function formatPeriodTitle(start,end){
+  if(start.getFullYear()===end.getFullYear()){
+    return `${start.getFullYear()}年${start.getMonth()+1}月${start.getDate()}日〜${end.getMonth()+1}月${end.getDate()}日`;
+  }
+  return `${start.getFullYear()}年${start.getMonth()+1}月${start.getDate()}日〜${end.getFullYear()}年${end.getMonth()+1}月${end.getDate()}日`;
+}
+function renderContinuous(start,end,map){
+  const dows=['日','月','火','水','木','金','土'];
+  let html='<table class="period-table"><thead>';
+  html+=`<tr><th class="period-title-cell" colspan="7">${formatPeriodTitle(start,end)}</th></tr>`;
+  html+='<tr>'+dows.map(d=>`<th class="period-dow">${d}</th>`).join('')+'</tr>';
+  html+='</thead><tbody>';
+
+  const cells=[];
+  for(let i=0;i<start.getDay();i++)cells.push('<td class="period-cell empty"></td>');
+
+  eachDate(start,end,d=>{
+    const date=calKey(d);
+    const row=map[date];
+    const dow=d.getDay();
+    const cls=dow===0?' sun':dow===6?' sat':'';
+    const label=d.getDate()===1 ? `${d.getMonth()+1}/${d.getDate()}` : `${d.getDate()}`;
+    cells.push(`<td class="period-cell${cls}"><div class="period-date">${label}</div>${row&&isVisible(row)?mark(row):''}</td>`);
+  });
+
+  while(cells.length%7!==0)cells.push('<td class="period-cell empty"></td>');
+
+  for(let i=0;i<cells.length;i+=7)html+='<tr>'+cells.slice(i,i+7).join('')+'</tr>';
+  html+='</tbody></table>';
+  return html;
+}
+function render(){
+  let start=parseDate(settings.calendarStart);
+  let end=parseDate(settings.calendarEnd);
+
+  if(!start || !end || start>end){
+    const now=new Date();
+    start=new Date(now.getFullYear(),now.getMonth(),15);
+    end=new Date(now.getFullYear(),now.getMonth()+1,0);
+  }
+
+  document.getElementById('periodText').textContent=`${jp(calKey(start))} 〜 ${jp(calKey(end))}`;
+
+  const map={};
+  rows.forEach(row=>{ if(row.date)map[row.date]=row; });
+  document.getElementById('calendar').innerHTML=renderContinuous(start,end,map);
+}
+function load(){
+  const callback='calendarCallback_'+Date.now();
+  window[callback]=res=>{
+    const data=res&&res.data?res.data:{};
+    rows=Array.isArray(data.calendar)?data.calendar:[];
+    settings=settingsRowsToObj(data.settings||[]);
+    render();
+    delete window[callback];
+  };
+  const script=document.createElement('script');
+  script.src=API_URL+'?action=getData&callback='+callback+'&t='+Date.now();
+  script.onerror=()=>render();
+  document.body.appendChild(script);
+}
 load();
 </script>
 </body>
