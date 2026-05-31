@@ -260,12 +260,80 @@
 
     .menu-grid{
       display:grid;
-      grid-template-columns:repeat(3, 1fr);
+      grid-template-columns:repeat(4, 1fr);
       gap:18px;
     }
 
     .menu-card{
       padding:26px;
+    }
+
+    .menu-card .small{
+      white-space:pre-line;
+    }
+
+    .group-price-grid{
+      display:grid;
+      grid-template-columns:repeat(2, 1fr);
+      gap:10px;
+      margin-top:18px;
+    }
+
+    .group-price-item{
+      padding:13px 10px 12px;
+      border-radius:17px;
+      background:rgba(255,253,248,.66);
+      border:1px solid rgba(31,21,12,.10);
+      text-align:center;
+    }
+
+    .group-price-label{
+      color:var(--accent);
+      font-weight:700;
+      font-size:13px;
+      line-height:1.35;
+      margin-bottom:3px;
+    }
+
+    .group-price-value{
+      font-family:'Noto Serif JP', serif;
+      color:var(--ink);
+      font-weight:700;
+      font-size:20px;
+      line-height:1.35;
+      letter-spacing:.02em;
+    }
+
+    .lesson-time-box{
+      margin-top:24px;
+      padding:28px;
+    }
+
+    .lesson-time-grid{
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:14px;
+      margin-top:16px;
+    }
+
+    .lesson-time-item{
+      padding:18px;
+      border-radius:20px;
+      background:rgba(255,253,248,.62);
+      border:1px solid rgba(31,21,12,.10);
+    }
+
+    .lesson-day{
+      font-weight:700;
+      color:var(--accent);
+      margin-bottom:4px;
+    }
+
+    .lesson-hour{
+      font-family:'Noto Serif JP', serif;
+      font-size:24px;
+      font-weight:700;
+      line-height:1.4;
     }
 
     .price{
@@ -415,6 +483,7 @@
       }
 
       .menu-grid,
+      .lesson-time-grid,
       .calendar-wrap,
       .access-grid{
         grid-template-columns:1fr;
@@ -444,9 +513,37 @@
         { date: '2026.05.10', title: 'ホームページを準備中です。' }
       ],
       menus: [
-        { name: '体験レッスン', price: '1,000円', note: '初めての方限定。ゆっくり雰囲気を感じていただけます。' },
-        { name: '1回レッスン', price: '1,500円', note: '都度払いで気軽にご参加いただけます。' },
-        { name: '月4回チケット', price: '5,000円', note: '定期的に通いたい方向け。料金は仮です。' }
+        {
+          name: 'グループレッスン',
+          price: '',
+          note: '',
+          groupPrices: [
+            { label: '月4回', price: '4,000円' },
+            { label: '月3回', price: '3,300円' },
+            { label: '月2回', price: '2,200円' },
+            { label: '1回', price: '1,500円' }
+          ]
+        },
+        {
+          name: 'お友達同士',
+          price: '1回 2,500円',
+          note: '2〜3名でのレッスンです。料金は1名あたりです。'
+        },
+        {
+          name: 'お一人でゆっくりと',
+          price: '1回 3,500円',
+          note: 'まわりを気にせず、ご自身のペースで受けたい方向けです。'
+        },
+        {
+          name: 'オンラインレッスン',
+          price: '月4回 2,500円',
+          note: '毎週月曜夜に行っています。'
+        }
+      ],
+      lessonTimes: [
+        { day: '毎週月曜日', time: '19:30〜20:45', note: 'オンライン・対面どちらも可能' },
+        { day: '毎週水曜日', time: '9:30〜10:45', note: '' },
+        { day: '毎週金曜日', time: '9:30〜10:45', note: '' }
       ],
       access: {
         name: 'Yoga Flower',
@@ -516,6 +613,11 @@
         </div>
 
         <div class="menu-grid" id="menuCards"></div>
+
+        <div class="lesson-time-box glass">
+          <h3>レッスン時間</h3>
+          <div class="lesson-time-grid" id="lessonTimes"></div>
+        </div>
       </div>
     </section>
 
@@ -607,8 +709,26 @@
     document.getElementById('menuCards').innerHTML = siteData.menus.map(item => `
       <article class="menu-card glass">
         <h3>${escapeHtml(item.name)}</h3>
-        <div class="price">${escapeHtml(item.price)}</div>
-        <p class="small">${escapeHtml(item.note)}</p>
+        ${item.price ? `<div class="price">${escapeHtml(item.price)}</div>` : ''}
+        ${item.groupPrices ? `
+          <div class="group-price-grid">
+            ${item.groupPrices.map(priceItem => `
+              <div class="group-price-item">
+                <div class="group-price-label">${escapeHtml(priceItem.label)}</div>
+                <div class="group-price-value">${escapeHtml(priceItem.price)}</div>
+              </div>
+            `).join('')}
+          </div>
+        ` : ''}
+        ${item.note ? `<p class="small">${escapeHtml(item.note)}</p>` : ''}
+      </article>
+    `).join('');
+
+    document.getElementById('lessonTimes').innerHTML = siteData.lessonTimes.map(item => `
+      <article class="lesson-time-item">
+        <div class="lesson-day">${escapeHtml(item.day)}</div>
+        <div class="lesson-hour">${escapeHtml(item.time)}</div>
+        ${item.note ? `<p class="small">${escapeHtml(item.note)}</p>` : ''}
       </article>
     `).join('');
 
