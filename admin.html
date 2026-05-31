@@ -8,57 +8,717 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;700&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+
 <style>
-:root{--ink:#1f150c;--sub:#6f6257;--paper:rgba(255,253,248,.92);--line:rgba(31,21,12,.14);--accent:#b88b6b;--red:#b75c5c;--shadow:0 14px 34px rgba(31,21,12,.10);--radius:22px}*{box-sizing:border-box}body{margin:0;color:var(--ink);font-family:'Zen Maru Gothic',sans-serif;background:url('images/bg.png') center top/cover fixed;line-height:1.7;padding-bottom:90px}body:before{content:'';position:fixed;inset:0;background:rgba(255,253,248,.42);z-index:-1}header{position:sticky;top:0;z-index:10;background:rgba(255,253,248,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}.header-inner{width:min(960px,calc(100% - 24px));margin:0 auto;min-height:66px;display:flex;align-items:center;justify-content:space-between;gap:12px}.logo{width:150px}.save-top{border:0;border-radius:999px;background:var(--ink);color:#fffdf8;font-weight:700;padding:10px 18px;box-shadow:0 10px 22px rgba(31,21,12,.20);font-family:inherit;font-size:15px}main{width:min(960px,calc(100% - 24px));margin:24px auto 0}h1,h2,h3{font-family:'Noto Serif JP',serif;line-height:1.45;letter-spacing:.04em;margin:0}h1{font-size:26px;margin-bottom:12px}.intro{color:var(--sub);margin:0 0 18px;font-size:14px}.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:18px 0}.tab{border:1px solid var(--line);background:rgba(255,253,248,.74);border-radius:999px;padding:10px 6px;font-family:inherit;font-weight:700;color:var(--sub)}.tab.active{background:var(--ink);color:#fffdf8}.panel{display:none}.panel.active{display:block}.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;margin-bottom:14px;backdrop-filter:blur(10px)}.card-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.card-title{font-weight:700;color:var(--accent);font-size:14px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}label{display:block;font-weight:700;font-size:13px;color:var(--sub);margin-bottom:4px}input,select,textarea{width:100%;border:1px solid var(--line);background:#fffdf8;border-radius:14px;padding:11px 12px;font-family:inherit;font-size:16px;color:var(--ink)}textarea{min-height:86px;resize:vertical}.full{grid-column:1/-1}.row-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:12px}.btn{border:0;border-radius:999px;padding:10px 15px;font-family:inherit;font-weight:700;font-size:14px}.btn-add{width:100%;background:rgba(184,139,107,.12);color:var(--accent);border:1px solid rgba(184,139,107,.28);margin:8px 0 18px;padding:13px}.btn-delete{background:rgba(183,92,92,.12);color:var(--red)}.btn-dup{background:rgba(184,139,107,.12);color:var(--accent)}.visible-line{display:flex;align-items:center;gap:8px;font-weight:700;color:var(--sub);font-size:14px}.visible-line input{width:20px;height:20px}.status{position:fixed;left:12px;right:12px;bottom:14px;z-index:20;background:rgba(31,21,12,.92);color:#fffdf8;border-radius:18px;padding:13px 16px;text-align:center;font-weight:700;box-shadow:0 12px 28px rgba(31,21,12,.22);display:none}.status.show{display:block}.hint{font-size:13px;color:var(--sub);margin:6px 0 16px}iframe[name=saveFrame]{display:none}@media(max-width:720px){.tabs{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}.logo{width:130px}h1{font-size:22px}}
+:root {
+  --ink:#1f150c;
+  --sub:#6f6257;
+  --paper:rgba(255,253,248,.92);
+  --line:rgba(31,21,12,.14);
+  --accent:#b88b6b;
+  --red:#b75c5c;
+  --shadow:0 14px 34px rgba(31,21,12,.10);
+  --radius:22px;
+}
+
+* {
+  box-sizing:border-box;
+}
+
+body {
+  margin:0;
+  color:var(--ink);
+  font-family:'Zen Maru Gothic',sans-serif;
+  background:url('images/bg.png') center top/cover fixed;
+  line-height:1.7;
+  padding-bottom:90px;
+}
+
+body::before {
+  content:'';
+  position:fixed;
+  inset:0;
+  background:rgba(255,253,248,.42);
+  z-index:-1;
+}
+
+header {
+  position:sticky;
+  top:0;
+  z-index:10;
+  background:rgba(255,253,248,.88);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+
+.header-inner {
+  width:min(960px,calc(100% - 24px));
+  margin:0 auto;
+  min-height:66px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.logo {
+  width:150px;
+}
+
+.save-top {
+  border:0;
+  border-radius:999px;
+  background:var(--ink);
+  color:#fffdf8;
+  font-weight:700;
+  padding:10px 18px;
+  box-shadow:0 10px 22px rgba(31,21,12,.20);
+  font-family:inherit;
+  font-size:15px;
+}
+
+main {
+  width:min(960px,calc(100% - 24px));
+  margin:24px auto 0;
+}
+
+h1,h2,h3 {
+  font-family:'Noto Serif JP',serif;
+  line-height:1.45;
+  letter-spacing:.04em;
+  margin:0;
+}
+
+h1 {
+  font-size:26px;
+  margin-bottom:12px;
+}
+
+.intro {
+  color:var(--sub);
+  margin:0 0 18px;
+  font-size:14px;
+}
+
+.tabs {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+  margin:18px 0;
+}
+
+.tab {
+  border:1px solid var(--line);
+  background:rgba(255,253,248,.74);
+  border-radius:999px;
+  padding:10px 6px;
+  font-family:inherit;
+  font-weight:700;
+  color:var(--sub);
+}
+
+.tab.active {
+  background:var(--ink);
+  color:#fffdf8;
+}
+
+.panel {
+  display:none;
+}
+
+.panel.active {
+  display:block;
+}
+
+.card {
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:18px;
+  margin-bottom:14px;
+  backdrop-filter:blur(10px);
+}
+
+.card-head {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:12px;
+}
+
+.card-title {
+  font-weight:700;
+  color:var(--accent);
+  font-size:15px;
+}
+
+.grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+label {
+  display:block;
+  font-weight:700;
+  font-size:13px;
+  color:var(--sub);
+  margin-bottom:4px;
+}
+
+input,select,textarea {
+  width:100%;
+  border:1px solid var(--line);
+  background:#fffdf8;
+  border-radius:14px;
+  padding:11px 12px;
+  font-family:inherit;
+  font-size:16px;
+  color:var(--ink);
+}
+
+textarea {
+  min-height:86px;
+  resize:vertical;
+}
+
+.full {
+  grid-column:1/-1;
+}
+
+.row-actions {
+  display:flex;
+  gap:8px;
+  justify-content:flex-end;
+  margin-top:12px;
+}
+
+.btn {
+  border:0;
+  border-radius:999px;
+  padding:10px 15px;
+  font-family:inherit;
+  font-weight:700;
+  font-size:14px;
+}
+
+.btn-add {
+  width:100%;
+  background:rgba(184,139,107,.12);
+  color:var(--accent);
+  border:1px solid rgba(184,139,107,.28);
+  margin:8px 0 18px;
+  padding:13px;
+}
+
+.btn-delete {
+  background:rgba(183,92,92,.12);
+  color:var(--red);
+}
+
+.btn-dup {
+  background:rgba(184,139,107,.12);
+  color:var(--accent);
+}
+
+.visible-line {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-weight:700;
+  color:var(--sub);
+  font-size:14px;
+}
+
+.visible-line input {
+  width:20px;
+  height:20px;
+}
+
+.status {
+  position:fixed;
+  left:12px;
+  right:12px;
+  bottom:14px;
+  z-index:20;
+  background:rgba(31,21,12,.92);
+  color:#fffdf8;
+  border-radius:18px;
+  padding:13px 16px;
+  text-align:center;
+  font-weight:700;
+  box-shadow:0 12px 28px rgba(31,21,12,.22);
+  display:none;
+}
+
+.status.show {
+  display:block;
+}
+
+.hint {
+  font-size:13px;
+  color:var(--sub);
+  margin:6px 0 16px;
+}
+
+.fixed-note {
+  font-size:13px;
+  color:var(--sub);
+  margin:0 0 14px;
+  padding:12px 14px;
+  border-radius:16px;
+  background:rgba(255,253,248,.64);
+  border:1px solid var(--line);
+}
+
+.menu-section-title {
+  margin:18px 0 10px;
+  font-family:'Noto Serif JP',serif;
+  font-weight:700;
+  color:var(--ink);
+}
+
+iframe[name="saveFrame"] {
+  display:none;
+}
+
+@media(max-width:720px) {
+  .tabs {
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .grid {
+    grid-template-columns:1fr;
+  }
+
+  .logo {
+    width:130px;
+  }
+
+  h1 {
+    font-size:22px;
+  }
+}
 </style>
 </head>
+
 <body>
-<header><div class="header-inner"><img class="logo" src="images/logo.png" alt="Yoga Flower"><button class="save-top" type="button" onclick="saveAll()">保存</button></div></header>
-<main><h1>Yoga Flower 管理画面</h1><p class="intro">お知らせ・レッスン時間・料金・予約状況をスマホから編集できます。編集後は「保存」を押してください。</p><div class="tabs"><button class="tab active" data-tab="news">お知らせ</button><button class="tab" data-tab="lesson">時間</button><button class="tab" data-tab="menu">料金</button><button class="tab" data-tab="calendar">カレンダー</button></div><section id="panel-news" class="panel active"><p class="hint">新しいお知らせほど上に置くと見やすいです。</p><div id="newsList"></div><button class="btn btn-add" type="button" onclick="addNews()">＋ お知らせを追加</button></section><section id="panel-lesson" class="panel"><div id="lessonList"></div><button class="btn btn-add" type="button" onclick="addLesson()">＋ レッスン時間を追加</button></section><section id="panel-menu" class="panel"><p class="hint">グループ料金は「種類」をグループにし、「内容」に月4回などを入れます。</p><div id="menuList"></div><button class="btn btn-add" type="button" onclick="addMenu()">＋ 料金を追加</button></section><section id="panel-calendar" class="panel"><p class="hint">表示専用カレンダーに出す日だけ登録してください。</p><div id="calendarList"></div><button class="btn btn-add" type="button" onclick="addCalendar()">＋ 日付を追加</button></section><button class="save-top" style="width:100%;margin-top:10px" type="button" onclick="saveAll()">保存</button></main>
-<form id="saveForm" method="POST" action="https://script.google.com/macros/s/AKfycbzlyU2DNJtiQNL5gQ9Lex55qsXyxQ4mI9bghM3bhjcQX5adCDmAcahI_v5RzBuYDi4T/exec" target="saveFrame"><input type="hidden" name="action" value="saveAll"><input type="hidden" name="payload" id="payloadField"></form><iframe name="saveFrame"></iframe><div class="status" id="status"></div>
+<header>
+  <div class="header-inner">
+    <img class="logo" src="images/logo.png" alt="Yoga Flower">
+    <button class="save-top" type="button" onclick="saveAll()">保存</button>
+  </div>
+</header>
+
+<main>
+  <h1>Yoga Flower 管理画面</h1>
+  <p class="intro">お知らせ・レッスン時間・料金・予約状況をスマホから編集できます。お知らせはホームページに最新3件だけ表示されます。編集後は「保存」を押してください。</p>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="news">お知らせ</button>
+    <button class="tab" data-tab="lesson">レッスン時間</button>
+    <button class="tab" data-tab="menu">料金</button>
+    <button class="tab" data-tab="calendar">カレンダー</button>
+  </div>
+
+  <section id="panel-news" class="panel active">
+    <p class="hint">ホームページには上から最新3件だけ表示されます。新しいお知らせほど上に置いてください。</p>
+    <div id="newsList"></div>
+    <button class="btn btn-add" type="button" onclick="addNews()">＋ お知らせを追加</button>
+  </section>
+
+  <section id="panel-lesson" class="panel">
+    <p class="fixed-note">レッスン時間は、今表示している内容を変更するだけです。追加・削除はできないようにしています。</p>
+    <div id="lessonList"></div>
+  </section>
+
+  <section id="panel-menu" class="panel">
+    <p class="fixed-note">料金は、今表示している項目の金額や説明だけを変更してください。追加・削除はできないようにしています。</p>
+    <div id="menuList"></div>
+  </section>
+
+  <section id="panel-calendar" class="panel">
+    <p class="hint">表示専用カレンダーに出す日だけ登録してください。</p>
+    <div id="calendarList"></div>
+    <button class="btn btn-add" type="button" onclick="addCalendar()">＋ 日付を追加</button>
+  </section>
+
+  <button class="save-top" style="width:100%;margin-top:10px" type="button" onclick="saveAll()">保存</button>
+</main>
+
+<form id="saveForm" method="POST" action="https://script.google.com/macros/s/AKfycbzlyU2DNJtiQNL5gQ9Lex55qsXyxQ4mI9bghM3bhjcQX5adCDmAcahI_v5RzBuYDi4T/exec" target="saveFrame">
+  <input type="hidden" name="action" value="saveAll">
+  <input type="hidden" name="payload" id="payloadField">
+</form>
+<iframe name="saveFrame"></iframe>
+<div class="status" id="status"></div>
+
 <script>
 const API_URL='https://script.google.com/macros/s/AKfycbzlyU2DNJtiQNL5gQ9Lex55qsXyxQ4mI9bghM3bhjcQX5adCDmAcahI_v5RzBuYDi4T/exec';
-let state={news:[],lesson_times:[],menus:[],calendar:[]};
-const fallback={news:[{id:'n1',date:'2026.6.1',title:'6月のレッスン予定を公開しました。',visible:'TRUE'}],lesson_times:[{id:'l1',day:'毎週月曜日',time:'19:30〜20:45',note:'オンライン・対面どちらも可能',visible:'TRUE'},{id:'l2',day:'毎週水曜日',time:'9:30〜10:45',note:'',visible:'TRUE'},{id:'l3',day:'毎週金曜日',time:'9:30〜10:45',note:'',visible:'TRUE'}],menus:[{id:'m1',name:'グループレッスン',price:'4,000円',note:'月4回',type:'group',visible:'TRUE'},{id:'m2',name:'グループレッスン',price:'3,300円',note:'月3回',type:'group',visible:'TRUE'},{id:'m3',name:'グループレッスン',price:'2,200円',note:'月2回',type:'group',visible:'TRUE'},{id:'m4',name:'グループレッスン',price:'1,500円',note:'1回',type:'group',visible:'TRUE'},{id:'m5',name:'お友達同士',price:'1回 2,500円',note:'2〜3名でのレッスンです。料金は1名あたりです。',type:'normal',visible:'TRUE'},{id:'m6',name:'お一人でゆっくりと',price:'1回 3,500円',note:'まわりを気にせず、ご自身のペースで受けたい方向けです。',type:'normal',visible:'TRUE'},{id:'m7',name:'オンラインレッスン',price:'月4回 2,500円',note:'毎週月曜夜に行っています。',type:'normal',visible:'TRUE'}],calendar:[]};
-function uid(p){return p+Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
-function esc(t){return String(t??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;')}
-function toDateInputValue(value){
-  if(!value) return '';
-  const text=String(value).trim();
-  if(/^\d{4}-\d{2}-\d{2}$/.test(text)) return text;
-  const m=text.match(/^(\d{4})[./-](\d{1,2})[./-](\d{1,2})$/);
-  if(!m) return '';
-  return `${m[1]}-${String(m[2]).padStart(2,'0')}-${String(m[3]).padStart(2,'0')}`;
+
+const DEFAULT_LESSONS = [
+  { id:'l1', day:'毎週月曜日', time:'19:30〜20:45', note:'オンライン・対面どちらも可能', visible:'TRUE' },
+  { id:'l2', day:'毎週水曜日', time:'9:30〜10:45', note:'', visible:'TRUE' },
+  { id:'l3', day:'毎週金曜日', time:'9:30〜10:45', note:'', visible:'TRUE' }
+];
+
+const DEFAULT_MENUS = [
+  { id:'m1', name:'グループレッスン', price:'4,000円', note:'月4回', type:'group', visible:'TRUE' },
+  { id:'m2', name:'グループレッスン', price:'3,300円', note:'月3回', type:'group', visible:'TRUE' },
+  { id:'m3', name:'グループレッスン', price:'2,200円', note:'月2回', type:'group', visible:'TRUE' },
+  { id:'m4', name:'グループレッスン', price:'1,500円', note:'1回', type:'group', visible:'TRUE' },
+  { id:'m5', name:'お友達同士', price:'1回 2,500円', note:'2〜3名でのレッスンです。料金は1名あたりです。', type:'normal', visible:'TRUE' },
+  { id:'m6', name:'お一人でゆっくりと', price:'1回 3,500円', note:'まわりを気にせず、ご自身のペースで受けたい方向けです。', type:'normal', visible:'TRUE' },
+  { id:'m7', name:'オンラインレッスン', price:'月4回 2,500円', note:'毎週月曜夜に行っています。', type:'normal', visible:'TRUE' }
+];
+
+let state = {
+  news: [],
+  lesson_times: [],
+  menus: [],
+  calendar: []
+};
+
+const fallback = {
+  news: [
+    { id:'n1', date:'2026.6.1', title:'6月のレッスン予定を公開しました。', visible:'TRUE' }
+  ],
+  lesson_times: DEFAULT_LESSONS,
+  menus: DEFAULT_MENUS,
+  calendar: []
+};
+
+function uid(prefix) {
+  return prefix + Date.now().toString(36) + Math.random().toString(36).slice(2,6);
 }
-function toDisplayDate(value){
-  if(!value) return '';
-  const text=String(value).trim();
-  let m=text.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
-  if(m) return `${m[1]}.${Number(m[2])}.${Number(m[3])}`;
-  m=text.match(/^(\d{4})[./](\d{1,2})[./](\d{1,2})$/);
-  if(m) return `${m[1]}.${Number(m[2])}.${Number(m[3])}`;
+
+function esc(text) {
+  return String(text ?? '')
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;')
+    .replace(/'/g,'&#039;');
+}
+
+function toDateInputValue(value) {
+  if (!value) return '';
+  const text = String(value).trim();
+  if (/^\d{4}-\d{2}-\d{2}$/.test(text)) return text;
+
+  const match = text.match(/^(\d{4})[./-](\d{1,2})[./-](\d{1,2})$/);
+  if (!match) return '';
+
+  return `${match[1]}-${String(match[2]).padStart(2,'0')}-${String(match[3]).padStart(2,'0')}`;
+}
+
+function toDisplayDate(value) {
+  if (!value) return '';
+  const text = String(value).trim();
+
+  let match = text.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+  if (match) return `${match[1]}.${Number(match[2])}.${Number(match[3])}`;
+
+  match = text.match(/^(\d{4})[./](\d{1,2})[./](\d{1,2})$/);
+  if (match) return `${match[1]}.${Number(match[2])}.${Number(match[3])}`;
+
   return text;
 }
-function showStatus(msg){status.textContent=msg;status.classList.add('show');setTimeout(()=>status.classList.remove('show'),2600)}
-document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));btn.classList.add('active');document.getElementById('panel-'+btn.dataset.tab).classList.add('active')}));
-function visibleChecked(item){return item.visible===undefined||item.visible===''||String(item.visible).toUpperCase()==='TRUE'}function loadData(){showStatus('読み込み中です');const cb='adminCallback_'+Date.now();const s=document.createElement('script');const timer=setTimeout(()=>{state=JSON.parse(JSON.stringify(fallback));renderAll();showStatus('初期データを表示しました');s.remove()},6000);window[cb]=res=>{clearTimeout(timer);const d=res&&res.data?res.data:fallback;state={news:d.news&&d.news.length?d.news:fallback.news,lesson_times:d.lesson_times&&d.lesson_times.length?d.lesson_times:fallback.lesson_times,menus:d.menus&&d.menus.length?d.menus:fallback.menus,calendar:d.calendar||[]};renderAll();showStatus('読み込みました');s.remove();delete window[cb]};s.src=API_URL+'?action=getData&callback='+cb+'&t='+Date.now();s.onerror=()=>{clearTimeout(timer);state=JSON.parse(JSON.stringify(fallback));renderAll();showStatus('読み込みに失敗しました');s.remove()};document.body.appendChild(s)}
-function renderAll(){renderNews();renderLesson();renderMenu();renderCalendar()}function field(kind,i,field,value){state[kind][i][field]=value}document.addEventListener('input',e=>{const d=e.target.dataset;if(!d.kind)return;field(d.kind,+d.i,d.field,e.target.value)});document.addEventListener('change',e=>{
-const d=e.target.dataset;
-if(!d.kind)return;
-let value=d.field==='visible'?(e.target.checked?'TRUE':'FALSE'):e.target.value;
-if(d.kind==='news'&&d.field==='date') value=toDisplayDate(value);
-field(d.kind,+d.i,d.field,value);
+
+function showStatus(message) {
+  status.textContent = message;
+  status.classList.add('show');
+  setTimeout(() => status.classList.remove('show'), 2600);
+}
+
+document.querySelectorAll('.tab').forEach(button => {
+  button.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(item => item.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(panel => panel.classList.remove('active'));
+
+    button.classList.add('active');
+    document.getElementById('panel-' + button.dataset.tab).classList.add('active');
+  });
 });
-function cardTop(title,kind,i,item){return `<div class="card"><div class="card-head"><div class="card-title">${title}</div><label class="visible-line"><input type="checkbox" data-kind="${kind}" data-i="${i}" data-field="visible" ${visibleChecked(item)?'checked':''}>表示</label></div>`}function actions(kind,i){return `<div class="row-actions"><button class="btn btn-dup" type="button" onclick="moveItem('${kind}',${i},-1)">上へ</button><button class="btn btn-delete" type="button" onclick="deleteItem('${kind}',${i})">削除</button></div></div>`}
-function renderNews(){newsList.innerHTML=state.news.map((it,i)=>cardTop('お知らせ '+(i+1),'news',i,it)+`<div class="grid"><div><label>日付</label><input type="date" data-kind="news" data-i="${i}" data-field="date" value="${esc(toDateInputValue(it.date))}"></div><div class="full"><label>内容</label><input data-kind="news" data-i="${i}" data-field="title" value="${esc(it.title)}"></div></div>`+actions('news',i)).join('')}
-function renderLesson(){lessonList.innerHTML=state.lesson_times.map((it,i)=>cardTop('レッスン時間 '+(i+1),'lesson_times',i,it)+`<div class="grid"><div><label>曜日</label><input data-kind="lesson_times" data-i="${i}" data-field="day" value="${esc(it.day)}"></div><div><label>時間</label><input data-kind="lesson_times" data-i="${i}" data-field="time" value="${esc(it.time)}"></div><div class="full"><label>補足</label><input data-kind="lesson_times" data-i="${i}" data-field="note" value="${esc(it.note)}"></div></div>`+actions('lesson_times',i)).join('')}
-function renderMenu(){menuList.innerHTML=state.menus.map((it,i)=>cardTop('料金 '+(i+1),'menus',i,it)+`<div class="grid"><div><label>種類</label><select data-kind="menus" data-i="${i}" data-field="type"><option value="normal" ${it.type!=='group'?'selected':''}>通常</option><option value="group" ${it.type==='group'?'selected':''}>グループ</option></select></div><div><label>メニュー名</label><input data-kind="menus" data-i="${i}" data-field="name" value="${esc(it.name)}"></div><div><label>料金</label><input data-kind="menus" data-i="${i}" data-field="price" value="${esc(it.price)}"></div><div><label>内容・補足</label><input data-kind="menus" data-i="${i}" data-field="note" value="${esc(it.note)}"></div></div>`+actions('menus',i)).join('')}
-function renderCalendar(){calendarList.innerHTML=state.calendar.map((it,i)=>`<div class="card"><div class="card-head"><div class="card-title">予約日 ${i+1}</div></div><div class="grid"><div><label>日付</label><input type="date" data-kind="calendar" data-i="${i}" data-field="date" value="${esc(it.date)}"></div><div><label>状態</label><select data-kind="calendar" data-i="${i}" data-field="status"><option value="空" ${it.status==='空'?'selected':''}>空</option><option value="残りわずか" ${it.status==='残りわずか'?'selected':''}>残りわずか</option><option value="満席" ${it.status==='満席'?'selected':''}>満席</option><option value="休み" ${it.status==='休み'?'selected':''}>休み</option></select></div><div class="full"><label>メモ</label><input data-kind="calendar" data-i="${i}" data-field="note" value="${esc(it.note)}"></div></div>${actions('calendar',i)}</div>`).join('')}
-function addNews(){
-const now=new Date();
-const today=`${now.getFullYear()}.${now.getMonth()+1}.${now.getDate()}`;
-state.news.unshift({id:uid('n'),date:today,title:'',visible:'TRUE'});
-renderNews();
-}function addLesson(){state.lesson_times.push({id:uid('l'),day:'',time:'',note:'',visible:'TRUE'});renderLesson()}function addMenu(){state.menus.push({id:uid('m'),name:'',price:'',note:'',type:'normal',visible:'TRUE'});renderMenu()}function addCalendar(){state.calendar.push({date:'',status:'空',note:''});renderCalendar()}function deleteItem(kind,i){if(confirm('削除しますか？')){state[kind].splice(i,1);renderAll()}}function moveItem(kind,i,dir){const ni=i+dir;if(ni<0||ni>=state[kind].length)return;const a=state[kind];[a[i],a[ni]]=[a[ni],a[i]];renderAll()}function saveAll(){payloadField.value=JSON.stringify(state);saveForm.submit();showStatus('保存しました。反映まで少し待ってください')}
+
+function visibleChecked(item) {
+  return item.visible === undefined || item.visible === '' || String(item.visible).toUpperCase() === 'TRUE';
+}
+
+function normalizeFixedRows(rows, defaults) {
+  const byId = {};
+  (rows || []).forEach(row => {
+    if (row.id) byId[row.id] = row;
+  });
+
+  return defaults.map(defaultRow => {
+    return {
+      ...defaultRow,
+      ...(byId[defaultRow.id] || {})
+    };
+  });
+}
+
+function loadData() {
+  showStatus('読み込み中です');
+
+  const callbackName = 'adminCallback_' + Date.now();
+  const script = document.createElement('script');
+
+  const timer = setTimeout(() => {
+    state = JSON.parse(JSON.stringify(fallback));
+    renderAll();
+    showStatus('初期データを表示しました');
+    script.remove();
+  }, 6000);
+
+  window[callbackName] = response => {
+    clearTimeout(timer);
+
+    const data = response && response.data ? response.data : fallback;
+
+    state = {
+      news: data.news && data.news.length ? data.news : fallback.news,
+      lesson_times: normalizeFixedRows(data.lesson_times, DEFAULT_LESSONS),
+      menus: normalizeFixedRows(data.menus, DEFAULT_MENUS),
+      calendar: data.calendar || []
+    };
+
+    renderAll();
+    showStatus('読み込みました');
+
+    script.remove();
+    delete window[callbackName];
+  };
+
+  script.src = API_URL + '?action=getData&callback=' + callbackName + '&t=' + Date.now();
+
+  script.onerror = () => {
+    clearTimeout(timer);
+    state = JSON.parse(JSON.stringify(fallback));
+    renderAll();
+    showStatus('読み込みに失敗しました');
+    script.remove();
+  };
+
+  document.body.appendChild(script);
+}
+
+function renderAll() {
+  renderNews();
+  renderLesson();
+  renderMenu();
+  renderCalendar();
+}
+
+function field(kind, index, fieldName, value) {
+  state[kind][index][fieldName] = value;
+}
+
+document.addEventListener('input', event => {
+  const data = event.target.dataset;
+  if (!data.kind) return;
+  field(data.kind, Number(data.i), data.field, event.target.value);
+});
+
+document.addEventListener('change', event => {
+  const data = event.target.dataset;
+  if (!data.kind) return;
+
+  let value = data.field === 'visible'
+    ? (event.target.checked ? 'TRUE' : 'FALSE')
+    : event.target.value;
+
+  if (data.kind === 'news' && data.field === 'date') {
+    value = toDisplayDate(value);
+  }
+
+  field(data.kind, Number(data.i), data.field, value);
+});
+
+function cardTop(title, kind, index, item, showVisible = true) {
+  return `
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">${title}</div>
+        ${showVisible ? `
+          <label class="visible-line">
+            <input type="checkbox" data-kind="${kind}" data-i="${index}" data-field="visible" ${visibleChecked(item) ? 'checked' : ''}>
+            表示
+          </label>
+        ` : ''}
+      </div>
+  `;
+}
+
+function actions(kind, index) {
+  return `
+      <div class="row-actions">
+        <button class="btn btn-dup" type="button" onclick="moveItem('${kind}',${index},-1)">上へ</button>
+        <button class="btn btn-delete" type="button" onclick="deleteItem('${kind}',${index})">削除</button>
+      </div>
+    </div>
+  `;
+}
+
+function renderNews() {
+  newsList.innerHTML = state.news.map((item, index) => {
+    return cardTop('お知らせ ' + (index + 1), 'news', index, item) + `
+      <div class="grid">
+        <div>
+          <label>日付</label>
+          <input type="date" data-kind="news" data-i="${index}" data-field="date" value="${esc(toDateInputValue(item.date))}">
+        </div>
+        <div class="full">
+          <label>内容</label>
+          <input data-kind="news" data-i="${index}" data-field="title" value="${esc(item.title)}">
+        </div>
+      </div>
+    ` + actions('news', index);
+  }).join('');
+}
+
+function renderLesson() {
+  lessonList.innerHTML = state.lesson_times.map((item, index) => {
+    return cardTop(item.day, 'lesson_times', index, item) + `
+      <div class="grid">
+        <div>
+          <label>時間</label>
+          <input data-kind="lesson_times" data-i="${index}" data-field="time" value="${esc(item.time)}">
+        </div>
+        <div class="full">
+          <label>補足</label>
+          <input data-kind="lesson_times" data-i="${index}" data-field="note" value="${esc(item.note)}">
+        </div>
+      </div>
+    </div>
+    `;
+  }).join('');
+}
+
+function renderMenu() {
+  const groupRows = state.menus.filter(item => item.type === 'group');
+  const normalRows = state.menus.filter(item => item.type !== 'group');
+
+  const groupHtml = `
+    <div class="menu-section-title">グループレッスン</div>
+    ${groupRows.map(item => {
+      const index = state.menus.indexOf(item);
+      return cardTop(item.note, 'menus', index, item) + `
+        <div class="grid">
+          <div class="full">
+            <label>${esc(item.note)}の料金</label>
+            <input data-kind="menus" data-i="${index}" data-field="price" value="${esc(item.price)}">
+          </div>
+        </div>
+      </div>
+      `;
+    }).join('')}
+  `;
+
+  const normalHtml = normalRows.map(item => {
+    const index = state.menus.indexOf(item);
+    return cardTop(item.name, 'menus', index, item) + `
+      <div class="grid">
+        <div>
+          <label>料金</label>
+          <input data-kind="menus" data-i="${index}" data-field="price" value="${esc(item.price)}">
+        </div>
+        <div class="full">
+          <label>説明</label>
+          <textarea data-kind="menus" data-i="${index}" data-field="note">${esc(item.note)}</textarea>
+        </div>
+      </div>
+    </div>
+    `;
+  }).join('');
+
+  menuList.innerHTML = groupHtml + normalHtml;
+}
+
+function renderCalendar() {
+  calendarList.innerHTML = state.calendar.map((item, index) => {
+    return `
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">予約日 ${index + 1}</div>
+        </div>
+
+        <div class="grid">
+          <div>
+            <label>日付</label>
+            <input type="date" data-kind="calendar" data-i="${index}" data-field="date" value="${esc(item.date)}">
+          </div>
+
+          <div>
+            <label>状態</label>
+            <select data-kind="calendar" data-i="${index}" data-field="status">
+              <option value="空" ${item.status === '空' ? 'selected' : ''}>空</option>
+              <option value="残りわずか" ${item.status === '残りわずか' ? 'selected' : ''}>残りわずか</option>
+              <option value="満席" ${item.status === '満席' ? 'selected' : ''}>満席</option>
+              <option value="休み" ${item.status === '休み' ? 'selected' : ''}>休み</option>
+            </select>
+          </div>
+
+          <div class="full">
+            <label>メモ</label>
+            <input data-kind="calendar" data-i="${index}" data-field="note" value="${esc(item.note)}">
+          </div>
+        </div>
+    ` + actions('calendar', index);
+  }).join('');
+}
+
+function addNews() {
+  const now = new Date();
+  const today = `${now.getFullYear()}.${now.getMonth() + 1}.${now.getDate()}`;
+
+  state.news.unshift({
+    id: uid('n'),
+    date: today,
+    title: '',
+    visible: 'TRUE'
+  });
+
+  renderNews();
+}
+
+function addCalendar() {
+  state.calendar.push({
+    date: '',
+    status: '空',
+    note: ''
+  });
+
+  renderCalendar();
+}
+
+function deleteItem(kind, index) {
+  if (confirm('削除しますか？')) {
+    state[kind].splice(index, 1);
+    renderAll();
+  }
+}
+
+function moveItem(kind, index, direction) {
+  const nextIndex = index + direction;
+  if (nextIndex < 0 || nextIndex >= state[kind].length) return;
+
+  const items = state[kind];
+  [items[index], items[nextIndex]] = [items[nextIndex], items[index]];
+
+  renderAll();
+}
+
+function saveAll() {
+  payloadField.value = JSON.stringify(state);
+  saveForm.submit();
+  showStatus('保存しました。反映まで少し待ってください');
+}
+
 loadData();
-</script></body></html>
+</script>
+</body>
+</html>
