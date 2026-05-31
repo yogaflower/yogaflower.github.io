@@ -133,19 +133,12 @@
       object-position:center center;
       opacity:0;
       transform:scale(1.02);
-      animation:heroFade 18s infinite;
+      transition:opacity 1.2s ease, transform 7s ease;
     }
 
-    .hero-slide:nth-child(1){
-      animation-delay:0s;
-    }
-
-    .hero-slide:nth-child(2){
-      animation-delay:6s;
-    }
-
-    .hero-slide:nth-child(3){
-      animation-delay:12s;
+    .hero-slide.is-active{
+      opacity:1;
+      transform:scale(1.06);
     }
 
     .hero-overlay{
@@ -154,27 +147,6 @@
       z-index:1;
       background:linear-gradient(90deg, rgba(255,253,248,.86) 0%, rgba(255,253,248,.54) 42%, rgba(255,253,248,.06) 72%);
       pointer-events:none;
-    }
-
-    @keyframes heroFade{
-      0%{
-        opacity:0;
-        transform:scale(1.02);
-      }
-      8%{
-        opacity:1;
-      }
-      33%{
-        opacity:1;
-        transform:scale(1.06);
-      }
-      41%{
-        opacity:0;
-      }
-      100%{
-        opacity:0;
-        transform:scale(1.06);
-      }
     }
 
     .hero::after{
@@ -523,16 +495,39 @@
       font-size:13px;
     }
 
+    .page-top{
+      position:fixed;
+      right:18px;
+      bottom:18px;
+      z-index:60;
+      width:48px;
+      height:48px;
+      border-radius:50%;
+      border:1px solid rgba(125,155,132,.35);
+      background:rgba(125,155,132,.88);
+      color:#fffdf8;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-decoration:none;
+      font-size:20px;
+      line-height:1;
+      box-shadow:0 12px 28px rgba(31,21,12,.18);
+      opacity:0;
+      pointer-events:none;
+      transform:translateY(8px);
+      transition:.2s ease;
+    }
+
+    .page-top.show{
+      opacity:1;
+      pointer-events:auto;
+      transform:translateY(0);
+    }
 
     @media (prefers-reduced-motion: reduce){
-      .hero-slide{
-        animation:none;
-      }
-
-      .hero-slide:first-child{
-        opacity:1;
-        transform:none;
-      }
+      .hero-slide{ transition:none; }
+      .hero-slide:first-child{ opacity:1; transform:none; }
     }
 
     /* スマホ */
@@ -626,8 +621,8 @@
 
 <body>
   <!--
-    更新する場所は基本ここだけです。
-    お知らせ・料金・住所・Instagram・カレンダーURLを変更できます。
+    表示データは admin.html から更新します。
+    読み込みに失敗した時だけ、この中の初期データが表示されます。
   -->
   <script>
     const siteData = {
@@ -675,7 +670,8 @@
         parking: '駐車場あり／詳しい場所はご予約時にご案内します。'
       },
       lineUrl: 'https://lin.ee/7df2abF',
-      calendarUrl: 'https://sanshi6453.github.io/memo-app/yoga-calendar.html'
+      calendarUrl: 'calendar.html',
+      apiUrl: 'https://script.google.com/macros/s/AKfycbzlyU2DNJtiQNL5gQ9Lex55qsXyxQ4mI9bghM3bhjcQX5adCDmAcahI_v5RzBuYDi4T/exec'
     };
   </script>
 
@@ -698,7 +694,7 @@
   <main id="top">
     <section class="hero">
       <div class="hero-slideshow" aria-hidden="true">
-        <img class="hero-slide" src="images/yoga-main.jpg" alt="">
+        <img class="hero-slide is-active" src="images/yoga-main.jpg" alt="">
         <img class="hero-slide" src="images/yoga-main-02.jpg" alt="">
         <img class="hero-slide" src="images/yoga-main-03.jpg" alt="">
       </div>
@@ -824,6 +820,8 @@
     </section>
   </main>
 
+  <a class="page-top" id="pageTop" href="#top" aria-label="ページTOPへ戻る">▲</a>
+
   <footer>
     <div class="container">
       © <span id="year"></span> Yoga Flower
@@ -832,7 +830,7 @@
 
   <script>
     function escapeHtml(text){
-      return String(text)
+      return String(text ?? '')
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
@@ -840,50 +838,94 @@
         .replace(/'/g, '&#039;');
     }
 
-    document.getElementById('newsList').innerHTML = siteData.news.map(item => `
-      <article class="news-item glass">
-        <div class="date">${escapeHtml(item.date)}</div>
-        <div>${escapeHtml(item.title)}</div>
-      </article>
-    `).join('');
+    function isVisible(item){
+      return item.visible === undefined || item.visible === '' || String(item.visible).toUpperCase() === 'TRUE';
+    }
 
-    document.getElementById('menuCards').innerHTML = siteData.menus.map(item => `
-      <article class="menu-card glass">
-        <h3>${escapeHtml(item.name)}</h3>
-        ${item.price ? `<div class="price">${escapeHtml(item.price)}</div>` : ''}
-        ${item.groupPrices ? `
-          <div class="group-price-grid">
-            ${item.groupPrices.map(priceItem => `
-              <div class="group-price-item">
-                <div class="group-price-label">${escapeHtml(priceItem.label)}</div>
-                <div class="group-price-value">${escapeHtml(priceItem.price)}</div>
-              </div>
-            `).join('')}
-          </div>
-        ` : ''}
-        ${item.note ? `<p class="small">${escapeHtml(item.note)}</p>` : ''}
-      </article>
-    `).join('');
+    function buildMenus(rows){
+      const hasType = rows.some(row => row.type);
+      if (!hasType) return rows;
+      const groupRows = rows.filter(row => row.type === 'group');
+      const normalRows = rows.filter(row => row.type !== 'group');
+      const menus = [];
+      if (groupRows.length){
+        menus.push({ name: 'グループレッスン', price: '', note: '', groupPrices: groupRows.map(row => ({ label: row.note || '', price: row.price || '' })) });
+      }
+      normalRows.forEach(row => menus.push({ name: row.name || '', price: row.price || '', note: row.note || '' }));
+      return menus;
+    }
 
-    document.getElementById('lessonTimes').innerHTML = siteData.lessonTimes.map(item => `
-      <article class="lesson-time-item">
-        <div class="lesson-day">${escapeHtml(item.day)}</div>
-        <div class="lesson-hour">${escapeHtml(item.time)}</div>
-        ${item.note ? `<p class="small">${escapeHtml(item.note)}</p>` : ''}
-      </article>
-    `).join('');
+    function normalizeData(raw){
+      const data = raw || {};
+      const news = Array.isArray(data.news) && data.news.length ? data.news : siteData.news;
+      const lessonTimes = Array.isArray(data.lesson_times) && data.lesson_times.length ? data.lesson_times : siteData.lessonTimes;
+      const menuRows = Array.isArray(data.menus) && data.menus.length ? data.menus : siteData.menus;
+      return { news: news.filter(isVisible), lessonTimes: lessonTimes.filter(isVisible), menus: buildMenus(menuRows.filter(isVisible)) };
+    }
+
+    function renderSite(rawData){
+      const data = normalizeData(rawData);
+      document.getElementById('newsList').innerHTML = data.news.map(item => `
+        <article class="news-item glass"><div class="date">${escapeHtml(item.date)}</div><div>${escapeHtml(item.title)}</div></article>
+      `).join('');
+      document.getElementById('menuCards').innerHTML = data.menus.map(item => `
+        <article class="menu-card glass">
+          <h3>${escapeHtml(item.name)}</h3>
+          ${item.price ? `<div class="price">${escapeHtml(item.price)}</div>` : ''}
+          ${item.groupPrices ? `<div class="group-price-grid">${item.groupPrices.map(priceItem => `<div class="group-price-item"><div class="group-price-label">${escapeHtml(priceItem.label)}</div><div class="group-price-value">${escapeHtml(priceItem.price)}</div></div>`).join('')}</div>` : ''}
+          ${item.note ? `<p class="small">${escapeHtml(item.note)}</p>` : ''}
+        </article>
+      `).join('');
+      document.getElementById('lessonTimes').innerHTML = data.lessonTimes.map(item => `
+        <article class="lesson-time-item"><div class="lesson-day">${escapeHtml(item.day)}</div><div class="lesson-hour">${escapeHtml(item.time)}</div>${item.note ? `<p class="small">${escapeHtml(item.note)}</p>` : ''}</article>
+      `).join('');
+    }
+
+    function loadRemoteData(){
+      const callbackName = 'yogaFlowerCallback_' + Date.now();
+      const script = document.createElement('script');
+      const timeout = setTimeout(() => { renderSite(null); script.remove(); }, 5000);
+      window[callbackName] = function(response){
+        clearTimeout(timeout);
+        renderSite(response && response.data ? response.data : null);
+        script.remove();
+        delete window[callbackName];
+      };
+      script.src = siteData.apiUrl + '?action=getData&callback=' + callbackName + '&t=' + Date.now();
+      script.onerror = function(){ clearTimeout(timeout); renderSite(null); script.remove(); delete window[callbackName]; };
+      document.body.appendChild(script);
+    }
+
+    function startHeroSlideshow(){
+      const slides = Array.from(document.querySelectorAll('.hero-slide'));
+      if (slides.length <= 1) return;
+      let current = 0;
+      setInterval(() => {
+        slides[current].classList.remove('is-active');
+        current = (current + 1) % slides.length;
+        slides[current].classList.add('is-active');
+      }, 6000);
+    }
+
+    function setupPageTop(){
+      const pageTop = document.getElementById('pageTop');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 420) pageTop.classList.add('show');
+        else pageTop.classList.remove('show');
+      });
+    }
 
     document.getElementById('accessName').textContent = siteData.access.name;
     document.getElementById('accessAddress').textContent = siteData.access.address;
     document.getElementById('accessParking').textContent = siteData.access.parking;
-
-    document.querySelectorAll('.js-line').forEach(link => {
-      link.href = siteData.lineUrl;
-    });
-
+    document.querySelectorAll('.js-line').forEach(link => { link.href = siteData.lineUrl; });
     document.getElementById('calendarLink').href = siteData.calendarUrl;
     document.getElementById('calendarFrame').src = siteData.calendarUrl;
     document.getElementById('year').textContent = new Date().getFullYear();
+    renderSite(null);
+    loadRemoteData();
+    startHeroSlideshow();
+    setupPageTop();
   </script>
 </body>
 </html>
