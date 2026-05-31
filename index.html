@@ -1,395 +1,439 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Yoga Flower｜古民家ヨガ教室</title>
-  <meta name="description" content="古民家の一室で行う、少人数制のやさしいヨガ教室です。" />
+  <meta name="description" content="古民家の一室で行う、少人数制のやさしいヨガ教室 Yoga Flower。">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;600;700&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
 
   <style>
-    :root {
-      --ink: #1f150c;
-      --sub: #6f6257;
-      --bg: #fbf7ef;
-      --paper: #fffdf8;
-      --line: #e6dccd;
-      --accent: #b88b6b;
-      --accent-soft: #ead8c8;
-      --green: #7d8b6f;
-      --shadow: 0 18px 45px rgba(31, 21, 12, 0.08);
-      --radius: 24px;
+    :root{
+      --ink:#1f150c;
+      --sub:#6f6257;
+      --paper:rgba(255,253,248,.86);
+      --paper-solid:#fffdf8;
+      --line:rgba(31,21,12,.14);
+      --accent:#b88b6b;
+      --soft:#f3e9dc;
+      --shadow:0 18px 50px rgba(31,21,12,.12);
+      --radius:26px;
     }
 
-    * { box-sizing: border-box; }
+    *{ box-sizing:border-box; }
 
-    body {
-      margin: 0;
-      color: var(--ink);
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      margin:0;
+      color:var(--ink);
+      font-family:'Zen Maru Gothic', sans-serif;
+      line-height:1.8;
+      background:url('images/bg.png') center top / cover fixed;
+    }
+
+    body::before{
+      content:'';
+      position:fixed;
+      inset:0;
+      background:rgba(255,253,248,.35);
+      pointer-events:none;
+      z-index:-1;
+    }
+
+    a{ color:inherit; }
+    img{ max-width:100%; display:block; }
+
+    .container{
+      width:min(1120px, calc(100% - 32px));
+      margin:0 auto;
+    }
+
+    header{
+      position:fixed;
+      top:0;
+      left:0;
+      right:0;
+      z-index:50;
+      background:rgba(255,253,248,.78);
+      backdrop-filter:blur(16px);
+      border-bottom:1px solid rgba(31,21,12,.08);
+    }
+
+    .header-inner{
+      height:74px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+    }
+
+    .header-logo{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      text-decoration:none;
+    }
+
+    .header-logo img{
+      width:178px;
+      height:auto;
+    }
+
+    nav{
+      display:flex;
+      align-items:center;
+      gap:22px;
+      font-size:14px;
+      color:var(--sub);
+      font-weight:700;
+    }
+
+    nav a{
+      text-decoration:none;
+      white-space:nowrap;
+    }
+
+    .insta-mini{
+      padding:9px 16px;
+      border-radius:999px;
+      background:var(--ink);
+      color:#fffdf8;
+      box-shadow:0 10px 20px rgba(31,21,12,.16);
+    }
+
+    .hero{
+      position:relative;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      overflow:hidden;
       background:
-        radial-gradient(circle at top left, rgba(234,216,200,.7), transparent 34%),
-        linear-gradient(180deg, #fffdf8 0%, var(--bg) 52%, #f5eee3 100%);
-      font-family: 'Zen Maru Gothic', sans-serif;
-      line-height: 1.8;
+        linear-gradient(90deg, rgba(255,253,248,.86) 0%, rgba(255,253,248,.54) 42%, rgba(255,253,248,.06) 72%),
+        url('images/yoga-main.jpg') center center / cover no-repeat;
     }
 
-    a { color: inherit; }
-
-    img { max-width: 100%; display: block; }
-
-    .container {
-      width: min(1120px, calc(100% - 32px));
-      margin: 0 auto;
+    .hero::after{
+      content:'';
+      position:absolute;
+      inset:auto 0 0 0;
+      height:160px;
+      background:linear-gradient(0deg, rgba(251,247,239,1), rgba(251,247,239,0));
+      pointer-events:none;
     }
 
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      background: rgba(255, 253, 248, 0.84);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(230, 220, 205, .7);
+    .hero-content{
+      position:relative;
+      z-index:2;
+      width:min(560px, 100%);
+      padding-top:96px;
     }
 
-    .header-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 14px 0;
-      gap: 18px;
+    .hero-logo{
+      width:340px;
+      max-width:86%;
+      margin-bottom:32px;
     }
 
-    .logo {
-      display: flex;
-      flex-direction: column;
-      line-height: 1.25;
-      text-decoration: none;
-      letter-spacing: .04em;
+    .eyebrow{
+      display:inline-block;
+      padding:6px 15px;
+      margin-bottom:18px;
+      border:1px solid rgba(31,21,12,.15);
+      border-radius:999px;
+      background:rgba(255,253,248,.62);
+      color:var(--sub);
+      font-size:13px;
+      letter-spacing:.08em;
     }
 
-    .logo-main {
-      font-family: 'Noto Serif JP', serif;
-      font-size: 22px;
-      font-weight: 700;
+    h1,h2,h3{
+      font-family:'Noto Serif JP', serif;
+      line-height:1.45;
+      margin:0;
+      letter-spacing:.05em;
+      font-weight:600;
     }
 
-    .logo-sub {
-      font-size: 11px;
-      color: var(--sub);
-      letter-spacing: .12em;
-      text-transform: uppercase;
+    h1{
+      font-size:clamp(34px, 5vw, 58px);
+      margin-bottom:22px;
     }
 
-    nav {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      font-size: 14px;
-      color: var(--sub);
+    .lead{
+      margin:0;
+      max-width:520px;
+      color:var(--sub);
+      font-size:17px;
     }
 
-    nav a {
-      text-decoration: none;
-      white-space: nowrap;
+    .hero-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top:32px;
     }
 
-    .insta-btn,
-    .primary-btn,
-    .ghost-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 46px;
-      padding: 0 20px;
-      border-radius: 999px;
-      text-decoration: none;
-      font-weight: 700;
-      letter-spacing: .04em;
-      transition: .2s ease;
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:48px;
+      padding:0 22px;
+      border-radius:999px;
+      text-decoration:none;
+      font-weight:700;
+      letter-spacing:.04em;
+      transition:.2s ease;
     }
 
-    .insta-btn,
-    .primary-btn {
-      background: var(--ink);
-      color: #fffdf8;
-      box-shadow: 0 12px 24px rgba(31,21,12,.16);
+    .btn:hover{
+      transform:translateY(-2px);
     }
 
-    .ghost-btn {
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.5);
-      color: var(--ink);
+    .btn-primary{
+      background:var(--ink);
+      color:#fffdf8;
+      box-shadow:0 14px 26px rgba(31,21,12,.18);
     }
 
-    .insta-btn:hover,
-    .primary-btn:hover,
-    .ghost-btn:hover {
-      transform: translateY(-2px);
+    .btn-ghost{
+      background:rgba(255,253,248,.68);
+      border:1px solid rgba(31,21,12,.14);
+      color:var(--ink);
     }
 
-    .hero {
-      padding: 72px 0 56px;
+    section{
+      padding:78px 0;
     }
 
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.05fr .95fr;
-      gap: 44px;
-      align-items: center;
+    .section-head{
+      margin-bottom:28px;
+      text-align:center;
     }
 
-    .eyebrow {
-      display: inline-block;
-      margin-bottom: 16px;
-      padding: 6px 14px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      color: var(--sub);
-      background: rgba(255,253,248,.72);
-      font-size: 13px;
+    .section-title{
+      font-size:clamp(28px, 4vw, 42px);
     }
 
-    h1, h2, h3 {
-      font-family: 'Noto Serif JP', serif;
-      line-height: 1.45;
-      margin: 0;
-      letter-spacing: .04em;
+    .section-copy{
+      margin:10px auto 0;
+      color:var(--sub);
+      max-width:660px;
     }
 
-    h1 {
-      font-size: clamp(34px, 5vw, 58px);
-      margin-bottom: 22px;
+    .glass{
+      background:var(--paper);
+      border:1px solid rgba(31,21,12,.11);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(10px);
     }
 
-    .lead {
-      font-size: 17px;
-      color: var(--sub);
-      margin: 0 0 28px;
-      max-width: 620px;
+    .news-list{
+      display:grid;
+      gap:12px;
+      max-width:850px;
+      margin:0 auto;
     }
 
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 28px;
+    .news-item{
+      display:grid;
+      grid-template-columns:125px 1fr;
+      gap:18px;
+      align-items:start;
+      padding:18px 22px;
     }
 
-    .hero-card {
-      position: relative;
-      min-height: 430px;
-      border-radius: 34px;
-      background:
-        linear-gradient(160deg, rgba(255,253,248,.7), rgba(234,216,200,.55)),
-        url('images/yoga-main.jpg');
-      background-size: cover;
-      background-position: center;
-      box-shadow: var(--shadow);
-      overflow: hidden;
+    .date{
+      color:var(--accent);
+      font-weight:700;
+      font-size:14px;
+      letter-spacing:.04em;
     }
 
-    .hero-card::after {
-      content: '';
-      position: absolute;
-      inset: 18px;
-      border: 1px solid rgba(255,253,248,.75);
-      border-radius: 26px;
-      pointer-events: none;
+    .menu-grid{
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:18px;
     }
 
-    .hero-note {
-      position: absolute;
-      left: 26px;
-      bottom: 26px;
-      right: 26px;
-      padding: 18px;
-      border-radius: 20px;
-      background: rgba(255,253,248,.86);
-      backdrop-filter: blur(10px);
-      color: var(--sub);
-      font-size: 14px;
+    .menu-card{
+      padding:26px;
     }
 
-    section {
-      padding: 64px 0;
+    .price{
+      margin:12px 0 4px;
+      font-family:'Noto Serif JP', serif;
+      font-size:30px;
+      font-weight:700;
+      color:var(--ink);
     }
 
-    .section-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: end;
-      gap: 24px;
-      margin-bottom: 26px;
+    .small{
+      color:var(--sub);
+      font-size:14px;
+      margin:0;
     }
 
-    .section-title {
-      font-size: clamp(26px, 3vw, 38px);
+    .calendar-wrap{
+      display:grid;
+      grid-template-columns:1fr 340px;
+      gap:22px;
+      align-items:stretch;
     }
 
-    .section-copy {
-      color: var(--sub);
-      margin: 8px 0 0;
+    .calendar-frame{
+      min-height:520px;
+      overflow:hidden;
     }
 
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
+    .calendar-frame iframe{
+      width:100%;
+      height:560px;
+      border:0;
+      display:block;
+      background:#fff;
     }
 
-    .card {
-      background: rgba(255,253,248,.82);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 24px;
-      box-shadow: var(--shadow);
+    .calendar-note{
+      padding:28px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      gap:16px;
     }
 
-    .news-list {
-      display: grid;
-      gap: 12px;
+    .access-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:22px;
     }
 
-    .news-item {
-      display: grid;
-      grid-template-columns: 120px 1fr;
-      gap: 18px;
-      align-items: start;
-      padding: 18px;
-      border-radius: 18px;
-      background: var(--paper);
-      border: 1px solid var(--line);
+    .access-card{
+      padding:30px;
     }
 
-    .date {
-      color: var(--accent);
-      font-weight: 700;
-      font-size: 14px;
+    .map-box{
+      min-height:330px;
+      display:grid;
+      place-items:center;
+      text-align:center;
+      padding:30px;
+      color:var(--sub);
     }
 
-    .price {
-      font-family: 'Noto Serif JP', serif;
-      font-size: 28px;
-      font-weight: 700;
-      margin: 10px 0 4px;
+    .contact{
+      padding-bottom:90px;
     }
 
-    .small {
-      color: var(--sub);
-      font-size: 14px;
+    .contact-box{
+      text-align:center;
+      padding:58px 24px;
+      background:rgba(31,21,12,.92);
+      color:#fffdf8;
+      border-radius:34px;
+      box-shadow:var(--shadow);
     }
 
-    .calendar-box {
-      display: grid;
-      grid-template-columns: 1fr 360px;
-      gap: 22px;
-      align-items: stretch;
+    .contact-box p{
+      margin:14px auto 26px;
+      color:rgba(255,253,248,.78);
+      max-width:640px;
     }
 
-    .calendar-preview {
-      min-height: 420px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: var(--paper);
-      box-shadow: var(--shadow);
-      overflow: hidden;
+    .contact-box .btn-primary{
+      background:#fffdf8;
+      color:var(--ink);
     }
 
-    .calendar-preview iframe {
-      width: 100%;
-      height: 520px;
-      border: 0;
-      display: block;
-      background: #fff;
+    footer{
+      padding:36px 0 48px;
+      color:var(--sub);
+      text-align:center;
+      font-size:13px;
     }
 
-    .calendar-side {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 16px;
-      background: rgba(125,139,111,.12);
-      border: 1px solid rgba(125,139,111,.24);
-      border-radius: var(--radius);
-      padding: 26px;
-    }
-
-    .access-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 22px;
-    }
-
-    .map-placeholder {
-      min-height: 320px;
-      border-radius: var(--radius);
-      background: linear-gradient(135deg, #e9dfd0, #fffaf1);
-      border: 1px solid var(--line);
-      display: grid;
-      place-items: center;
-      color: var(--sub);
-      text-align: center;
-      padding: 24px;
-    }
-
-    .contact-band {
-      text-align: center;
-      padding: 54px 24px;
-      border-radius: 34px;
-      background: var(--ink);
-      color: #fffdf8;
-      box-shadow: var(--shadow);
-    }
-
-    .contact-band p {
-      color: rgba(255,253,248,.78);
-      margin: 14px auto 24px;
-      max-width: 620px;
-    }
-
-    footer {
-      padding: 36px 0 48px;
-      color: var(--sub);
-      font-size: 13px;
-      text-align: center;
-    }
-
-    .edit-note {
-      margin-top: 18px;
-      padding: 14px 16px;
-      border-radius: 16px;
-      background: rgba(184,139,107,.12);
-      color: var(--sub);
-      font-size: 13px;
-    }
-
-    @media (max-width: 860px) {
-      nav { display: none; }
-      .hero { padding-top: 48px; }
-      .hero-grid,
-      .calendar-box,
-      .access-grid {
-        grid-template-columns: 1fr;
+    /* スマホ */
+    @media (max-width:860px){
+      header{
+        position:absolute;
+        background:rgba(255,253,248,.72);
       }
-      .hero-card { min-height: 340px; }
-      .cards { grid-template-columns: 1fr; }
-      .section-head { display: block; }
-      .news-item { grid-template-columns: 1fr; gap: 4px; }
-      .calendar-preview iframe { height: 460px; }
+
+      .header-inner{
+        height:68px;
+      }
+
+      .header-logo img{
+        width:150px;
+      }
+
+      nav{
+        display:none;
+      }
+
+      .hero{
+        min-height:92vh;
+        align-items:end;
+        padding-bottom:64px;
+        background:
+          linear-gradient(0deg, rgba(255,253,248,.92) 0%, rgba(255,253,248,.72) 42%, rgba(255,253,248,.10) 78%),
+          url('images/yoga-main.jpg') center top / cover no-repeat;
+      }
+
+      .hero-content{
+        padding-top:110px;
+      }
+
+      .hero-logo{
+        width:270px;
+        margin-bottom:24px;
+      }
+
+      h1{
+        font-size:34px;
+      }
+
+      .lead{
+        font-size:15px;
+      }
+
+      section{
+        padding:56px 0;
+      }
+
+      .news-item{
+        grid-template-columns:1fr;
+        gap:2px;
+      }
+
+      .menu-grid,
+      .calendar-wrap,
+      .access-grid{
+        grid-template-columns:1fr;
+      }
+
+      .calendar-frame{
+        min-height:440px;
+      }
+
+      .calendar-frame iframe{
+        height:470px;
+      }
     }
   </style>
 </head>
-<body>
 
+<body>
   <!--
-    =========================================================
-    更新しやすくするためのデータ欄
-    知人が後から触る場合は、まずこの辺だけ変更すればOKです。
-    本格運用では Googleスプレッドシート連携にするとさらに簡単です。
-    =========================================================
+    更新する場所は基本ここだけです。
+    お知らせ・料金・住所・Instagram・カレンダーURLを変更できます。
   -->
   <script>
     const siteData = {
@@ -415,38 +459,38 @@
 
   <header>
     <div class="container header-inner">
-      <a href="#top" class="logo">
-        <span class="logo-main">Yoga Flower</span>
-        <span class="logo-sub">Kominka yoga studio</span>
+      <a href="#top" class="header-logo" aria-label="Yoga Flower トップへ">
+        <img src="images/logo.png" alt="Yoga Flower">
       </a>
+
       <nav>
         <a href="#news">お知らせ</a>
         <a href="#menu">メニュー</a>
         <a href="#calendar">予約状況</a>
         <a href="#access">アクセス</a>
-        <a class="insta-btn" id="headerInstagram" href="#" target="_blank" rel="noopener">Instagram</a>
+        <a class="insta-mini js-instagram" href="#" target="_blank" rel="noopener">Instagram</a>
       </nav>
     </div>
   </header>
 
   <main id="top">
     <section class="hero">
-      <div class="container hero-grid">
-        <div>
+      <div class="container">
+        <div class="hero-content">
+          <img class="hero-logo" src="images/logo.png" alt="Yoga Flower">
+
           <span class="eyebrow">古民家の一室で、ゆったり整えるヨガ時間</span>
+
           <h1>深呼吸したくなる、<br>小さなヨガ教室。</h1>
+
           <p class="lead">
-            慌ただしい毎日の中で、少しだけ自分に戻る時間を。少人数制で、初めての方にもやさしいレッスンを行っています。
+            慌ただしい毎日の中で、少しだけ自分に戻る時間を。
+            少人数制で、初めての方にもやさしいレッスンを行っています。
           </p>
+
           <div class="hero-actions">
-            <a class="primary-btn" href="#calendar">予約状況を見る</a>
-            <a class="ghost-btn" href="#menu">料金を見る</a>
-          </div>
-        </div>
-        <div class="hero-card" aria-label="ヨガ教室のイメージ写真">
-          <div class="hero-note">
-            ※ここに古民家・ヨガマット・お花などの写真を入れると、一気に雰囲気が出ます。<br>
-            画像ファイル名：images/yoga-main.jpg
+            <a class="btn btn-primary" href="#calendar">予約状況を見る</a>
+            <a class="btn btn-ghost" href="#menu">料金を見る</a>
           </div>
         </div>
       </div>
@@ -455,11 +499,10 @@
     <section id="news">
       <div class="container">
         <div class="section-head">
-          <div>
-            <h2 class="section-title">お知らせ</h2>
-            <p class="section-copy">レッスン予定や大切なお知らせを掲載します。</p>
-          </div>
+          <h2 class="section-title">お知らせ</h2>
+          <p class="section-copy">レッスン予定や大切なお知らせを掲載します。</p>
         </div>
+
         <div class="news-list" id="newsList"></div>
       </div>
     </section>
@@ -467,37 +510,34 @@
     <section id="menu">
       <div class="container">
         <div class="section-head">
-          <div>
-            <h2 class="section-title">メニュー・料金</h2>
-            <p class="section-copy">料金は仮入力です。後から変更できます。</p>
-          </div>
+          <h2 class="section-title">メニュー・料金</h2>
+          <p class="section-copy">料金は仮入力です。後から変更できます。</p>
         </div>
-        <div class="cards" id="menuCards"></div>
-        <div class="edit-note">
-          将来的には Googleスプレッドシートや簡単な管理画面と連携して、知人がスマホから料金表を変更できる仕様にできます。
-        </div>
+
+        <div class="menu-grid" id="menuCards"></div>
       </div>
     </section>
 
     <section id="calendar">
       <div class="container">
         <div class="section-head">
-          <div>
-            <h2 class="section-title">予約状況カレンダー</h2>
-            <p class="section-copy">空き状況を確認して、Instagramからお問い合わせください。</p>
-          </div>
+          <h2 class="section-title">予約状況カレンダー</h2>
+          <p class="section-copy">空き状況を確認して、Instagramからお問い合わせください。</p>
         </div>
 
-        <div class="calendar-box">
-          <div class="calendar-preview">
+        <div class="calendar-wrap">
+          <div class="calendar-frame glass">
             <iframe id="calendarFrame" title="予約状況カレンダー"></iframe>
           </div>
-          <div class="calendar-side">
+
+          <div class="calendar-note glass">
             <h3>ご予約について</h3>
             <p class="small">
-              現在は既存の予約カレンダーを表示しています。後から「表示専用デザイン」に整える、または知人がスマホで更新できる管理ページを別で作る形がおすすめです。
+              現在は既存の予約カレンダーを表示しています。
+              後から表示専用デザインに整える、またはスマホで更新できる管理ページを作ることもできます。
             </p>
-            <a class="primary-btn" id="calendarLink" href="#" target="_blank" rel="noopener">カレンダーを開く</a>
+            <a class="btn btn-primary" id="calendarLink" href="#" target="_blank" rel="noopener">カレンダーを開く</a>
+            <a class="btn btn-ghost js-instagram" href="#" target="_blank" rel="noopener">Instagramで問い合わせる</a>
           </div>
         </div>
       </div>
@@ -506,35 +546,35 @@
     <section id="access">
       <div class="container">
         <div class="section-head">
-          <div>
-            <h2 class="section-title">アクセス</h2>
-            <p class="section-copy">詳しい住所や駐車場情報を掲載します。</p>
-          </div>
+          <h2 class="section-title">アクセス</h2>
+          <p class="section-copy">詳しい住所や駐車場情報を掲載します。</p>
         </div>
+
         <div class="access-grid">
-          <div class="card">
+          <div class="access-card glass">
             <h3 id="accessName">Yoga Flower</h3>
             <p id="accessAddress"></p>
             <p id="accessParking" class="small"></p>
           </div>
-          <div class="map-placeholder">
+
+          <div class="map-box glass">
             <div>
               Googleマップ埋め込み予定<br>
-              <span class="small">※住所確定後に地図を入れます</span>
+              <span class="small">住所確定後に地図を入れます</span>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="contact">
+    <section class="contact" id="contact">
       <div class="container">
-        <div class="contact-band">
+        <div class="contact-box">
           <h2 class="section-title">お問い合わせ・ご予約</h2>
           <p>
             レッスンのご予約やご質問は、InstagramのDMよりお願いいたします。
           </p>
-          <a class="primary-btn" id="mainInstagram" href="#" target="_blank" rel="noopener">Instagramで問い合わせる</a>
+          <a class="btn btn-primary js-instagram" href="#" target="_blank" rel="noopener">Instagramで問い合わせる</a>
         </div>
       </div>
     </section>
@@ -547,7 +587,7 @@
   </footer>
 
   <script>
-    function escapeHtml(text) {
+    function escapeHtml(text){
       return String(text)
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
@@ -557,14 +597,14 @@
     }
 
     document.getElementById('newsList').innerHTML = siteData.news.map(item => `
-      <article class="news-item">
+      <article class="news-item glass">
         <div class="date">${escapeHtml(item.date)}</div>
         <div>${escapeHtml(item.title)}</div>
       </article>
     `).join('');
 
     document.getElementById('menuCards').innerHTML = siteData.menus.map(item => `
-      <article class="card">
+      <article class="menu-card glass">
         <h3>${escapeHtml(item.name)}</h3>
         <div class="price">${escapeHtml(item.price)}</div>
         <p class="small">${escapeHtml(item.note)}</p>
@@ -575,8 +615,10 @@
     document.getElementById('accessAddress').textContent = siteData.access.address;
     document.getElementById('accessParking').textContent = siteData.access.parking;
 
-    document.getElementById('headerInstagram').href = siteData.instagram;
-    document.getElementById('mainInstagram').href = siteData.instagram;
+    document.querySelectorAll('.js-instagram').forEach(link => {
+      link.href = siteData.instagram;
+    });
+
     document.getElementById('calendarLink').href = siteData.calendarUrl;
     document.getElementById('calendarFrame').src = siteData.calendarUrl;
     document.getElementById('year').textContent = new Date().getFullYear();
