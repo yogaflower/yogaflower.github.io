@@ -8,25 +8,19 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;700&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
-
 <style>
-:root {
+:root{
   --ink:#1f150c;
   --sub:#6f6257;
   --paper:rgba(255,253,248,.92);
-  --paper-solid:#fffdf8;
   --line:rgba(31,21,12,.14);
   --accent:#b88b6b;
   --red:#b75c5c;
   --shadow:0 14px 34px rgba(31,21,12,.10);
   --radius:22px;
 }
-
-* {
-  box-sizing:border-box;
-}
-
-body {
+*{box-sizing:border-box}
+body{
   margin:0;
   color:var(--ink);
   font-family:'Zen Maru Gothic',sans-serif;
@@ -34,16 +28,14 @@ body {
   line-height:1.7;
   padding-bottom:90px;
 }
-
-body::before {
+body::before{
   content:'';
   position:fixed;
   inset:0;
   background:rgba(255,253,248,.42);
   z-index:-1;
 }
-
-header {
+header{
   position:sticky;
   top:0;
   z-index:10;
@@ -51,8 +43,7 @@ header {
   backdrop-filter:blur(14px);
   border-bottom:1px solid var(--line);
 }
-
-.header-inner {
+.header-inner{
   width:min(960px,calc(100% - 24px));
   margin:0 auto;
   min-height:66px;
@@ -61,12 +52,8 @@ header {
   justify-content:space-between;
   gap:12px;
 }
-
-.logo {
-  width:150px;
-}
-
-.save-top {
+.logo{width:150px}
+.save-top{
   border:0;
   border-radius:999px;
   background:var(--ink);
@@ -77,38 +64,25 @@ header {
   font-family:inherit;
   font-size:15px;
 }
-
-main {
+main{
   width:min(960px,calc(100% - 24px));
   margin:24px auto 0;
 }
-
-h1,h2,h3 {
+h1,h2,h3{
   font-family:'Noto Serif JP',serif;
   line-height:1.45;
   letter-spacing:.04em;
   margin:0;
 }
-
-h1 {
-  font-size:26px;
-  margin-bottom:12px;
-}
-
-.intro {
-  color:var(--sub);
-  margin:0 0 18px;
-  font-size:14px;
-}
-
-.tabs {
+h1{font-size:26px;margin-bottom:12px}
+.intro{color:var(--sub);margin:0 0 18px;font-size:14px}
+.tabs{
   display:grid;
   grid-template-columns:repeat(4,1fr);
   gap:8px;
   margin:18px 0;
 }
-
-.tab {
+.tab{
   border:1px solid var(--line);
   background:rgba(255,253,248,.74);
   border-radius:999px;
@@ -117,21 +91,10 @@ h1 {
   font-weight:700;
   color:var(--sub);
 }
-
-.tab.active {
-  background:var(--ink);
-  color:#fffdf8;
-}
-
-.panel {
-  display:none;
-}
-
-.panel.active {
-  display:block;
-}
-
-.card {
+.tab.active{background:var(--ink);color:#fffdf8}
+.panel{display:none}
+.panel.active{display:block}
+.card,.preview{
   background:var(--paper);
   border:1px solid var(--line);
   border-radius:var(--radius);
@@ -140,36 +103,31 @@ h1 {
   margin-bottom:14px;
   backdrop-filter:blur(10px);
 }
-
-.card-head {
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
+.preview-title{
+  font-family:'Noto Serif JP',serif;
+  font-weight:700;
+  font-size:20px;
   margin-bottom:12px;
 }
-
-.card-title {
+.card-title{
   font-weight:700;
   color:var(--accent);
   font-size:15px;
+  margin-bottom:12px;
 }
-
-.grid {
+.grid{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:10px;
 }
-
-label {
+label{
   display:block;
   font-weight:700;
   font-size:13px;
   color:var(--sub);
   margin-bottom:4px;
 }
-
-input,select,textarea {
+input,select,textarea{
   width:100%;
   border:1px solid var(--line);
   background:#fffdf8;
@@ -179,24 +137,15 @@ input,select,textarea {
   font-size:16px;
   color:var(--ink);
 }
-
-textarea {
-  min-height:86px;
-  resize:vertical;
-}
-
-.full {
-  grid-column:1/-1;
-}
-
-.row-actions {
+textarea{min-height:86px;resize:vertical}
+.full{grid-column:1/-1}
+.row-actions{
   display:flex;
   gap:8px;
   justify-content:flex-end;
   margin-top:12px;
 }
-
-.btn {
+.btn{
   border:0;
   border-radius:999px;
   padding:10px 15px;
@@ -204,8 +153,7 @@ textarea {
   font-weight:700;
   font-size:14px;
 }
-
-.btn-add {
+.btn-add{
   width:100%;
   background:rgba(184,139,107,.12);
   color:var(--accent);
@@ -213,18 +161,9 @@ textarea {
   margin:8px 0 18px;
   padding:13px;
 }
-
-.btn-delete {
-  background:rgba(183,92,92,.12);
-  color:var(--red);
-}
-
-.btn-dup {
-  background:rgba(184,139,107,.12);
-  color:var(--accent);
-}
-
-.visible-line {
+.btn-delete{background:rgba(183,92,92,.12);color:var(--red)}
+.btn-dup{background:rgba(184,139,107,.12);color:var(--accent)}
+.visible-line{
   display:flex;
   align-items:center;
   gap:8px;
@@ -232,13 +171,65 @@ textarea {
   color:var(--sub);
   font-size:14px;
 }
-
-.visible-line input {
-  width:20px;
-  height:20px;
+.visible-line input{width:20px;height:20px}
+.news-preview-list{display:grid;gap:10px}
+.news-preview-item{
+  display:grid;
+  grid-template-columns:110px 1fr;
+  gap:12px;
+  padding:14px 16px;
+  border-radius:18px;
+  background:rgba(255,253,248,.82);
+  border:1px solid rgba(31,21,12,.10);
 }
-
-.status {
+.preview-date{color:var(--accent);font-weight:700;font-size:14px}
+.lesson-preview-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+.lesson-preview-item,.menu-preview-card{
+  padding:16px;
+  border-radius:20px;
+  background:rgba(255,253,248,.76);
+  border:1px solid rgba(31,21,12,.10);
+}
+.lesson-day{color:var(--accent);font-weight:700;margin-bottom:4px}
+.lesson-hour{
+  font-family:'Noto Serif JP',serif;
+  font-size:22px;
+  font-weight:700;
+  line-height:1.4;
+}
+.menu-preview-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+}
+.menu-preview-card h3{font-size:18px;margin:0 0 8px}
+.price{
+  font-family:'Noto Serif JP',serif;
+  font-size:24px;
+  font-weight:700;
+  line-height:1.35;
+}
+.group-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:8px;
+  margin-top:12px;
+}
+.group-item{
+  text-align:center;
+  padding:10px 8px;
+  border-radius:15px;
+  background:rgba(255,253,248,.74);
+  border:1px solid rgba(31,21,12,.10);
+}
+.group-label{color:var(--accent);font-size:13px;font-weight:700}
+.group-price{font-family:'Noto Serif JP',serif;font-size:18px;font-weight:700}
+.small{color:var(--sub);font-size:13px;margin:4px 0 0}
+.status{
   position:fixed;
   left:12px;
   right:12px;
@@ -253,196 +244,19 @@ textarea {
   box-shadow:0 12px 28px rgba(31,21,12,.22);
   display:none;
 }
-
-.status.show {
-  display:block;
-}
-
-.hint {
-  font-size:13px;
-  color:var(--sub);
-  margin:6px 0 16px;
-}
-
-.fixed-note {
-  font-size:13px;
-  color:var(--sub);
-  margin:0 0 14px;
-  padding:12px 14px;
-  border-radius:16px;
-  background:rgba(255,253,248,.64);
-  border:1px solid var(--line);
-}
-
-.preview-wrap {
-  margin:0 0 20px;
-  padding:18px;
-  border-radius:24px;
-  background:rgba(255,253,248,.70);
-  border:1px solid var(--line);
-  box-shadow:0 10px 26px rgba(31,21,12,.08);
-}
-
-.preview-title {
-  font-family:'Noto Serif JP',serif;
-  font-weight:700;
-  font-size:19px;
-  margin:0 0 12px;
-  color:var(--ink);
-}
-
-.preview-sub {
-  color:var(--sub);
-  font-size:13px;
-  margin:0 0 12px;
-}
-
-.preview-news-list {
-  display:grid;
-  gap:10px;
-}
-
-.preview-news-item {
-  display:grid;
-  grid-template-columns:110px 1fr;
-  gap:12px;
-  padding:14px 16px;
-  border-radius:18px;
-  background:rgba(255,253,248,.82);
-  border:1px solid rgba(31,21,12,.10);
-}
-
-.preview-date {
-  color:var(--accent);
-  font-weight:700;
-  font-size:14px;
-}
-
-.preview-lesson-grid {
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:12px;
-}
-
-.preview-lesson-item {
-  padding:16px;
-  border-radius:20px;
-  background:rgba(255,253,248,.76);
-  border:1px solid rgba(31,21,12,.10);
-}
-
-.preview-lesson-day {
-  color:var(--accent);
-  font-weight:700;
-  margin-bottom:4px;
-}
-
-.preview-lesson-hour {
-  font-family:'Noto Serif JP',serif;
-  font-size:22px;
-  font-weight:700;
-  line-height:1.4;
-}
-
-.preview-small {
-  color:var(--sub);
-  font-size:13px;
-  margin:4px 0 0;
-}
-
-.preview-menu-grid {
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:12px;
-}
-
-.preview-menu-card {
-  padding:18px;
-  border-radius:20px;
-  background:rgba(255,253,248,.76);
-  border:1px solid rgba(31,21,12,.10);
-}
-
-.preview-menu-card h3 {
-  font-size:18px;
-  margin:0 0 8px;
-}
-
-.preview-price {
-  font-family:'Noto Serif JP',serif;
-  font-size:24px;
-  font-weight:700;
-  line-height:1.35;
-}
-
-.preview-group-grid {
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:8px;
-  margin-top:12px;
-}
-
-.preview-group-item {
-  text-align:center;
-  padding:10px 8px;
-  border-radius:15px;
-  background:rgba(255,253,248,.74);
-  border:1px solid rgba(31,21,12,.10);
-}
-
-.preview-group-label {
-  color:var(--accent);
-  font-size:13px;
-  font-weight:700;
-}
-
-.preview-group-price {
-  font-family:'Noto Serif JP',serif;
-  font-size:18px;
-  font-weight:700;
-}
-
-.menu-section-title {
-  margin:18px 0 10px;
-  font-family:'Noto Serif JP',serif;
-  font-weight:700;
-  color:var(--ink);
-}
-
-iframe[name="saveFrame"] {
-  display:none;
-}
-
-@media(max-width:720px) {
-  .tabs {
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .grid {
-    grid-template-columns:1fr;
-  }
-
-  .logo {
-    width:130px;
-  }
-
-  h1 {
-    font-size:22px;
-  }
-
-  .preview-news-item {
-    grid-template-columns:1fr;
-    gap:2px;
-  }
-
-  .preview-lesson-grid,
-  .preview-menu-grid {
-    grid-template-columns:1fr;
-  }
+.status.show{display:block}
+.hint{font-size:13px;color:var(--sub);margin:6px 0 16px}
+iframe[name="saveFrame"]{display:none}
+@media(max-width:720px){
+  .tabs{grid-template-columns:repeat(2,1fr)}
+  .grid{grid-template-columns:1fr}
+  .logo{width:130px}
+  h1{font-size:22px}
+  .news-preview-item{grid-template-columns:1fr;gap:2px}
+  .lesson-preview-grid,.menu-preview-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
-
 <body>
 <header>
   <div class="header-inner">
@@ -453,7 +267,7 @@ iframe[name="saveFrame"] {
 
 <main>
   <h1>Yoga Flower 管理画面</h1>
-  <p class="intro">実際のホームページに近い表示を確認しながら編集できます。編集後は「保存」を押してください。</p>
+  <p class="intro">今ホームページに出る内容を確認しながら編集できます。編集後は「保存」を押してください。</p>
 
   <div class="tabs">
     <button class="tab active" data-tab="news">お知らせ</button>
@@ -463,34 +277,30 @@ iframe[name="saveFrame"] {
   </div>
 
   <section id="panel-news" class="panel active">
-    <div class="preview-wrap">
-      <h2 class="preview-title">現在のお知らせ表示</h2>
-      <p class="preview-sub">ホームページには上から最新3件だけ表示されます。</p>
-      <div class="preview-news-list" id="newsPreview"></div>
+    <div class="preview">
+      <div class="preview-title">現在のお知らせ表示</div>
+      <p class="small">ホームページには上から最新3件だけ表示されます。</p>
+      <div class="news-preview-list" id="newsPreview"></div>
     </div>
-
-    <p class="hint">新しいお知らせほど上に置いてください。</p>
     <div id="newsList"></div>
     <button class="btn btn-add" type="button" onclick="addNews()">＋ お知らせを追加</button>
   </section>
 
   <section id="panel-lesson" class="panel">
-    <div class="preview-wrap">
-      <h2 class="preview-title">現在のレッスン時間表示</h2>
-      <div class="preview-lesson-grid" id="lessonPreview"></div>
+    <div class="preview">
+      <div class="preview-title">現在のレッスン時間表示</div>
+      <div class="lesson-preview-grid" id="lessonPreview"></div>
     </div>
-
-    <p class="fixed-note">下の欄で、今表示しているレッスン時間を変更できます。追加・削除はできないようにしています。</p>
+    <p class="hint">下の欄で、今表示している時間だけ変更できます。</p>
     <div id="lessonList"></div>
   </section>
 
   <section id="panel-menu" class="panel">
-    <div class="preview-wrap">
-      <h2 class="preview-title">現在の料金表表示</h2>
-      <div class="preview-menu-grid" id="menuPreview"></div>
+    <div class="preview">
+      <div class="preview-title">現在の料金表表示</div>
+      <div class="menu-preview-grid" id="menuPreview"></div>
     </div>
-
-    <p class="fixed-note">下の欄で、今表示している料金や説明を変更できます。追加・削除はできないようにしています。</p>
+    <p class="hint">下の欄で、今表示している料金や説明だけ変更できます。</p>
     <div id="menuList"></div>
   </section>
 
@@ -513,159 +323,106 @@ iframe[name="saveFrame"] {
 <script>
 const API_URL='https://script.google.com/macros/s/AKfycbzlyU2DNJtiQNL5gQ9Lex55qsXyxQ4mI9bghM3bhjcQX5adCDmAcahI_v5RzBuYDi4T/exec';
 
-const DEFAULT_LESSONS = [
-  { id:'l1', day:'毎週月曜日', time:'19:30〜20:45', note:'オンライン・対面どちらも可能', visible:'TRUE' },
-  { id:'l2', day:'毎週水曜日', time:'9:30〜10:45', note:'', visible:'TRUE' },
-  { id:'l3', day:'毎週金曜日', time:'9:30〜10:45', note:'', visible:'TRUE' }
+const DEFAULT_NEWS=[
+  {id:'n1',date:'2026.6.1',title:'6月のレッスン予定を公開しました。',visible:'TRUE'},
+  {id:'n2',date:'2026.5.20',title:'体験レッスンの受付を開始しました。',visible:'TRUE'},
+  {id:'n3',date:'2026.5.10',title:'ホームページを準備中です。',visible:'TRUE'}
 ];
 
-const DEFAULT_MENUS = [
-  { id:'m1', name:'グループレッスン', price:'4,000円', note:'月4回', type:'group', visible:'TRUE' },
-  { id:'m2', name:'グループレッスン', price:'3,300円', note:'月3回', type:'group', visible:'TRUE' },
-  { id:'m3', name:'グループレッスン', price:'2,200円', note:'月2回', type:'group', visible:'TRUE' },
-  { id:'m4', name:'グループレッスン', price:'1,500円', note:'1回', type:'group', visible:'TRUE' },
-  { id:'m5', name:'お友達同士', price:'1回 2,500円', note:'2〜3名でのレッスンです。料金は1名あたりです。', type:'normal', visible:'TRUE' },
-  { id:'m6', name:'お一人でゆっくりと', price:'1回 3,500円', note:'まわりを気にせず、ご自身のペースで受けたい方向けです。', type:'normal', visible:'TRUE' },
-  { id:'m7', name:'オンラインレッスン', price:'月4回 2,500円', note:'毎週月曜夜に行っています。', type:'normal', visible:'TRUE' }
+const DEFAULT_LESSONS=[
+  {id:'l1',day:'毎週月曜日',time:'19:30〜20:45',note:'オンライン・対面どちらも可能',visible:'TRUE'},
+  {id:'l2',day:'毎週水曜日',time:'9:30〜10:45',note:'',visible:'TRUE'},
+  {id:'l3',day:'毎週金曜日',time:'9:30〜10:45',note:'',visible:'TRUE'}
 ];
 
-let state = {
-  news: [],
-  lesson_times: [],
-  menus: [],
-  calendar: []
-};
+const DEFAULT_MENUS=[
+  {id:'m1',name:'グループレッスン',price:'4,000円',note:'月4回',type:'group',visible:'TRUE'},
+  {id:'m2',name:'グループレッスン',price:'3,300円',note:'月3回',type:'group',visible:'TRUE'},
+  {id:'m3',name:'グループレッスン',price:'2,200円',note:'月2回',type:'group',visible:'TRUE'},
+  {id:'m4',name:'グループレッスン',price:'1,500円',note:'1回',type:'group',visible:'TRUE'},
+  {id:'m5',name:'お友達同士',price:'1回 2,500円',note:'2〜3名でのレッスンです。料金は1名あたりです。',type:'normal',visible:'TRUE'},
+  {id:'m6',name:'お一人でゆっくりと',price:'1回 3,500円',note:'まわりを気にせず、ご自身のペースで受けたい方向けです。',type:'normal',visible:'TRUE'},
+  {id:'m7',name:'オンラインレッスン',price:'月4回 2,500円',note:'毎週月曜夜に行っています。',type:'normal',visible:'TRUE'}
+];
 
-const fallback = {
-  news: [
-    { id:'n1', date:'2026.6.1', title:'6月のレッスン予定を公開しました。', visible:'TRUE' }
-  ],
-  lesson_times: DEFAULT_LESSONS,
-  menus: DEFAULT_MENUS,
-  calendar: []
-};
+let state={news:[],lesson_times:[],menus:[],calendar:[]};
 
-function uid(prefix) {
-  return prefix + Date.now().toString(36) + Math.random().toString(36).slice(2,6);
+function clone(data){return JSON.parse(JSON.stringify(data));}
+function uid(prefix){return prefix+Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
+function esc(text){return String(text??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');}
+function isVisible(item){return item.visible===undefined||item.visible===''||String(item.visible).toUpperCase()==='TRUE';}
+
+function toDateInputValue(value){
+  if(!value)return '';
+  const text=String(value).trim();
+  if(/^\d{4}-\d{2}-\d{2}$/.test(text))return text;
+  const m=text.match(/^(\d{4})[./-](\d{1,2})[./-](\d{1,2})$/);
+  if(!m)return '';
+  return `${m[1]}-${String(m[2]).padStart(2,'0')}-${String(m[3]).padStart(2,'0')}`;
 }
 
-function esc(text) {
-  return String(text ?? '')
-    .replace(/&/g,'&amp;')
-    .replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;')
-    .replace(/"/g,'&quot;')
-    .replace(/'/g,'&#039;');
-}
-
-function isVisible(item) {
-  return item.visible === undefined || item.visible === '' || String(item.visible).toUpperCase() === 'TRUE';
-}
-
-function toDateInputValue(value) {
-  if (!value) return '';
-  const text = String(value).trim();
-  if (/^\d{4}-\d{2}-\d{2}$/.test(text)) return text;
-
-  const match = text.match(/^(\d{4})[./-](\d{1,2})[./-](\d{1,2})$/);
-  if (!match) return '';
-
-  return `${match[1]}-${String(match[2]).padStart(2,'0')}-${String(match[3]).padStart(2,'0')}`;
-}
-
-function toDisplayDate(value) {
-  if (!value) return '';
-  const text = String(value).trim();
-
-  let match = text.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
-  if (match) return `${match[1]}.${Number(match[2])}.${Number(match[3])}`;
-
-  match = text.match(/^(\d{4})[./](\d{1,2})[./](\d{1,2})$/);
-  if (match) return `${match[1]}.${Number(match[2])}.${Number(match[3])}`;
-
+function toDisplayDate(value){
+  if(!value)return '';
+  const text=String(value).trim();
+  let m=text.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+  if(m)return `${m[1]}.${Number(m[2])}.${Number(m[3])}`;
+  m=text.match(/^(\d{4})[./](\d{1,2})[./](\d{1,2})$/);
+  if(m)return `${m[1]}.${Number(m[2])}.${Number(m[3])}`;
   return text;
 }
 
-function showStatus(message) {
-  status.textContent = message;
+function showStatus(message){
+  status.textContent=message;
   status.classList.add('show');
-  setTimeout(() => status.classList.remove('show'), 2600);
+  setTimeout(()=>status.classList.remove('show'),2600);
 }
 
-document.querySelectorAll('.tab').forEach(button => {
-  button.addEventListener('click', () => {
-    document.querySelectorAll('.tab').forEach(item => item.classList.remove('active'));
-    document.querySelectorAll('.panel').forEach(panel => panel.classList.remove('active'));
-
+document.querySelectorAll('.tab').forEach(button=>{
+  button.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(item=>item.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(panel=>panel.classList.remove('active'));
     button.classList.add('active');
-    document.getElementById('panel-' + button.dataset.tab).classList.add('active');
+    document.getElementById('panel-'+button.dataset.tab).classList.add('active');
   });
 });
 
-function visibleChecked(item) {
-  return isVisible(item);
+function normalizeFixedRows(rows,defaults){
+  const byId={};
+  (rows||[]).forEach(row=>{if(row.id)byId[row.id]=row;});
+  return defaults.map(def=>({...def,...(byId[def.id]||{})}));
 }
 
-function normalizeFixedRows(rows, defaults) {
-  const byId = {};
-  (rows || []).forEach(row => {
-    if (row.id) byId[row.id] = row;
-  });
-
-  return defaults.map(defaultRow => {
-    return {
-      ...defaultRow,
-      ...(byId[defaultRow.id] || {})
-    };
-  });
-}
-
-function loadData() {
+function loadData(){
   showStatus('読み込み中です');
+  state.news=clone(DEFAULT_NEWS);
+  state.lesson_times=clone(DEFAULT_LESSONS);
+  state.menus=clone(DEFAULT_MENUS);
+  state.calendar=[];
+  renderAll();
 
-  const callbackName = 'adminCallback_' + Date.now();
-  const script = document.createElement('script');
+  const cb='adminCallback_'+Date.now();
+  const script=document.createElement('script');
+  const timer=setTimeout(()=>{showStatus('初期データを表示しています');script.remove();},6000);
 
-  const timer = setTimeout(() => {
-    state = JSON.parse(JSON.stringify(fallback));
-    renderAll();
-    showStatus('初期データを表示しました');
-    script.remove();
-  }, 6000);
-
-  window[callbackName] = response => {
+  window[cb]=response=>{
     clearTimeout(timer);
-
-    const data = response && response.data ? response.data : fallback;
-
-    state = {
-      news: data.news && data.news.length ? data.news : fallback.news,
-      lesson_times: normalizeFixedRows(data.lesson_times, DEFAULT_LESSONS),
-      menus: normalizeFixedRows(data.menus, DEFAULT_MENUS),
-      calendar: data.calendar || []
-    };
-
+    const data=response&&response.data?response.data:{};
+    state.news=data.news&&data.news.length?data.news:clone(DEFAULT_NEWS);
+    state.lesson_times=normalizeFixedRows(data.lesson_times,DEFAULT_LESSONS);
+    state.menus=normalizeFixedRows(data.menus,DEFAULT_MENUS);
+    state.calendar=data.calendar||[];
     renderAll();
     showStatus('読み込みました');
-
     script.remove();
-    delete window[callbackName];
+    delete window[cb];
   };
 
-  script.src = API_URL + '?action=getData&callback=' + callbackName + '&t=' + Date.now();
-
-  script.onerror = () => {
-    clearTimeout(timer);
-    state = JSON.parse(JSON.stringify(fallback));
-    renderAll();
-    showStatus('読み込みに失敗しました');
-    script.remove();
-  };
-
+  script.src=API_URL+'?action=getData&callback='+cb+'&t='+Date.now();
+  script.onerror=()=>{clearTimeout(timer);showStatus('初期データを表示しています');script.remove();};
   document.body.appendChild(script);
 }
 
-function renderAll() {
+function renderAll(){
   renderNewsPreview();
   renderLessonPreview();
   renderMenuPreview();
@@ -675,54 +432,47 @@ function renderAll() {
   renderCalendar();
 }
 
-function field(kind, index, fieldName, value) {
-  state[kind][index][fieldName] = value;
-  renderPreviewsOnly();
-}
-
-function renderPreviewsOnly() {
+function renderPreviews(){
   renderNewsPreview();
   renderLessonPreview();
   renderMenuPreview();
 }
 
-document.addEventListener('input', event => {
-  const data = event.target.dataset;
-  if (!data.kind) return;
-  field(data.kind, Number(data.i), data.field, event.target.value);
+function field(kind,index,fieldName,value){
+  state[kind][index][fieldName]=value;
+  renderPreviews();
+}
+
+document.addEventListener('input',event=>{
+  const data=event.target.dataset;
+  if(!data.kind)return;
+  field(data.kind,Number(data.i),data.field,event.target.value);
 });
 
-document.addEventListener('change', event => {
-  const data = event.target.dataset;
-  if (!data.kind) return;
-
-  let value = data.field === 'visible'
-    ? (event.target.checked ? 'TRUE' : 'FALSE')
-    : event.target.value;
-
-  if (data.kind === 'news' && data.field === 'date') {
-    value = toDisplayDate(value);
-  }
-
-  field(data.kind, Number(data.i), data.field, value);
+document.addEventListener('change',event=>{
+  const data=event.target.dataset;
+  if(!data.kind)return;
+  let value=data.field==='visible'?(event.target.checked?'TRUE':'FALSE'):event.target.value;
+  if(data.kind==='news'&&data.field==='date')value=toDisplayDate(value);
+  field(data.kind,Number(data.i),data.field,value);
 });
 
-function cardTop(title, kind, index, item, showVisible = true) {
+function visibleChecked(item){return isVisible(item);}
+
+function cardTop(title,kind,index,item){
   return `
     <div class="card">
-      <div class="card-head">
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:12px;">
         <div class="card-title">${title}</div>
-        ${showVisible ? `
-          <label class="visible-line">
-            <input type="checkbox" data-kind="${kind}" data-i="${index}" data-field="visible" ${visibleChecked(item) ? 'checked' : ''}>
-            表示
-          </label>
-        ` : ''}
+        <label class="visible-line">
+          <input type="checkbox" data-kind="${kind}" data-i="${index}" data-field="visible" ${visibleChecked(item)?'checked':''}>
+          表示
+        </label>
       </div>
   `;
 }
 
-function actions(kind, index) {
+function actions(kind,index){
   return `
       <div class="row-actions">
         <button class="btn btn-dup" type="button" onclick="moveItem('${kind}',${index},-1)">上へ</button>
@@ -732,139 +482,107 @@ function actions(kind, index) {
   `;
 }
 
-function renderNewsPreview() {
-  const visibleNews = state.news.filter(isVisible).slice(0, 3);
-
-  newsPreview.innerHTML = visibleNews.length
-    ? visibleNews.map(item => `
-      <article class="preview-news-item">
-        <div class="preview-date">${esc(item.date)}</div>
-        <div>${esc(item.title)}</div>
-      </article>
-    `).join('')
-    : '<div class="preview-small">表示するお知らせがありません。</div>';
+function renderNewsPreview(){
+  const rows=state.news.filter(isVisible).slice(0,3);
+  newsPreview.innerHTML=rows.length?rows.map(item=>`
+    <article class="news-preview-item">
+      <div class="preview-date">${esc(item.date)}</div>
+      <div>${esc(item.title)}</div>
+    </article>
+  `).join(''):'<p class="small">表示するお知らせがありません。</p>';
 }
 
-function renderLessonPreview() {
-  const visibleLessons = state.lesson_times.filter(isVisible);
-
-  lessonPreview.innerHTML = visibleLessons.map(item => `
-    <article class="preview-lesson-item">
-      <div class="preview-lesson-day">${esc(item.day)}</div>
-      <div class="preview-lesson-hour">${esc(item.time)}</div>
-      ${item.note ? `<p class="preview-small">${esc(item.note)}</p>` : ''}
+function renderLessonPreview(){
+  lessonPreview.innerHTML=state.lesson_times.filter(isVisible).map(item=>`
+    <article class="lesson-preview-item">
+      <div class="lesson-day">${esc(item.day)}</div>
+      <div class="lesson-hour">${esc(item.time)}</div>
+      ${item.note?`<p class="small">${esc(item.note)}</p>`:''}
     </article>
   `).join('');
 }
 
-function buildMenuPreviewRows() {
-  const visibleMenus = state.menus.filter(isVisible);
-  const groupRows = visibleMenus.filter(item => item.type === 'group');
-  const normalRows = visibleMenus.filter(item => item.type !== 'group');
-
-  const rows = [];
-
-  if (groupRows.length) {
-    rows.push({
-      name:'グループレッスン',
-      groupPrices: groupRows.map(item => ({
-        label:item.note,
-        price:item.price
-      }))
-    });
+function renderMenuPreview(){
+  const visible=state.menus.filter(isVisible);
+  const groups=visible.filter(item=>item.type==='group');
+  const normals=visible.filter(item=>item.type!=='group');
+  const rows=[];
+  if(groups.length){
+    rows.push({name:'グループレッスン',groupPrices:groups.map(g=>({label:g.note,price:g.price}))});
   }
-
-  normalRows.forEach(item => {
-    rows.push({
-      name:item.name,
-      price:item.price,
-      note:item.note
-    });
-  });
-
-  return rows;
-}
-
-function renderMenuPreview() {
-  const rows = buildMenuPreviewRows();
-
-  menuPreview.innerHTML = rows.map(item => `
-    <article class="preview-menu-card">
+  normals.forEach(item=>rows.push({name:item.name,price:item.price,note:item.note}));
+  menuPreview.innerHTML=rows.map(item=>`
+    <article class="menu-preview-card">
       <h3>${esc(item.name)}</h3>
-      ${item.price ? `<div class="preview-price">${esc(item.price)}</div>` : ''}
-      ${item.groupPrices ? `
-        <div class="preview-group-grid">
-          ${item.groupPrices.map(priceItem => `
-            <div class="preview-group-item">
-              <div class="preview-group-label">${esc(priceItem.label)}</div>
-              <div class="preview-group-price">${esc(priceItem.price)}</div>
+      ${item.price?`<div class="price">${esc(item.price)}</div>`:''}
+      ${item.groupPrices?`
+        <div class="group-grid">
+          ${item.groupPrices.map(p=>`
+            <div class="group-item">
+              <div class="group-label">${esc(p.label)}</div>
+              <div class="group-price">${esc(p.price)}</div>
             </div>
           `).join('')}
         </div>
-      ` : ''}
-      ${item.note ? `<p class="preview-small">${esc(item.note)}</p>` : ''}
+      `:''}
+      ${item.note?`<p class="small">${esc(item.note)}</p>`:''}
     </article>
   `).join('');
 }
 
-function renderNews() {
-  newsList.innerHTML = state.news.map((item, index) => {
-    return cardTop('お知らせ ' + (index + 1), 'news', index, item) + `
-      <div class="grid">
-        <div>
-          <label>日付</label>
-          <input type="date" data-kind="news" data-i="${index}" data-field="date" value="${esc(toDateInputValue(item.date))}">
-        </div>
-        <div class="full">
-          <label>内容</label>
-          <input data-kind="news" data-i="${index}" data-field="title" value="${esc(item.title)}">
-        </div>
+function renderNews(){
+  newsList.innerHTML=state.news.map((item,index)=>cardTop('お知らせ '+(index+1),'news',index,item)+`
+    <div class="grid">
+      <div>
+        <label>日付</label>
+        <input type="date" data-kind="news" data-i="${index}" data-field="date" value="${esc(toDateInputValue(item.date))}">
       </div>
-    ` + actions('news', index);
-  }).join('');
-}
-
-function renderLesson() {
-  lessonList.innerHTML = state.lesson_times.map((item, index) => {
-    return cardTop(item.day, 'lesson_times', index, item) + `
-      <div class="grid">
-        <div>
-          <label>時間</label>
-          <input data-kind="lesson_times" data-i="${index}" data-field="time" value="${esc(item.time)}">
-        </div>
-        <div class="full">
-          <label>補足</label>
-          <input data-kind="lesson_times" data-i="${index}" data-field="note" value="${esc(item.note)}">
-        </div>
+      <div class="full">
+        <label>内容</label>
+        <input data-kind="news" data-i="${index}" data-field="title" value="${esc(item.title)}">
       </div>
     </div>
-    `;
-  }).join('');
+  `+actions('news',index)).join('');
 }
 
-function renderMenu() {
-  const groupRows = state.menus.filter(item => item.type === 'group');
-  const normalRows = state.menus.filter(item => item.type !== 'group');
+function renderLesson(){
+  lessonList.innerHTML=state.lesson_times.map((item,index)=>cardTop(item.day,'lesson_times',index,item)+`
+    <div class="grid">
+      <div>
+        <label>時間</label>
+        <input data-kind="lesson_times" data-i="${index}" data-field="time" value="${esc(item.time)}">
+      </div>
+      <div class="full">
+        <label>補足</label>
+        <input data-kind="lesson_times" data-i="${index}" data-field="note" value="${esc(item.note)}">
+      </div>
+    </div>
+    </div>
+  `).join('');
+}
 
-  const groupHtml = `
-    <div class="menu-section-title">グループレッスン</div>
-    ${groupRows.map(item => {
-      const index = state.menus.indexOf(item);
-      return cardTop(item.note, 'menus', index, item) + `
+function renderMenu(){
+  const groups=state.menus.filter(item=>item.type==='group');
+  const normals=state.menus.filter(item=>item.type!=='group');
+
+  const groupHtml=`
+    <div class="card-title" style="margin:18px 0 10px;">グループレッスン</div>
+    ${groups.map(item=>{
+      const index=state.menus.indexOf(item);
+      return cardTop(item.note,'menus',index,item)+`
         <div class="grid">
           <div class="full">
             <label>${esc(item.note)}の料金</label>
             <input data-kind="menus" data-i="${index}" data-field="price" value="${esc(item.price)}">
           </div>
         </div>
-      </div>
-      `;
+      </div>`;
     }).join('')}
   `;
 
-  const normalHtml = normalRows.map(item => {
-    const index = state.menus.indexOf(item);
-    return cardTop(item.name, 'menus', index, item) + `
+  const normalHtml=normals.map(item=>{
+    const index=state.menus.indexOf(item);
+    return cardTop(item.name,'menus',index,item)+`
       <div class="grid">
         <div>
           <label>料金</label>
@@ -875,89 +593,72 @@ function renderMenu() {
           <textarea data-kind="menus" data-i="${index}" data-field="note">${esc(item.note)}</textarea>
         </div>
       </div>
-    </div>
-    `;
+    </div>`;
   }).join('');
 
-  menuList.innerHTML = groupHtml + normalHtml;
+  menuList.innerHTML=groupHtml+normalHtml;
 }
 
-function renderCalendar() {
-  calendarList.innerHTML = state.calendar.map((item, index) => {
-    return `
-      <div class="card">
-        <div class="card-head">
-          <div class="card-title">予約日 ${index + 1}</div>
+function renderCalendar(){
+  calendarList.innerHTML=state.calendar.map((item,index)=>`
+    <div class="card">
+      <div class="card-title">予約日 ${index+1}</div>
+      <div class="grid">
+        <div>
+          <label>日付</label>
+          <input type="date" data-kind="calendar" data-i="${index}" data-field="date" value="${esc(item.date)}">
         </div>
-
-        <div class="grid">
-          <div>
-            <label>日付</label>
-            <input type="date" data-kind="calendar" data-i="${index}" data-field="date" value="${esc(item.date)}">
-          </div>
-
-          <div>
-            <label>状態</label>
-            <select data-kind="calendar" data-i="${index}" data-field="status">
-              <option value="空" ${item.status === '空' ? 'selected' : ''}>空</option>
-              <option value="残りわずか" ${item.status === '残りわずか' ? 'selected' : ''}>残りわずか</option>
-              <option value="満席" ${item.status === '満席' ? 'selected' : ''}>満席</option>
-              <option value="休み" ${item.status === '休み' ? 'selected' : ''}>休み</option>
-            </select>
-          </div>
-
-          <div class="full">
-            <label>メモ</label>
-            <input data-kind="calendar" data-i="${index}" data-field="note" value="${esc(item.note)}">
-          </div>
+        <div>
+          <label>状態</label>
+          <select data-kind="calendar" data-i="${index}" data-field="status">
+            <option value="空" ${item.status==='空'?'selected':''}>空</option>
+            <option value="残りわずか" ${item.status==='残りわずか'?'selected':''}>残りわずか</option>
+            <option value="満席" ${item.status==='満席'?'selected':''}>満席</option>
+            <option value="休み" ${item.status==='休み'?'selected':''}>休み</option>
+          </select>
         </div>
-    ` + actions('calendar', index);
-  }).join('');
+        <div class="full">
+          <label>メモ</label>
+          <input data-kind="calendar" data-i="${index}" data-field="note" value="${esc(item.note)}">
+        </div>
+      </div>
+    `+actions('calendar',index)).join('');
 }
 
-function addNews() {
-  const now = new Date();
-  const today = `${now.getFullYear()}.${now.getMonth() + 1}.${now.getDate()}`;
-
-  state.news.unshift({
-    id: uid('n'),
-    date: today,
-    title: '',
-    visible: 'TRUE'
-  });
-
+function addNews(){
+  const now=new Date();
+  state.news.unshift({id:uid('n'),date:`${now.getFullYear()}.${now.getMonth()+1}.${now.getDate()}`,title:'',visible:'TRUE'});
   renderAll();
 }
 
-function addCalendar() {
-  state.calendar.push({
-    date: '',
-    status: '空',
-    note: ''
-  });
-
+function addCalendar(){
+  state.calendar.push({date:'',status:'空',note:''});
   renderCalendar();
 }
 
-function deleteItem(kind, index) {
-  if (confirm('削除しますか？')) {
-    state[kind].splice(index, 1);
+function deleteItem(kind,index){
+  if(confirm('削除しますか？')){
+    state[kind].splice(index,1);
     renderAll();
   }
 }
 
-function moveItem(kind, index, direction) {
-  const nextIndex = index + direction;
-  if (nextIndex < 0 || nextIndex >= state[kind].length) return;
-
-  const items = state[kind];
-  [items[index], items[nextIndex]] = [items[nextIndex], items[index]];
-
+function moveItem(kind,index,direction){
+  const next=index+direction;
+  if(next<0||next>=state[kind].length)return;
+  const items=state[kind];
+  [items[index],items[next]]=[items[next],items[index]];
   renderAll();
 }
 
-function saveAll() {
-  payloadField.value = JSON.stringify(state);
+function saveAll(){
+  const payload={
+    news:state.news,
+    lesson_times:normalizeFixedRows(state.lesson_times,DEFAULT_LESSONS),
+    menus:normalizeFixedRows(state.menus,DEFAULT_MENUS),
+    calendar:state.calendar
+  };
+  payloadField.value=JSON.stringify(payload);
   saveForm.submit();
   showStatus('保存しました。反映まで少し待ってください');
 }
