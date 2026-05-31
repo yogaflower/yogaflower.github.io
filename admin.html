@@ -3,15 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
 <title>Yoga Flower 管理画面</title>
 <link rel="icon" href="images/yogaflower.ico" type="image/x-icon">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;700&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <style>
 :root{
   --ink:#1f150c;
@@ -48,7 +44,7 @@ header{
   border-bottom:1px solid var(--line);
 }
 .header-inner{
-  width:min(980px,calc(100% - 24px));
+  width:min(960px,calc(100% - 24px));
   margin:0 auto;
   min-height:66px;
   display:flex;
@@ -69,7 +65,7 @@ header{
   font-size:15px;
 }
 main{
-  width:min(980px,calc(100% - 24px));
+  width:min(960px,calc(100% - 24px));
   margin:24px auto 0;
 }
 h1,h2,h3{
@@ -79,10 +75,7 @@ h1,h2,h3{
   margin:0;
 }
 h1{font-size:26px;margin-bottom:12px}
-.intro,.hint,.small{color:var(--sub);font-size:14px}
-.intro{margin:0 0 18px}
-.hint{margin:6px 0 16px}
-.small{margin:4px 0 0}
+.intro{color:var(--sub);margin:0 0 18px;font-size:14px}
 .tabs{
   display:grid;
   grid-template-columns:repeat(4,1fr);
@@ -127,7 +120,6 @@ h1{font-size:26px;margin-bottom:12px}
   grid-template-columns:1fr 1fr;
   gap:10px;
 }
-.full{grid-column:1/-1}
 label{
   display:block;
   font-weight:700;
@@ -146,6 +138,7 @@ input,select,textarea{
   color:var(--ink);
 }
 textarea{min-height:86px;resize:vertical}
+.full{grid-column:1/-1}
 .row-actions{
   display:flex;
   gap:8px;
@@ -170,8 +163,6 @@ textarea{min-height:86px;resize:vertical}
 }
 .btn-delete{background:rgba(183,92,92,.12);color:var(--red)}
 .btn-dup{background:rgba(184,139,107,.12);color:var(--accent)}
-.btn-dark{background:var(--ink);color:#fffdf8}
-.btn-soft{background:rgba(255,253,248,.78);border:1px solid var(--line);color:var(--ink)}
 .visible-line{
   display:flex;
   align-items:center;
@@ -192,12 +183,11 @@ textarea{min-height:86px;resize:vertical}
   border:1px solid rgba(31,21,12,.10);
 }
 .preview-date{color:var(--accent);font-weight:700;font-size:14px}
-.lesson-preview-grid,.menu-preview-grid{
+.lesson-preview-grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:12px;
 }
-.menu-preview-grid{grid-template-columns:repeat(4,1fr)}
 .lesson-preview-item,.menu-preview-card{
   padding:16px;
   border-radius:20px;
@@ -205,14 +195,24 @@ textarea{min-height:86px;resize:vertical}
   border:1px solid rgba(31,21,12,.10);
 }
 .lesson-day{color:var(--accent);font-weight:700;margin-bottom:4px}
-.lesson-hour,.price{
+.lesson-hour{
   font-family:'Noto Serif JP',serif;
   font-size:22px;
   font-weight:700;
   line-height:1.4;
 }
+.menu-preview-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+}
 .menu-preview-card h3{font-size:18px;margin:0 0 8px}
-.price{font-size:24px}
+.price{
+  font-family:'Noto Serif JP',serif;
+  font-size:24px;
+  font-weight:700;
+  line-height:1.35;
+}
 .group-grid{
   display:grid;
   grid-template-columns:repeat(2,1fr);
@@ -228,6 +228,7 @@ textarea{min-height:86px;resize:vertical}
 }
 .group-label{color:var(--accent);font-size:13px;font-weight:700}
 .group-price{font-family:'Noto Serif JP',serif;font-size:18px;font-weight:700}
+.small{color:var(--sub);font-size:13px;margin:4px 0 0}
 .status{
   position:fixed;
   left:12px;
@@ -244,144 +245,8 @@ textarea{min-height:86px;resize:vertical}
   display:none;
 }
 .status.show{display:block}
-.admin-cal{
-  background:var(--paper);
-  border:1px solid var(--line);
-  border-radius:var(--radius);
-  box-shadow:var(--shadow);
-  padding:16px;
-  margin-bottom:14px;
-}
-.cal-head{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  margin-bottom:12px;
-}
-.cal-title{
-  font-family:'Noto Serif JP',serif;
-  font-size:22px;
-  font-weight:700;
-}
-.cal-btn{
-  border:1px solid var(--line);
-  background:#fffdf8;
-  border-radius:999px;
-  padding:8px 13px;
-  font-family:inherit;
-  font-weight:700;
-  color:var(--ink);
-}
-.cal-grid{
-  display:grid;
-  grid-template-columns:repeat(7,1fr);
-  border:1px solid var(--line);
-  border-radius:18px;
-  overflow:hidden;
-  background:#fffdf8;
-}
-.dow,.day{
-  border-right:1px solid var(--line);
-  border-bottom:1px solid var(--line);
-  min-height:70px;
-  padding:6px;
-}
-.dow{
-  min-height:auto;
-  text-align:center;
-  font-weight:700;
-  color:var(--sub);
-  background:rgba(255,253,248,.74);
-}
-.day{position:relative;cursor:pointer}
-.day:hover{background:rgba(184,139,107,.08)}
-.day.selected{outline:3px solid rgba(184,139,107,.45);outline-offset:-3px}
-.day-num{font-weight:700;font-size:13px}
-.day.sun .day-num{color:#b76f78}
-.day.sat .day-num{color:#5f7f99}
-.mark{margin-top:4px;font-size:12px;line-height:1.35}
-.circle-num{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  width:24px;
-  height:24px;
-  border-radius:50%;
-  background:#b88b6b;
-  color:#fffdf8;
-  font-weight:700;
-  margin-right:3px;
-}
-.badge{
-  display:inline-block;
-  border-radius:999px;
-  padding:2px 7px;
-  font-weight:700;
-}
-.badge.empty{background:rgba(111,143,168,.15);color:#4d6d86}
-.badge.full{background:rgba(183,92,92,.13);color:#9a4545}
-.badge.off{background:rgba(111,98,87,.13);color:#6f6257}
-.night{color:#b88b6b;font-weight:700}
-.cal-editor{
-  background:var(--paper);
-  border:1px solid var(--line);
-  border-radius:var(--radius);
-  box-shadow:var(--shadow);
-  padding:18px;
-  margin-bottom:16px;
-}
-.capture-wrap{
-  background:rgba(255,253,248,.92);
-  border:1px solid var(--line);
-  border-radius:28px;
-  box-shadow:var(--shadow);
-  padding:22px;
-  margin:16px 0;
-}
-.capture-logo{width:180px;margin:0 auto 10px}
-.capture-title{
-  text-align:center;
-  font-family:'Noto Serif JP',serif;
-  font-weight:700;
-  font-size:28px;
-  margin-bottom:6px;
-}
-.capture-period{text-align:center;color:var(--sub);font-size:14px;margin-bottom:16px}
-.period-calendar{
-  display:grid;
-  grid-template-columns:repeat(7,1fr);
-  border:1px solid var(--line);
-  border-radius:18px;
-  overflow:hidden;
-  background:#fffdf8;
-}
-.period-month{
-  grid-column:1/-1;
-  text-align:center;
-  font-family:'Noto Serif JP',serif;
-  font-weight:700;
-  font-size:22px;
-  padding:10px;
-  background:rgba(255,253,248,.88);
-  border-bottom:1px solid var(--line);
-}
-.p-dow,.p-cell{
-  min-height:88px;
-  border-right:1px solid var(--line);
-  border-bottom:1px solid var(--line);
-  padding:7px;
-}
-.p-dow{
-  min-height:auto;
-  text-align:center;
-  font-weight:700;
-  color:var(--sub);
-}
-.p-date{font-weight:700;font-size:13px}
-.p-cell.sun .p-date{color:#b76f78}
-.p-cell.sat .p-date{color:#5f7f99}
-.debug-box{background:#fff3cd;border:2px solid #1f150c;border-radius:16px;padding:10px 14px;margin:0 0 14px;font-weight:700;color:#1f150c;font-size:13px}.debug-box span{display:inline-block;margin-right:10px} iframe[name="saveFrame"]{display:none}
+.hint{font-size:13px;color:var(--sub);margin:6px 0 16px}
+iframe[name="saveFrame"]{display:none}
 @media(max-width:720px){
   .tabs{grid-template-columns:repeat(2,1fr)}
   .grid{grid-template-columns:1fr}
@@ -389,13 +254,6 @@ textarea{min-height:86px;resize:vertical}
   h1{font-size:22px}
   .news-preview-item{grid-template-columns:1fr;gap:2px}
   .lesson-preview-grid,.menu-preview-grid{grid-template-columns:1fr}
-  .day{min-height:58px;padding:4px}
-  .mark{font-size:10px}
-  .circle-num{width:20px;height:20px}
-  .cal-title{font-size:19px}
-  .p-cell{min-height:68px;padding:4px}
-  .capture-wrap{padding:12px}
-  .capture-title{font-size:22px}
 }
 </style>
 </head>
@@ -408,88 +266,51 @@ textarea{min-height:86px;resize:vertical}
 </header>
 
 <main>
-<h1>Yoga Flower 管理画面</h1>
-<p class="intro">スプレッドシートの内容を読み込んで編集します。編集後は「保存」を押してください。</p>
-<div class="debug-box" id="debugBox">修正版 2026-05-31 fallback対応 読み込み確認中...</div>
+  <h1>Yoga Flower 管理画面</h1>
+  <p class="intro">今ホームページに出る内容を確認しながら編集できます。編集後は「保存」を押してください。</p>
 
-<div class="tabs">
-  <button class="tab active" data-tab="news">お知らせ</button>
-  <button class="tab" data-tab="lesson">レッスン時間</button>
-  <button class="tab" data-tab="menu">料金</button>
-  <button class="tab" data-tab="calendar">カレンダー</button>
-</div>
-
-<section id="panel-news" class="panel active">
-  <div class="preview">
-    <div class="preview-title">現在のお知らせ表示</div>
-    <p class="small">ホームページには上から最新3件だけ表示されます。</p>
-    <div class="news-preview-list" id="newsPreview"></div>
+  <div class="tabs">
+    <button class="tab active" data-tab="news">お知らせ</button>
+    <button class="tab" data-tab="lesson">レッスン時間</button>
+    <button class="tab" data-tab="menu">料金</button>
+    <button class="tab" data-tab="calendar">カレンダー</button>
   </div>
-  <div id="newsList"></div>
-  <button class="btn btn-add" type="button" onclick="addNews()">＋ お知らせを追加</button>
-</section>
 
-<section id="panel-lesson" class="panel">
-  <div class="preview">
-    <div class="preview-title">現在のレッスン時間表示</div>
-    <div class="lesson-preview-grid" id="lessonPreview"></div>
-  </div>
-  <p class="hint">下の欄で、今表示している時間だけ変更できます。</p>
-  <div id="lessonList"></div>
-</section>
-
-<section id="panel-menu" class="panel">
-  <div class="preview">
-    <div class="preview-title">現在の料金表表示</div>
-    <div class="menu-preview-grid" id="menuPreview"></div>
-  </div>
-  <p class="hint">下の欄で、今表示している料金や説明だけ変更できます。</p>
-  <div id="menuList"></div>
-</section>
-
-<section id="panel-calendar" class="panel">
-  <div class="preview">
-    <div class="preview-title">表示する期間</div>
-    <p class="small">好きな開始日〜終了日を選ぶと、その期間だけのカレンダーを1枚で表示できます。</p>
-    <div class="grid">
-      <div>
-        <label>表示開始日</label>
-        <input type="date" id="calendarStart" onchange="updateSettingFromInput('calendarStart',this.value)">
-      </div>
-      <div>
-        <label>表示終了日</label>
-        <input type="date" id="calendarEnd" onchange="updateSettingFromInput('calendarEnd',this.value)">
-      </div>
+  <section id="panel-news" class="panel active">
+    <div class="preview">
+      <div class="preview-title">現在のお知らせ表示</div>
+      <p class="small">ホームページには上から最新3件だけ表示されます。</p>
+      <div class="news-preview-list" id="newsPreview"></div>
     </div>
-    <div class="row-actions">
-      <button class="btn btn-soft" type="button" onclick="renderPeriodPreview()">期間プレビュー更新</button>
-      <button class="btn btn-dark" type="button" onclick="saveCalendarImage()">画像で保存</button>
+    <div id="newsList"></div>
+    <button class="btn btn-add" type="button" onclick="addNews()">＋ お知らせを追加</button>
+  </section>
+
+  <section id="panel-lesson" class="panel">
+    <div class="preview">
+      <div class="preview-title">現在のレッスン時間表示</div>
+      <div class="lesson-preview-grid" id="lessonPreview"></div>
     </div>
-  </div>
+    <p class="hint">下の欄で、今表示している時間だけ変更できます。</p>
+    <div id="lessonList"></div>
+  </section>
 
-  <div id="calendarCapture" class="capture-wrap">
-    <img class="capture-logo" src="images/logo.png" alt="Yoga Flower">
-    <div class="capture-title">予約状況カレンダー</div>
-    <div class="capture-period" id="capturePeriod"></div>
-    <div id="periodPreview"></div>
-  </div>
-
-  <p class="hint">下の月カレンダーの日付をタップして、丸囲み数字・空/満・夜・自由テキストを設定できます。</p>
-  <div class="admin-cal">
-    <div class="cal-head">
-      <button class="cal-btn" onclick="changeCalMonth(-1)" type="button">前の月</button>
-      <div class="cal-title" id="calTitle"></div>
-      <button class="cal-btn" onclick="changeCalMonth(1)" type="button">次の月</button>
+  <section id="panel-menu" class="panel">
+    <div class="preview">
+      <div class="preview-title">現在の料金表表示</div>
+      <div class="menu-preview-grid" id="menuPreview"></div>
     </div>
-    <div class="cal-grid" id="calGrid"></div>
-  </div>
-  <div class="cal-editor" id="calEditor">
-    <div class="preview-title">日付をタップしてください</div>
-    <p class="small">選んだ日付の内容をここで編集します。</p>
-  </div>
-</section>
+    <p class="hint">下の欄で、今表示している料金や説明だけ変更できます。</p>
+    <div id="menuList"></div>
+  </section>
 
-<button class="save-top" style="width:100%;margin-top:10px" type="button" onclick="saveAll()">保存</button>
+  <section id="panel-calendar" class="panel">
+    <p class="hint">表示専用カレンダーに出す日だけ登録してください。</p>
+    <div id="calendarList"></div>
+    <button class="btn btn-add" type="button" onclick="addCalendar()">＋ 日付を追加</button>
+  </section>
+
+  <button class="save-top" style="width:100%;margin-top:10px" type="button" onclick="saveAll()">保存</button>
 </main>
 
 <form id="saveForm" method="POST" action="https://script.google.com/macros/s/AKfycbzlyU2DNJtiQNL5gQ9Lex55qsXyxQ4mI9bghM3bhjcQX5adCDmAcahI_v5RzBuYDi4T/exec" target="saveFrame">
@@ -502,123 +323,103 @@ textarea{min-height:86px;resize:vertical}
 <script>
 const API_URL='https://script.google.com/macros/s/AKfycbzlyU2DNJtiQNL5gQ9Lex55qsXyxQ4mI9bghM3bhjcQX5adCDmAcahI_v5RzBuYDi4T/exec';
 
-let state={
-  news:[],
-  lesson_times:[],
-  menus:[],
-  calendar:[],
-  settings:{calendarStart:'', calendarEnd:''}
-};
+const DEFAULT_NEWS=[
+  {id:'n1',date:'2026.6.1',title:'6月のレッスン予定を公開しました。',visible:'TRUE'},
+  {id:'n2',date:'2026.5.20',title:'体験レッスンの受付を開始しました。',visible:'TRUE'},
+  {id:'n3',date:'2026.5.10',title:'ホームページを準備中です。',visible:'TRUE'}
+];
 
-let dataLoaded=false;
-let calCurrent=new Date();
-calCurrent.setDate(1);
-let selectedDate='';
+const DEFAULT_LESSONS=[
+  {id:'l1',day:'毎週月曜日',time:'19:30〜20:45',note:'オンライン・対面どちらも可能',visible:'TRUE'},
+  {id:'l2',day:'毎週水曜日',time:'9:30〜10:45',note:'',visible:'TRUE'},
+  {id:'l3',day:'毎週金曜日',time:'9:30〜10:45',note:'',visible:'TRUE'}
+];
 
-function uid(p){return p+Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
-function esc(t){return String(t??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;')}
-function isVisible(i){return i.visible===undefined||i.visible===''||String(i.visible).toUpperCase()==='TRUE'}
-function toDateInputValue(v){if(!v)return'';const t=String(v).trim();if(/^\d{4}-\d{2}-\d{2}$/.test(t))return t;const m=t.match(/^(\d{4})[./-](\d{1,2})[./-](\d{1,2})$/);if(!m)return'';return `${m[1]}-${String(m[2]).padStart(2,'0')}-${String(m[3]).padStart(2,'0')}`}
-function toDisplayDate(v){if(!v)return'';const t=String(v).trim();let m=t.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);if(m)return `${m[1]}.${Number(m[2])}.${Number(m[3])}`;m=t.match(/^(\d{4})[./](\d{1,2})[./](\d{1,2})$/);if(m)return `${m[1]}.${Number(m[2])}.${Number(m[3])}`;return t}
-function parseDate(s){if(!s)return null;const d=new Date(s+'T00:00:00');return isNaN(d)?null:d}
-function calKey(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
-function formatJP(s){const d=parseDate(s);return d?`${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日`:''}
-function showStatus(m){status.textContent=m;status.classList.add('show');setTimeout(()=>status.classList.remove('show'),2600)}
+const DEFAULT_MENUS=[
+  {id:'m1',name:'グループレッスン',price:'4,000円',note:'月4回',type:'group',visible:'TRUE'},
+  {id:'m2',name:'グループレッスン',price:'3,300円',note:'月3回',type:'group',visible:'TRUE'},
+  {id:'m3',name:'グループレッスン',price:'2,200円',note:'月2回',type:'group',visible:'TRUE'},
+  {id:'m4',name:'グループレッスン',price:'1,500円',note:'1回',type:'group',visible:'TRUE'},
+  {id:'m5',name:'お友達同士',price:'1回 2,500円',note:'2〜3名でのレッスンです。料金は1名あたりです。',type:'normal',visible:'TRUE'},
+  {id:'m6',name:'お一人でゆっくりと',price:'1回 3,500円',note:'まわりを気にせず、ご自身のペースで受けたい方向けです。',type:'normal',visible:'TRUE'},
+  {id:'m7',name:'オンラインレッスン',price:'月4回 2,500円',note:'毎週月曜夜に行っています。',type:'normal',visible:'TRUE'}
+];
 
-document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{
-  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
-  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
-  b.classList.add('active');
-  document.getElementById('panel-'+b.dataset.tab).classList.add('active');
-}));
+let state={news:[],lesson_times:[],menus:[],calendar:[]};
 
-function settingsRowsToObj(rows){
-  const o={};
-  (rows||[]).forEach(r=>{if(r.key)o[r.key]=r.value||''});
-  return o;
+function clone(data){return JSON.parse(JSON.stringify(data));}
+function uid(prefix){return prefix+Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
+function esc(text){return String(text??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');}
+function isVisible(item){return item.visible===undefined||item.visible===''||String(item.visible).toUpperCase()==='TRUE';}
+
+function toDateInputValue(value){
+  if(!value)return '';
+  const text=String(value).trim();
+  if(/^\d{4}-\d{2}-\d{2}$/.test(text))return text;
+  const m=text.match(/^(\d{4})[./-](\d{1,2})[./-](\d{1,2})$/);
+  if(!m)return '';
+  return `${m[1]}-${String(m[2]).padStart(2,'0')}-${String(m[3]).padStart(2,'0')}`;
 }
 
-function settingsObjToRows(obj){
-  return Object.keys(obj).map(k=>({key:k,value:obj[k]||''}));
+function toDisplayDate(value){
+  if(!value)return '';
+  const text=String(value).trim();
+  let m=text.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+  if(m)return `${m[1]}.${Number(m[2])}.${Number(m[3])}`;
+  m=text.match(/^(\d{4})[./](\d{1,2})[./](\d{1,2})$/);
+  if(m)return `${m[1]}.${Number(m[2])}.${Number(m[3])}`;
+  return text;
 }
 
-function initDefaultPeriod(){
-  const now=new Date();
-  const start=new Date(now.getFullYear(),now.getMonth(),15);
-  const end=new Date(now.getFullYear(),now.getMonth()+1,0);
-  if(!state.settings.calendarStart) state.settings.calendarStart=calKey(start);
-  if(!state.settings.calendarEnd) state.settings.calendarEnd=calKey(end);
+function showStatus(message){
+  status.textContent=message;
+  status.classList.add('show');
+  setTimeout(()=>status.classList.remove('show'),2600);
 }
 
+document.querySelectorAll('.tab').forEach(button=>{
+  button.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(item=>item.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(panel=>panel.classList.remove('active'));
+    button.classList.add('active');
+    document.getElementById('panel-'+button.dataset.tab).classList.add('active');
+  });
+});
 
-
-function cloneDefaultLessons(){
-  return [
-    {id:'l1',day:'毎週月曜日',time:'19:30〜20:45',note:'オンライン・対面どちらも可能',visible:'TRUE'},
-    {id:'l2',day:'毎週水曜日',time:'9:30〜10:45',note:'',visible:'TRUE'},
-    {id:'l3',day:'毎週金曜日',time:'9:30〜10:45',note:'',visible:'TRUE'}
-  ];
-}
-
-function cloneDefaultMenus(){
-  return [
-    {id:'m1',name:'グループレッスン',price:'4,000円',note:'月4回',type:'group',visible:'TRUE'},
-    {id:'m2',name:'グループレッスン',price:'3,300円',note:'月3回',type:'group',visible:'TRUE'},
-    {id:'m3',name:'グループレッスン',price:'2,200円',note:'月2回',type:'group',visible:'TRUE'},
-    {id:'m4',name:'グループレッスン',price:'1,500円',note:'1回',type:'group',visible:'TRUE'},
-    {id:'m5',name:'お友達同士',price:'1回 2,500円',note:'2〜3名でのレッスンです。料金は1名あたりです。',type:'normal',visible:'TRUE'},
-    {id:'m6',name:'お一人でゆっくりと',price:'1回 3,500円',note:'まわりを気にせず、ご自身のペースで受けたい方向けです。',type:'normal',visible:'TRUE'},
-    {id:'m7',name:'オンラインレッスン',price:'月4回 2,500円',note:'毎週月曜夜に行っています。',type:'normal',visible:'TRUE'}
-  ];
-}
-
-function updateDebugBox(message){
-  const el=document.getElementById('debugBox');
-  if(!el)return;
-  el.innerHTML =
-    '<span>修正版 2026-05-31 fallback対応</span>' +
-    '<span>' + message + '</span>' +
-    '<span>お知らせ:' + state.news.length + '件</span>' +
-    '<span>レッスン時間:' + state.lesson_times.length + '件</span>' +
-    '<span>料金:' + state.menus.length + '件</span>' +
-    '<span>カレンダー:' + state.calendar.length + '件</span>';
+function normalizeFixedRows(rows,defaults){
+  const byId={};
+  (rows||[]).forEach(row=>{if(row.id)byId[row.id]=row;});
+  return defaults.map(def=>({...def,...(byId[def.id]||{})}));
 }
 
 function loadData(){
   showStatus('読み込み中です');
-  const cb='adminCallback_'+Date.now();
-  const s=document.createElement('script');
-  const timer=setTimeout(()=>{
-    updateDebugBox('読み込み失敗');
-    updateDebugBox('読み込み失敗');
-    showStatus('読み込みに失敗しました。保存しないでください');
-    s.remove();
-  },8000);
+  state.news=clone(DEFAULT_NEWS);
+  state.lesson_times=clone(DEFAULT_LESSONS);
+  state.menus=clone(DEFAULT_MENUS);
+  state.calendar=[];
+  renderAll();
 
-  window[cb]=res=>{
+  const cb='adminCallback_'+Date.now();
+  const script=document.createElement('script');
+  const timer=setTimeout(()=>{showStatus('初期データを表示しています');script.remove();},6000);
+
+  window[cb]=response=>{
     clearTimeout(timer);
-    const data=res&&res.data?res.data:{};
-    state.news=Array.isArray(data.news)?data.news:[];
-    state.lesson_times=Array.isArray(data.lesson_times)&&data.lesson_times.length?data.lesson_times:cloneDefaultLessons();
-    state.menus=Array.isArray(data.menus)&&data.menus.length?data.menus:cloneDefaultMenus();
-    state.calendar=Array.isArray(data.calendar)?data.calendar:[];
-    state.settings=settingsRowsToObj(data.settings||[]);
-    initDefaultPeriod();
-    dataLoaded=true;
-    updateDebugBox('読み込み成功');
+    const data=response&&response.data?response.data:{};
+    state.news=data.news&&data.news.length?data.news:clone(DEFAULT_NEWS);
+    state.lesson_times=normalizeFixedRows(data.lesson_times,DEFAULT_LESSONS);
+    state.menus=normalizeFixedRows(data.menus,DEFAULT_MENUS);
+    state.calendar=data.calendar||[];
     renderAll();
     showStatus('読み込みました');
-    s.remove();
+    script.remove();
     delete window[cb];
   };
 
-  s.src=API_URL+'?action=getData&callback='+cb+'&t='+Date.now();
-  s.onerror=()=>{
-    clearTimeout(timer);
-    showStatus('読み込みに失敗しました。保存しないでください');
-    s.remove();
-  };
-  document.body.appendChild(s);
+  script.src=API_URL+'?action=getData&callback='+cb+'&t='+Date.now();
+  script.onerror=()=>{clearTimeout(timer);showStatus('初期データを表示しています');script.remove();};
+  document.body.appendChild(script);
 }
 
 function renderAll(){
@@ -629,205 +430,210 @@ function renderAll(){
   renderLesson();
   renderMenu();
   renderCalendar();
-  renderCalendarSettings();
-  renderPeriodPreview();
 }
 
 function renderPreviews(){
   renderNewsPreview();
   renderLessonPreview();
   renderMenuPreview();
-  renderCalendar();
-  renderPeriodPreview();
 }
 
-function field(k,i,f,v){
-  state[k][i][f]=v;
+function field(kind,index,fieldName,value){
+  state[kind][index][fieldName]=value;
   renderPreviews();
 }
 
-document.addEventListener('input',e=>{
-  const d=e.target.dataset;
-  if(!d.kind)return;
-  field(d.kind,Number(d.i),d.field,e.target.value);
-  if(d.kind==='calendar')renderCalendarEditor();
+document.addEventListener('input',event=>{
+  const data=event.target.dataset;
+  if(!data.kind)return;
+  field(data.kind,Number(data.i),data.field,event.target.value);
 });
 
-document.addEventListener('change',e=>{
-  const d=e.target.dataset;
-  if(!d.kind)return;
-  let v=d.field==='visible'?(e.target.checked?'TRUE':'FALSE'):e.target.value;
-  if(d.kind==='news'&&d.field==='date')v=toDisplayDate(v);
-  field(d.kind,Number(d.i),d.field,v);
-  if(d.kind==='calendar')renderCalendarEditor();
+document.addEventListener('change',event=>{
+  const data=event.target.dataset;
+  if(!data.kind)return;
+  let value=data.field==='visible'?(event.target.checked?'TRUE':'FALSE'):event.target.value;
+  if(data.kind==='news'&&data.field==='date')value=toDisplayDate(value);
+  field(data.kind,Number(data.i),data.field,value);
 });
+
+function visibleChecked(item){return isVisible(item);}
 
 function cardTop(title,kind,index,item){
-  return `<div class="card"><div style="display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:12px;"><div class="card-title">${esc(title)}</div><label class="visible-line"><input type="checkbox" data-kind="${kind}" data-i="${index}" data-field="visible" ${isVisible(item)?'checked':''}>表示</label></div>`;
+  return `
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:12px;">
+        <div class="card-title">${title}</div>
+        <label class="visible-line">
+          <input type="checkbox" data-kind="${kind}" data-i="${index}" data-field="visible" ${visibleChecked(item)?'checked':''}>
+          表示
+        </label>
+      </div>
+  `;
 }
 
 function actions(kind,index){
-  return `<div class="row-actions"><button class="btn btn-dup" type="button" onclick="moveItem('${kind}',${index},-1)">上へ</button><button class="btn btn-delete" type="button" onclick="deleteItem('${kind}',${index})">削除</button></div></div>`;
+  return `
+      <div class="row-actions">
+        <button class="btn btn-dup" type="button" onclick="moveItem('${kind}',${index},-1)">上へ</button>
+        <button class="btn btn-delete" type="button" onclick="deleteItem('${kind}',${index})">削除</button>
+      </div>
+    </div>
+  `;
 }
 
 function renderNewsPreview(){
   const rows=state.news.filter(isVisible).slice(0,3);
-  newsPreview.innerHTML=rows.length?rows.map(i=>`<article class="news-preview-item"><div class="preview-date">${esc(i.date)}</div><div>${esc(i.title)}</div></article>`).join(''):'<p class="small">お知らせデータがありません。</p>';
+  newsPreview.innerHTML=rows.length?rows.map(item=>`
+    <article class="news-preview-item">
+      <div class="preview-date">${esc(item.date)}</div>
+      <div>${esc(item.title)}</div>
+    </article>
+  `).join(''):'<p class="small">表示するお知らせがありません。</p>';
 }
 
 function renderLessonPreview(){
-  const rows=state.lesson_times.filter(isVisible);
-  lessonPreview.innerHTML=rows.length?rows.map(i=>`<article class="lesson-preview-item"><div class="lesson-day">${esc(i.day)}</div><div class="lesson-hour">${esc(i.time)}</div>${i.note?`<p class="small">${esc(i.note)}</p>`:''}</article>`).join(''):'<p class="small">レッスン時間データを読み込めていません。</p>';
-}
-
-function buildMenuRows(){
-  const visible=state.menus.filter(isVisible);
-  const group=visible.filter(i=>i.type==='group');
-  const normal=visible.filter(i=>i.type!=='group');
-  const rows=[];
-  if(group.length){
-    rows.push({name:'グループレッスン', groupPrices:group.map(x=>({label:x.note, price:x.price}))});
-  }
-  normal.forEach(i=>rows.push({name:i.name, price:i.price, note:i.note}));
-  return rows;
+  lessonPreview.innerHTML=state.lesson_times.filter(isVisible).map(item=>`
+    <article class="lesson-preview-item">
+      <div class="lesson-day">${esc(item.day)}</div>
+      <div class="lesson-hour">${esc(item.time)}</div>
+      ${item.note?`<p class="small">${esc(item.note)}</p>`:''}
+    </article>
+  `).join('');
 }
 
 function renderMenuPreview(){
-  const rows=buildMenuRows();
-  menuPreview.innerHTML=rows.length?rows.map(i=>`<article class="menu-preview-card"><h3>${esc(i.name)}</h3>${i.price?`<div class="price">${esc(i.price)}</div>`:''}${i.groupPrices?`<div class="group-grid">${i.groupPrices.map(p=>`<div class="group-item"><div class="group-label">${esc(p.label)}</div><div class="group-price">${esc(p.price)}</div></div>`).join('')}</div>`:''}${i.note?`<p class="small">${esc(i.note)}</p>`:''}</article>`).join(''):'<p class="small">料金データを読み込めていません。</p>';
+  const visible=state.menus.filter(isVisible);
+  const groups=visible.filter(item=>item.type==='group');
+  const normals=visible.filter(item=>item.type!=='group');
+  const rows=[];
+  if(groups.length){
+    rows.push({name:'グループレッスン',groupPrices:groups.map(g=>({label:g.note,price:g.price}))});
+  }
+  normals.forEach(item=>rows.push({name:item.name,price:item.price,note:item.note}));
+  menuPreview.innerHTML=rows.map(item=>`
+    <article class="menu-preview-card">
+      <h3>${esc(item.name)}</h3>
+      ${item.price?`<div class="price">${esc(item.price)}</div>`:''}
+      ${item.groupPrices?`
+        <div class="group-grid">
+          ${item.groupPrices.map(p=>`
+            <div class="group-item">
+              <div class="group-label">${esc(p.label)}</div>
+              <div class="group-price">${esc(p.price)}</div>
+            </div>
+          `).join('')}
+        </div>
+      `:''}
+      ${item.note?`<p class="small">${esc(item.note)}</p>`:''}
+    </article>
+  `).join('');
 }
 
 function renderNews(){
-  newsList.innerHTML=state.news.map((i,x)=>cardTop('お知らせ '+(x+1),'news',x,i)+`<div class="grid"><div><label>日付</label><input type="date" data-kind="news" data-i="${x}" data-field="date" value="${esc(toDateInputValue(i.date))}"></div><div class="full"><label>内容</label><input data-kind="news" data-i="${x}" data-field="title" value="${esc(i.title)}"></div></div>`+actions('news',x)).join('');
+  newsList.innerHTML=state.news.map((item,index)=>cardTop('お知らせ '+(index+1),'news',index,item)+`
+    <div class="grid">
+      <div>
+        <label>日付</label>
+        <input type="date" data-kind="news" data-i="${index}" data-field="date" value="${esc(toDateInputValue(item.date))}">
+      </div>
+      <div class="full">
+        <label>内容</label>
+        <input data-kind="news" data-i="${index}" data-field="title" value="${esc(item.title)}">
+      </div>
+    </div>
+  `+actions('news',index)).join('');
 }
 
 function renderLesson(){
-  lessonList.innerHTML=state.lesson_times.length?state.lesson_times.map((i,x)=>cardTop(i.day,'lesson_times',x,i)+`<div class="grid"><div><label>時間</label><input data-kind="lesson_times" data-i="${x}" data-field="time" value="${esc(i.time)}"></div><div class="full"><label>補足</label><input data-kind="lesson_times" data-i="${x}" data-field="note" value="${esc(i.note)}"></div></div></div>`).join(''):'<div class="card"><div class="card-title">レッスン時間データを読み込めていません</div><p class="small">読み込み完了後に表示されます。</p></div>';
+  lessonList.innerHTML=state.lesson_times.map((item,index)=>cardTop(item.day,'lesson_times',index,item)+`
+    <div class="grid">
+      <div>
+        <label>時間</label>
+        <input data-kind="lesson_times" data-i="${index}" data-field="time" value="${esc(item.time)}">
+      </div>
+      <div class="full">
+        <label>補足</label>
+        <input data-kind="lesson_times" data-i="${index}" data-field="note" value="${esc(item.note)}">
+      </div>
+    </div>
+    </div>
+  `).join('');
 }
 
 function renderMenu(){
-  if(!state.menus.length){
-    menuList.innerHTML='<div class="card"><div class="card-title">料金データを読み込めていません</div><p class="small">読み込み完了後に表示されます。</p></div>';
-    return;
-  }
-  const group=state.menus.filter(i=>i.type==='group');
-  const normal=state.menus.filter(i=>i.type!=='group');
-  const groupHtml=`<div class="card-title" style="margin:18px 0 10px;">グループレッスン</div>${group.map(i=>{const x=state.menus.indexOf(i);return cardTop(i.note,'menus',x,i)+`<div class="grid"><div class="full"><label>${esc(i.note)}の料金</label><input data-kind="menus" data-i="${x}" data-field="price" value="${esc(i.price)}"></div></div></div>`}).join('')}`;
-  const normalHtml=normal.map(i=>{const x=state.menus.indexOf(i);return cardTop(i.name,'menus',x,i)+`<div class="grid"><div><label>料金</label><input data-kind="menus" data-i="${x}" data-field="price" value="${esc(i.price)}"></div><div class="full"><label>説明</label><textarea data-kind="menus" data-i="${x}" data-field="note">${esc(i.note)}</textarea></div></div></div>`}).join('');
+  const groups=state.menus.filter(item=>item.type==='group');
+  const normals=state.menus.filter(item=>item.type!=='group');
+
+  const groupHtml=`
+    <div class="card-title" style="margin:18px 0 10px;">グループレッスン</div>
+    ${groups.map(item=>{
+      const index=state.menus.indexOf(item);
+      return cardTop(item.note,'menus',index,item)+`
+        <div class="grid">
+          <div class="full">
+            <label>${esc(item.note)}の料金</label>
+            <input data-kind="menus" data-i="${index}" data-field="price" value="${esc(item.price)}">
+          </div>
+        </div>
+      </div>`;
+    }).join('')}
+  `;
+
+  const normalHtml=normals.map(item=>{
+    const index=state.menus.indexOf(item);
+    return cardTop(item.name,'menus',index,item)+`
+      <div class="grid">
+        <div>
+          <label>料金</label>
+          <input data-kind="menus" data-i="${index}" data-field="price" value="${esc(item.price)}">
+        </div>
+        <div class="full">
+          <label>説明</label>
+          <textarea data-kind="menus" data-i="${index}" data-field="note">${esc(item.note)}</textarea>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
   menuList.innerHTML=groupHtml+normalHtml;
 }
 
-function getCalRow(date){return state.calendar.find(r=>r.date===date)}
-function ensureCalRow(date){let r=getCalRow(date);if(!r){r={date,number:'',status:'',text:'',night:'FALSE',visible:'TRUE'};state.calendar.push(r)}return r}
-function changeCalMonth(diff){calCurrent.setMonth(calCurrent.getMonth()+diff);renderCalendar()}
-function selectDate(date){selectedDate=date;ensureCalRow(date);renderCalendar();renderCalendarEditor()}
-
 function renderCalendar(){
-  const y=calCurrent.getFullYear(),m=calCurrent.getMonth();
-  calTitle.textContent=`${y}年${m+1}月`;
-  let html=['日','月','火','水','木','金','土'].map(d=>`<div class="dow">${d}</div>`).join('');
-  const first=new Date(y,m,1),last=new Date(y,m+1,0),start=first.getDay();
-  for(let i=0;i<start;i++)html+='<div class="day"></div>';
-  for(let d=1;d<=last.getDate();d++){
-    const date=calKey(new Date(y,m,d));
-    const row=getCalRow(date);
-    const dow=new Date(y,m,d).getDay();
-    const cls=dow===0?' sun':dow===6?' sat':'';
-    html+=`<div class="day${cls} ${selectedDate===date?'selected':''}" onclick="selectDate('${date}')"><div class="day-num">${d}</div>${row&&isVisible(row)?renderDayMark(row):''}</div>`;
-  }
-  calGrid.innerHTML=html;
-}
-
-function renderDayMark(row){
-  let s='<div class="mark">';
-  if(row.number)s+=`<span class="circle-num">${esc(row.number)}</span>`;
-  if(row.status)s+=`<span class="badge ${row.status==='満'?'full':row.status==='空'?'empty':row.status==='休'?'off':''}">${esc(row.status)}</span>`;
-  if(String(row.night).toUpperCase()==='TRUE')s+=' <span class="night">夜🌙</span>';
-  if(row.text)s+=`<div>${esc(row.text)}</div>`;
-  return s+'</div>';
-}
-
-function renderCalendarEditor(){
-  if(!selectedDate){
-    calEditor.innerHTML='<div class="preview-title">日付をタップしてください</div><p class="small">選んだ日付の内容をここで編集します。</p>';
-    return;
-  }
-  const row=ensureCalRow(selectedDate);
-  const idx=state.calendar.indexOf(row);
-  calEditor.innerHTML=`<div class="preview-title">${selectedDate} の設定</div><div class="grid"><div><label>丸囲み数字</label><input inputmode="numeric" data-kind="calendar" data-i="${idx}" data-field="number" value="${esc(row.number)}" placeholder="例：1"></div><div><label>状態</label><select data-kind="calendar" data-i="${idx}" data-field="status"><option value="" ${!row.status?'selected':''}>なし</option><option value="空" ${row.status==='空'?'selected':''}>空</option><option value="満" ${row.status==='満'?'selected':''}>満</option><option value="休" ${row.status==='休'?'selected':''}>休</option></select></div><div><label>夜</label><select data-kind="calendar" data-i="${idx}" data-field="night"><option value="FALSE" ${String(row.night).toUpperCase()!=='TRUE'?'selected':''}>表示しない</option><option value="TRUE" ${String(row.night).toUpperCase()==='TRUE'?'selected':''}>夜🌙を表示</option></select></div><div><label>表示</label><select data-kind="calendar" data-i="${idx}" data-field="visible"><option value="TRUE" ${isVisible(row)?'selected':''}>表示する</option><option value="FALSE" ${!isVisible(row)?'selected':''}>非表示</option></select></div><div class="full"><label>自由テキスト</label><input data-kind="calendar" data-i="${idx}" data-field="text" value="${esc(row.text)}" placeholder="例：残1 / 午前のみ"></div></div><div class="row-actions"><button class="btn btn-delete" type="button" onclick="clearCalendarDate('${selectedDate}')">この日の入力を消す</button></div>`;
-}
-
-function clearCalendarDate(date){
-  const idx=state.calendar.findIndex(r=>r.date===date);
-  if(idx>=0&&confirm('この日の入力を消しますか？')){
-    state.calendar.splice(idx,1);
-    selectedDate='';
-    renderCalendar();
-    renderCalendarEditor();
-    renderPeriodPreview();
-  }
-}
-
-function renderCalendarSettings(){
-  calendarStart.value=state.settings.calendarStart||'';
-  calendarEnd.value=state.settings.calendarEnd||'';
-}
-
-function updateSettingFromInput(key,value){
-  state.settings[key]=value;
-  renderPeriodPreview();
-}
-
-function eachDate(start,end,cb){
-  let d=new Date(start);
-  while(d<=end){
-    cb(new Date(d));
-    d.setDate(d.getDate()+1);
-  }
-}
-
-function renderPeriodPreview(){
-  const start=parseDate(state.settings.calendarStart),end=parseDate(state.settings.calendarEnd);
-  if(!start||!end||start>end){
-    capturePeriod.textContent='表示期間を選んでください';
-    periodPreview.innerHTML='';
-    return;
-  }
-  capturePeriod.textContent=`${formatJP(state.settings.calendarStart)} 〜 ${formatJP(state.settings.calendarEnd)}`;
-  periodPreview.innerHTML=renderOneContinuousPeriod(start,end);
-}
-
-function renderOneContinuousPeriod(start,end){
-  let html=`<div class="period-calendar"><div class="period-month">${formatPeriodTitle(start,end)}</div>`;
-  html+=['日','月','火','水','木','金','土'].map(d=>`<div class="p-dow">${d}</div>`).join('');
-  for(let i=0;i<start.getDay();i++)html+='<div class="p-cell"></div>';
-  eachDate(start,end,dateObj=>{
-    const date=calKey(dateObj),dow=dateObj.getDay(),row=getCalRow(date),cls=dow===0?' sun':dow===6?' sat':'';
-    html+=`<div class="p-cell${cls}"><div class="p-date">${dateObj.getMonth()+1}/${dateObj.getDate()}</div>${row&&isVisible(row)?renderDayMark(row):''}</div>`;
-  });
-  html+='</div>';
-  return html;
-}
-
-function formatPeriodTitle(start,end){
-  if(start.getFullYear()===end.getFullYear())return `${start.getFullYear()}年${start.getMonth()+1}月${start.getDate()}日〜${end.getMonth()+1}月${end.getDate()}日`;
-  return `${start.getFullYear()}年${start.getMonth()+1}月${start.getDate()}日〜${end.getFullYear()}年${end.getMonth()+1}月${end.getDate()}日`;
-}
-
-function saveCalendarImage(){
-  renderPeriodPreview();
-  html2canvas(document.getElementById('calendarCapture'),{backgroundColor:null,scale:2}).then(canvas=>{
-    const a=document.createElement('a');
-    a.download='yoga-flower-calendar.png';
-    a.href=canvas.toDataURL('image/png');
-    a.click();
-  }).catch(()=>showStatus('画像保存に失敗しました'));
+  calendarList.innerHTML=state.calendar.map((item,index)=>`
+    <div class="card">
+      <div class="card-title">予約日 ${index+1}</div>
+      <div class="grid">
+        <div>
+          <label>日付</label>
+          <input type="date" data-kind="calendar" data-i="${index}" data-field="date" value="${esc(item.date)}">
+        </div>
+        <div>
+          <label>状態</label>
+          <select data-kind="calendar" data-i="${index}" data-field="status">
+            <option value="空" ${item.status==='空'?'selected':''}>空</option>
+            <option value="残りわずか" ${item.status==='残りわずか'?'selected':''}>残りわずか</option>
+            <option value="満席" ${item.status==='満席'?'selected':''}>満席</option>
+            <option value="休み" ${item.status==='休み'?'selected':''}>休み</option>
+          </select>
+        </div>
+        <div class="full">
+          <label>メモ</label>
+          <input data-kind="calendar" data-i="${index}" data-field="note" value="${esc(item.note)}">
+        </div>
+      </div>
+    `+actions('calendar',index)).join('');
 }
 
 function addNews(){
   const now=new Date();
   state.news.unshift({id:uid('n'),date:`${now.getFullYear()}.${now.getMonth()+1}.${now.getDate()}`,title:'',visible:'TRUE'});
   renderAll();
+}
+
+function addCalendar(){
+  state.calendar.push({date:'',status:'空',note:''});
+  renderCalendar();
 }
 
 function deleteItem(kind,index){
@@ -846,23 +652,17 @@ function moveItem(kind,index,direction){
 }
 
 function saveAll(){
-  if(!dataLoaded){
-    showStatus('まだ読み込みが完了していません。保存しないでください');
-    return;
-  }
   const payload={
     news:state.news,
-    lesson_times:state.lesson_times,
-    menus:state.menus,
-    calendar:state.calendar.filter(r=>r.date&&(r.number||r.status||r.text||String(r.night).toUpperCase()==='TRUE'||String(r.visible).toUpperCase()==='FALSE')),
-    settings:settingsObjToRows(state.settings)
+    lesson_times:normalizeFixedRows(state.lesson_times,DEFAULT_LESSONS),
+    menus:normalizeFixedRows(state.menus,DEFAULT_MENUS),
+    calendar:state.calendar
   };
   payloadField.value=JSON.stringify(payload);
   saveForm.submit();
   showStatus('保存しました。反映まで少し待ってください');
 }
 
-updateDebugBox('読み込み前');
 loadData();
 </script>
 </body>
