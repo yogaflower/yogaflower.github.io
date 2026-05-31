@@ -278,6 +278,13 @@
       backdrop-filter:blur(10px);
     }
 
+
+    .loading-message{
+      text-align:center;
+      color:var(--sub);
+      padding:20px;
+    }
+
     .news-list{
       display:grid;
       gap:12px;
@@ -503,8 +510,8 @@
       width:48px;
       height:48px;
       border-radius:50%;
-      border:1px solid rgba(125,155,132,.35);
-      background:rgba(125,155,132,.88);
+      border:1px solid rgba(31,21,12,.18);
+      background:rgba(31,21,12,.86);
       color:#fffdf8;
       display:flex;
       align-items:center;
@@ -616,6 +623,36 @@
         height:470px;
       }
     }
+
+    /* アクセス右側：レッスン会場写真カード */
+    .venue-photo-card{
+      padding:0;
+      overflow:hidden;
+    }
+
+    .venue-photo-card img{
+      width:100%;
+      height:330px;
+      object-fit:cover;
+      object-position:center center;
+      border-radius:var(--radius) var(--radius) 0 0;
+    }
+
+    .venue-photo-body{
+      padding:24px 26px 28px;
+      text-align:left;
+    }
+
+    .venue-photo-body h3{
+      margin-bottom:10px;
+    }
+
+    @media (max-width:860px){
+      .venue-photo-card img{
+        height:260px;
+      }
+    }
+
   </style>
 </head>
 
@@ -787,10 +824,13 @@
             <p id="accessParking" class="small"></p>
           </div>
 
-          <div class="map-box glass">
-            <div>
-              Googleマップ埋め込み予定<br>
-              <span class="small">住所確定後に地図を入れます</span>
+          <div class="venue-photo-card glass">
+            <img src="images/yoga-sub.jpg?v=20260601" alt="Yoga Flower レッスン会場">
+            <div class="venue-photo-body">
+              <h3>レッスン会場</h3>
+              <p class="small">
+                古民家ならではの木のぬくもりと自然光に包まれた空間で、ゆったりとレッスンを行っています。
+              </p>
             </div>
           </div>
         </div>
@@ -857,7 +897,7 @@
 
     function normalizeData(raw){
       const data = raw || {};
-      const news = Array.isArray(data.news) && data.news.length ? data.news : siteData.news;
+      const news = Array.isArray(data.news) ? data.news : [];
       const lessonTimes = Array.isArray(data.lesson_times) && data.lesson_times.length ? data.lesson_times : siteData.lessonTimes;
       const menuRows = Array.isArray(data.menus) && data.menus.length ? data.menus : siteData.menus;
       return { news: news.filter(isVisible).slice(0, 3), lessonTimes: lessonTimes.filter(isVisible), menus: buildMenus(menuRows.filter(isVisible)) };
@@ -865,9 +905,11 @@
 
     function renderSite(rawData){
       const data = normalizeData(rawData);
-      document.getElementById('newsList').innerHTML = data.news.map(item => `
+      document.getElementById('newsList').innerHTML = data.news.length
+        ? data.news.map(item => `
         <article class="news-item glass"><div class="date">${escapeHtml(item.date)}</div><div>${escapeHtml(item.title)}</div></article>
-      `).join('');
+      `).join('')
+        : '<div class="loading-message glass">現在、お知らせはありません。</div>';
       document.getElementById('menuCards').innerHTML = data.menus.map(item => `
         <article class="menu-card glass">
           <h3>${escapeHtml(item.name)}</h3>
@@ -923,10 +965,11 @@
     document.getElementById('calendarLink').href = calendarSrc;
     document.getElementById('calendarFrame').src = calendarSrc;
     document.getElementById('year').textContent = new Date().getFullYear();
-    renderSite(null);
+    document.getElementById('newsList').innerHTML = '<div class="loading-message glass">お知らせを読み込み中です。</div>';
     loadRemoteData();
     startHeroSlideshow();
     setupPageTop();
   </script>
+<!-- access-photo-card-updated-20260601 -->
 </body>
 </html>
