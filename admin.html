@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <title>Yoga Flower 管理画面</title>
 <link rel="icon" href="images/yogaflower.ico" type="image/x-icon">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -378,7 +381,7 @@ textarea{min-height:86px;resize:vertical}
 .p-date{font-weight:700;font-size:13px}
 .p-cell.sun .p-date{color:#b76f78}
 .p-cell.sat .p-date{color:#5f7f99}
-iframe[name="saveFrame"]{display:none}
+.debug-box{background:#fff3cd;border:2px solid #1f150c;border-radius:16px;padding:10px 14px;margin:0 0 14px;font-weight:700;color:#1f150c;font-size:13px}.debug-box span{display:inline-block;margin-right:10px} iframe[name="saveFrame"]{display:none}
 @media(max-width:720px){
   .tabs{grid-template-columns:repeat(2,1fr)}
   .grid{grid-template-columns:1fr}
@@ -407,6 +410,7 @@ iframe[name="saveFrame"]{display:none}
 <main>
 <h1>Yoga Flower 管理画面</h1>
 <p class="intro">スプレッドシートの内容を読み込んで編集します。編集後は「保存」を押してください。</p>
+<div class="debug-box" id="debugBox">修正版 2026-05-31 読み込み確認中...</div>
 
 <div class="tabs">
   <button class="tab active" data-tab="news">お知らせ</button>
@@ -546,11 +550,26 @@ function initDefaultPeriod(){
   if(!state.settings.calendarEnd) state.settings.calendarEnd=calKey(end);
 }
 
+
+function updateDebugBox(message){
+  const el=document.getElementById('debugBox');
+  if(!el)return;
+  el.innerHTML =
+    '<span>修正版 2026-05-31</span>' +
+    '<span>' + message + '</span>' +
+    '<span>お知らせ:' + state.news.length + '件</span>' +
+    '<span>レッスン時間:' + state.lesson_times.length + '件</span>' +
+    '<span>料金:' + state.menus.length + '件</span>' +
+    '<span>カレンダー:' + state.calendar.length + '件</span>';
+}
+
 function loadData(){
   showStatus('読み込み中です');
   const cb='adminCallback_'+Date.now();
   const s=document.createElement('script');
   const timer=setTimeout(()=>{
+    updateDebugBox('読み込み失敗');
+    updateDebugBox('読み込み失敗');
     showStatus('読み込みに失敗しました。保存しないでください');
     s.remove();
   },8000);
@@ -565,6 +584,7 @@ function loadData(){
     state.settings=settingsRowsToObj(data.settings||[]);
     initDefaultPeriod();
     dataLoaded=true;
+    updateDebugBox('読み込み成功');
     renderAll();
     showStatus('読み込みました');
     s.remove();
@@ -821,6 +841,7 @@ function saveAll(){
   showStatus('保存しました。反映まで少し待ってください');
 }
 
+updateDebugBox('読み込み前');
 loadData();
 </script>
 </body>
