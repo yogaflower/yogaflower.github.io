@@ -496,7 +496,21 @@
       margin-top:10px;
     }
 
-    footer{
+    
+    .menu-toggle{
+      display:none;
+      width:44px;
+      height:44px;
+      border:none;
+      background:#fffdf8;
+      color:#1f150c;
+      border-radius:12px;
+      font-size:24px;
+      cursor:pointer;
+      box-shadow:0 6px 18px rgba(31,21,12,.12);
+    }
+
+footer{
       padding:36px 0 48px;
       color:var(--sub);
       text-align:center;
@@ -552,9 +566,31 @@
         width:150px;
       }
 
+      .menu-toggle{
+        display:flex;
+        align-items:center;
+        justify-content:center;
+      }
+
       nav{
+        position:fixed;
+        top:68px;
+        left:0;
+        right:0;
+        background:rgba(255,253,248,.98);
+        backdrop-filter:blur(12px);
+        padding:18px;
+        flex-direction:column;
+        gap:14px;
+        border-bottom:1px solid rgba(31,21,12,.08);
         display:none;
       }
+
+      nav.open{display:flex;}
+
+      .line-contact-layout{flex-direction:column;gap:18px;}
+      .line-contact-text{text-align:center;max-width:none;width:100%;}
+      .line-contact-text .btn{width:100%;max-width:340px;}
 
       .hero{
         min-height:92vh;
@@ -726,6 +762,7 @@
         <a href="#access">アクセス</a>
         <a class="line-mini js-line" href="#" target="_blank" rel="noopener">LINE</a>
       </nav>
+      <button class="menu-toggle" id="menuToggle">☰</button>
     </div>
   </header>
 
@@ -973,6 +1010,13 @@
     loadRemoteData();
     startHeroSlideshow();
     setupPageTop();
+
+    const menuToggle=document.getElementById('menuToggle');
+    const nav=document.querySelector('nav');
+    if(menuToggle){
+      menuToggle.addEventListener('click',()=>nav.classList.toggle('open'));
+      nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>nav.classList.remove('open')));
+    }
   </script>
 <!-- access-photo-card-updated-20260601 -->
 </body>
