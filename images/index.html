@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yoga Flower｜古民家ヨガ</title>
+  <meta name="description" content="古民家の一室で行う、少人数制のやさしいヨガ教室 Yoga Flower。">
+  <link rel="icon" href="images/yogaflower.ico" type="image/x-icon">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;600;700&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --ink:#1f150c;
+      --sub:#6f6257;
+      --paper:rgba(255,253,248,.86);
+      --paper-solid:#fffdf8;
+      --line:rgba(31,21,12,.14);
+      --accent:#b88b6b;
+      --soft:#f3e9dc;
+      --shadow:0 18px 50px rgba(31,21,12,.12);
+      --radius:26px;
+    }
+
+    *{ box-sizing:border-box; }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      margin:0;
+      color:var(--ink);
+      font-family:'Zen Maru Gothic', sans-serif;
+      line-height:1.8;
+      background:url('images/bg.png') center top / cover fixed;
+    }
+
+    body::before{
+      content:'';
+      position:fixed;
+      inset:0;
+      background:rgba(255,253,248,.35);
+      pointer-events:none;
+      z-index:-1;
+    }
+
+    a{ color:inherit; }
+    img{ max-width:100%; display:block; }
+
+    .container{
+      width:min(1120px, calc(100% - 32px));
+      margin:0 auto;
+    }
+
+    header{
+      position:fixed;
+      top:0;
+      left:0;
+      right:0;
+      z-index:50;
+      background:rgba(255,253,248,.78);
+      backdrop-filter:blur(16px);
+      border-bottom:1px solid rgba(31,21,12,.08);
+    }
+
+    .header-inner{
+      height:74px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+    }
+
+    .header-logo{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      text-decoration:none;
+    }
+
+    .header-logo img{
+      width:178px;
+      height:auto;
+    }
+
+    nav{
+      display:flex;
+      align-items:center;
+      gap:22px;
+      font-size:14px;
+      color:var(--sub);
+      font-weight:700;
+    }
+
+    nav a{
+      text-decoration:none;
+      white-space:nowrap;
+    }
+
+    .line-mini{
+      padding:9px 16px;
+      border-radius:999px;
+      background:#7d9b84;
+      color:#fffdf8;
+      box-shadow:0 10px 20px rgba(125,155,132,.28);
+    }
+
+    .hero{
+      position:relative;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      overflow:hidden;
+      background:#fbf7ef;
+    }
+
+    .hero-slideshow{
+      position:absolute;
+      inset:0;
+      z-index:0;
+      overflow:hidden;
+    }
+
+    .hero-slide{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      object-position:center center;
+      opacity:0;
+      transform:scale(1.02);
+      transition:opacity 1.2s ease, transform 7s ease;
+    }
+
+    .hero-slide.is-active{
+      opacity:1;
+      transform:scale(1.06);
+    }
+
+    .hero-overlay{
+      position:absolute;
+      inset:0;
+      z-index:1;
+      background:linear-gradient(90deg, rgba(255,253,248,.86) 0%, rgba(255,253,248,.54) 42%, rgba(255,253,248,.06) 72%);
+      pointer-events:none;
+    }
+
+    .hero::after{
+      content:'';
+      position:absolute;
+      inset:auto 0 0 0;
+      height:160px;
+      background:linear-gradient(0deg, rgba(251,247,239,1), rgba(251,247,239,0));
+      pointer-events:none;
+    }
+
+    .hero-content{
+      position:relative;
+      z-index:2;
+      width:min(560px, 100%);
+      padding-top:96px;
+    }
+
+    .hero-logo{
+      width:340px;
+      max-width:86%;
+      margin-bottom:32px;
+    }
+
+    .eyebrow{
+      display:inline-block;
+      padding:6px 15px;
+      margin-bottom:18px;
+      border:1px solid rgba(31,21,12,.15);
+      border-radius:999px;
+      background:rgba(255,253,248,.62);
+      color:var(--sub);
+      font-size:13px;
+      letter-spacing:.08em;
+    }
+
+    h1,h2,h3{
+      font-family:'Noto Serif JP', serif;
+      line-height:1.45;
+      margin:0;
+      letter-spacing:.05em;
+      font-weight:600;
+    }
+
+    h1{
+      font-size:clamp(34px, 5vw, 58px);
+      margin-bottom:22px;
+    }
+
+    .lead{
+      margin:0;
+      max-width:520px;
+      color:var(--sub);
+      font-size:17px;
+    }
+
+    .hero-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top:32px;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:48px;
+      padding:0 22px;
+      border-radius:999px;
+      text-decoration:none;
+      font-weight:700;
+      letter-spacing:.04em;
+      transition:.2s ease;
+    }
+
+    .btn:hover{
+      transform:translateY(-2px);
+    }
+
+    .btn-primary{
+      background:var(--ink);
+      color:#fffdf8;
+      box-shadow:0 14px 26px rgba(31,21,12,.18);
+    }
+
+    .btn-ghost{
+      background:rgba(255,253,248,.68);
+      border:1px solid rgba(31,21,12,.14);
+      color:var(--ink);
+    }
+
+    .btn-line{
+      background:#7d9b84;
+      color:#fffdf8;
+      box-shadow:0 14px 26px rgba(125,155,132,.28);
+    }
+
+    .btn-line-light{
+      background:rgba(125,155,132,.13);
+      border:1px solid rgba(125,155,132,.35);
+      color:#516f58;
+    }
+
+    section{
+      padding:78px 0;
+    }
+
+    .section-head{
+      margin-bottom:28px;
+      text-align:center;
+    }
+
+    .section-title{
+      font-size:clamp(28px, 4vw, 42px);
+    }
+
+    .section-copy{
+      margin:10px auto 0;
+      color:var(--sub);
+      max-width:660px;
+    }
+
+    .glass{
+      background:var(--paper);
+      border:1px solid rgba(31,21,12,.11);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(10px);
+    }
+
+    .news-list{
+      display:grid;
+      gap:12px;
+      max-width:850px;
+      margin:0 auto;
+    }
+
+    .news-item{
+      display:grid;
+      grid-template-columns:125px 1fr;
+      gap:18px;
+      align-items:start;
+      padding:18px 22px;
+    }
+
+    .date{
+      color:var(--accent);
+      font-weight:700;
+      font-size:14px;
+      letter-spacing:.04em;
+    }
+
+    .menu-grid{
+      display:grid;
+      grid-template-columns:repeat(4, 1fr);
+      gap:18px;
+    }
+
+    .menu-card{
+      padding:26px;
+    }
+
+    .menu-card .small{
+      white-space:pre-line;
+    }
+
+    .group-price-grid{
+      display:grid;
+      grid-template-columns:repeat(2, 1fr);
+      gap:10px;
+      margin-top:18px;
+    }
+
+    .group-price-item{
+      padding:13px 10px 12px;
+      border-radius:17px;
+      background:rgba(255,253,248,.66);
+      border:1px solid rgba(31,21,12,.10);
+      text-align:center;
+    }
+
+    .group-price-label{
+      color:var(--accent);
+      font-weight:700;
+      font-size:13px;
+      line-height:1.35;
+      margin-bottom:3px;
+    }
+
+    .group-price-value{
+      font-family:'Noto Serif JP', serif;
+      color:var(--ink);
+      font-weight:700;
+      font-size:20px;
+      line-height:1.35;
+      letter-spacing:.02em;
+    }
+
+    .lesson-time-box{
+      margin-top:0;
+      margin-bottom:24px;
+      padding:28px;
+    }
+
+    .lesson-time-grid{
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:14px;
+      margin-top:16px;
+    }
+
+    .lesson-time-item{
+      padding:18px;
+      border-radius:20px;
+      background:rgba(255,253,248,.62);
+      border:1px solid rgba(31,21,12,.10);
+    }
+
+    .lesson-day{
+      font-weight:700;
+      color:var(--accent);
+      margin-bottom:4px;
+    }
+
+    .lesson-hour{
+      font-family:'Noto Serif JP', serif;
+      font-size:24px;
+      font-weight:700;
+      line-height:1.4;
+    }
+
+    .price{
+      margin:12px 0 4px;
+      font-family:'Noto Serif JP', serif;
+      font-size:30px;
+      font-weight:700;
+      color:var(--ink);
+    }
+
+    .small{
+      color:var(--sub);
+      font-size:14px;
+      margin:0;
+    }
+
+    .calendar-wrap{
+      display:grid;
+      grid-template-columns:1fr 340px;
+      gap:22px;
+      align-items:stretch;
+    }
+
+    .calendar-frame{
+      min-height:520px;
+      overflow:hidden;
+    }
+
+    .calendar-frame iframe{
+      width:100%;
+      height:560px;
+      border:0;
+      display:block;
+      background:#fff;
+    }
+
+    .calendar-note{
+      padding:28px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      gap:16px;
+    }
+
+    .access-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:22px;
+    }
+
+    .access-card{
+      padding:30px;
+    }
+
+
+    .venue-photo-card{
+      padding:0;
+      overflow:hidden;
+    }
+
+    .venue-photo-card img{
+      width:100%;
+      height:260px;
+      object-fit:cover;
+      object-position:center center;
+      border-radius:var(--radius) var(--radius) 0 0;
+    }
+
+    .venue-photo-body{
+      padding:24px 26px 28px;
+    }
+
+    .venue-photo-body h3{
+      margin-bottom:10px;
+    }
+
+    @media (max-width:860px){
+      .venue-photo-card img{
+        height:240px;
+      }
+    }
+
+    .map-box{
+      min-height:330px;
+      display:grid;
+      place-items:center;
+      text-align:center;
+      padding:30px;
+      color:var(--sub);
+    }
+
+    .contact{
+      padding-bottom:90px;
+    }
+
+    .contact-box{
+      text-align:center;
+      padding:58px 24px;
+      background:rgba(255,253,248,.88);
+      color:var(--ink);
+      border:1px solid rgba(125,155,132,.26);
+      border-radius:34px;
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(10px);
+    }
+
+    .contact-box p{
+      margin:14px auto 24px;
+      color:var(--sub);
+      max-width:640px;
+    }
+
+    .line-contact-layout{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:28px;
+      flex-wrap:wrap;
+      margin-top:24px;
+    }
+
+    .line-qr{
+      width:168px;
+      padding:12px;
+      border-radius:24px;
+      background:#fff;
+      border:1px solid rgba(125,155,132,.24);
+      box-shadow:0 14px 30px rgba(31,21,12,.10);
+    }
+
+    .line-contact-text{
+      text-align:left;
+      max-width:360px;
+    }
+
+    .line-contact-text .small{
+      margin-top:10px;
+    }
+
+    footer{
+      padding:36px 0 48px;
+      color:var(--sub);
+      text-align:center;
+      font-size:13px;
+    }
+
+    .page-top{
+      position:fixed;
+      right:18px;
+      bottom:18px;
+      z-index:60;
+      width:48px;
+      height:48px;
+      border-radius:50%;
+      border:1px solid rgba(125,155,132,.35);
+      background:rgba(125,155,132,.88);
+      color:#fffdf8;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-decoration:none;
+      font-size:20px;
+      line-height:1;
+      box-shadow:0 12px 28px rgba(31,21,12,.18);
+      opacity:0;
+      pointer-events:none;
+      transform:translateY(8px);
+      transition:.2s ease;
+    }
+
+    .page-top.show{
+      opacity:1;
+      pointer-events:auto;
+      transform:translateY(0);
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .hero-slide{ transition:none; }
+      .hero-slide:first-child{ opacity:1; transform:none; }
+    }
+
+    /* スマホ */
+    @media (max-width:860px){
+      header{
+        position:absolute;
+        background:rgba(255,253,248,.72);
+      }
+
+      .header-inner{
+        height:68px;
+      }
+
+      .header-logo img{
+        width:150px;
+      }
+
+      nav{
+        display:none;
+      }
+
+      .hero{
+        min-height:92vh;
+        align-items:end;
+        padding-bottom:64px;
+      }
+
+      .hero-overlay{
+        background:linear-gradient(0deg, rgba(255,253,248,.92) 0%, rgba(255,253,248,.72) 42%, rgba(255,253,248,.10) 78%);
+      }
+
+      .hero-slide{
+        object-position:center center;
+      }
+
+      .hero-slide:nth-child(1){
+        object-position:center top;
+      }
+
+      .hero-slide:nth-child(2){
+        object-position:center center;
+      }
+
+      .hero-slide:nth-child(3){
+        object-position:center center;
+      }
+
+      .hero-content{
+        padding-top:110px;
+      }
+
+      .hero-logo{
+        width:270px;
+        margin-bottom:24px;
+      }
+
+      h1{
+        font-size:34px;
+      }
+
+      .lead{
+        font-size:15px;
+      }
+
+      section{
+        padding:56px 0;
+      }
+
+      .news-item{
+        grid-template-columns:1fr;
+        gap:2px;
+      }
+
+      .menu-grid,
+      .lesson-time-grid,
+      .calendar-wrap,
+      .access-grid{
+        grid-template-columns:1fr;
+      }
+
+      .calendar-frame{
+        min-height:440px;
+      }
+
+      .calendar-frame iframe{
+        height:470px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!--
+    表示データは admin.html から更新します。
+    読み込みに失敗した時だけ、この中の初期データが表示されます。
+  -->
+  <script>
+    const siteData = {
+      news: [
+        { date: '2026.06.01', title: '6月のレッスン予定を公開しました。' },
+        { date: '2026.05.20', title: '体験レッスンの受付を開始しました。' },
+        { date: '2026.05.10', title: 'ホームページを準備中です。' }
+      ],
+      menus: [
+        {
+          name: 'グループレッスン',
+          price: '',
+          note: '',
+          groupPrices: [
+            { label: '月4回', price: '4,000円' },
+            { label: '月3回', price: '3,300円' },
+            { label: '月2回', price: '2,200円' },
+            { label: '1回', price: '1,500円' }
+          ]
+        },
+        {
+          name: 'お友達同士',
+          price: '1回 2,500円',
+          note: '2〜3名でのレッスンです。料金は1名あたりです。'
+        },
+        {
+          name: 'お一人でゆっくりと',
+          price: '1回 3,500円',
+          note: 'まわりを気にせず、ご自身のペースで受けたい方向けです。'
+        },
+        {
+          name: 'オンラインレッスン',
+          price: '月4回 2,500円',
+          note: '毎週月曜夜に行っています。'
+        }
+      ],
+      lessonTimes: [
+        { day: '毎週月曜日', time: '19:30〜20:45', note: 'オンライン・対面どちらも可能' },
+        { day: '毎週水曜日', time: '9:30〜10:45', note: '' },
+        { day: '毎週金曜日', time: '9:30〜10:45', note: '' }
+      ],
+      access: {
+        name: 'Yoga Flower',
+        address: '三重県三重郡朝日町',
+        parking: '駐車場あり／詳しい場所はご予約時にご案内します。'
+      },
+      lineUrl: 'https://lin.ee/7df2abF',
+      calendarUrl: 'calendar.html',
+      apiUrl: 'https://script.google.com/macros/s/AKfycbzlyU2DNJtiQNL5gQ9Lex55qsXyxQ4mI9bghM3bhjcQX5adCDmAcahI_v5RzBuYDi4T/exec'
+    };
+  </script>
+
+  <header>
+    <div class="container header-inner">
+      <a href="#top" class="header-logo" aria-label="Yoga Flower トップへ">
+        <img src="images/logo.png" alt="Yoga Flower">
+      </a>
+
+      <nav>
+        <a href="#news">お知らせ</a>
+        <a href="#menu">メニュー</a>
+        <a href="#calendar">予約状況</a>
+        <a href="#access">アクセス</a>
+        <a class="line-mini js-line" href="#" target="_blank" rel="noopener">LINE</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-slideshow" aria-hidden="true">
+        <img class="hero-slide is-active" src="images/yoga-main.jpg" alt="">
+        <img class="hero-slide" src="images/yoga-main-02.jpg" alt="">
+        <img class="hero-slide" src="images/yoga-main-03.jpg" alt="">
+      </div>
+      <div class="hero-overlay"></div>
+
+      <div class="container">
+        <div class="hero-content">
+          <img class="hero-logo" src="images/logo.png" alt="Yoga Flower">
+
+          <span class="eyebrow">古民家の一室で、ゆったり整えるヨガ時間</span>
+
+          <h1>深呼吸したくなる、<br>小さなヨガ教室。</h1>
+
+          <p class="lead">
+            慌ただしい毎日の中で、少しだけ自分に戻る時間を。<br>
+            少人数制で、初めての方にもやさしいレッスンを行っています。
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#calendar">予約状況を見る</a>
+            <a class="btn btn-ghost" href="#menu">料金を見る</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="news">
+      <div class="container">
+        <div class="section-head">
+          <h2 class="section-title">お知らせ</h2>
+          <p class="section-copy">レッスン予定や大切なお知らせを掲載します。</p>
+        </div>
+
+        <div class="news-list" id="newsList"></div>
+      </div>
+    </section>
+
+    <section id="menu">
+      <div class="container">
+        <div class="section-head">
+          <h2 class="section-title">メニュー・料金</h2>
+          <p class="section-copy">料金は先払いでお願い致します。</p>
+        </div>
+
+        <div class="lesson-time-box glass">
+          <h3>レッスン時間</h3>
+          <div class="lesson-time-grid" id="lessonTimes"></div>
+        </div>
+
+        <div class="menu-grid" id="menuCards"></div>
+      </div>
+    </section>
+
+    <section id="calendar">
+      <div class="container">
+        <div class="section-head">
+          <h2 class="section-title">予約状況カレンダー</h2>
+          <p class="section-copy">空き状況を確認して、LINEからお問い合わせください。</p>
+        </div>
+
+        <div class="calendar-wrap">
+          <div class="calendar-frame glass">
+            <iframe id="calendarFrame" title="予約状況カレンダー"></iframe>
+          </div>
+
+          <div class="calendar-note glass">
+            <h3>ご予約について</h3>
+            <p class="small">
+              現在の予約状況をご確認いただけます。<br>
+ご予約・お問い合わせは<br>LINEよりお気軽にどうぞ。
+            </p>
+            <a class="btn btn-primary" id="calendarLink" href="#" target="_blank" rel="noopener">カレンダーを開く</a>
+            <a class="btn btn-line-light js-line" href="#" target="_blank" rel="noopener">LINEで問い合わせる</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="access">
+      <div class="container">
+        <div class="section-head">
+          <h2 class="section-title">アクセス</h2>
+          <p class="section-copy">詳しい住所や駐車場情報を掲載します。</p>
+        </div>
+
+        <div class="access-grid">
+          <div class="access-card glass">
+            <h3 id="accessName">Yoga Flower</h3>
+            <p id="accessAddress"></p>
+            <p id="accessParking" class="small"></p>
+          </div>
+
+          <div class="venue-photo-card glass">
+            <img src="images/yoga-sub.jpg" alt="Yoga Flower レッスン会場">
+            <div class="venue-photo-body">
+              <h3>レッスン会場</h3>
+              <p class="small">
+                古民家ならではの木のぬくもりと自然光に包まれた空間で、ゆったりとレッスンを行っています。
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="container">
+        <div class="contact-box">
+          <h2 class="section-title">お問い合わせ・ご予約</h2>
+          <p>
+            レッスンのご予約やご質問は、LINEよりお願いいたします。
+          </p>
+
+          <div class="line-contact-layout">
+            <img class="line-qr" src="images/line_qr.png" alt="Yoga Flower LINE QRコード">
+
+            <div class="line-contact-text">
+              <a class="btn btn-line js-line" href="#" target="_blank" rel="noopener">LINEで予約・お問い合わせ</a>
+              <p class="small">
+                友だち追加後、レッスン希望日やご質問をお気軽にメッセージください。
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <a class="page-top" id="pageTop" href="#top" aria-label="ページTOPへ戻る">▲</a>
+
+  <footer>
+    <div class="container">
+      © <span id="year"></span> Yoga Flower
+    </div>
+  </footer>
+
+  <script>
+    function escapeHtml(text){
+      return String(text ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function isVisible(item){
+      return item.visible === undefined || item.visible === '' || String(item.visible).toUpperCase() === 'TRUE';
+    }
+
+    function buildMenus(rows){
+      const hasType = rows.some(row => row.type);
+      if (!hasType) return rows;
+      const groupRows = rows.filter(row => row.type === 'group');
+      const normalRows = rows.filter(row => row.type !== 'group');
+      const menus = [];
+      if (groupRows.length){
+        menus.push({ name: 'グループレッスン', price: '', note: '', groupPrices: groupRows.map(row => ({ label: row.note || '', price: row.price || '' })) });
+      }
+      normalRows.forEach(row => menus.push({ name: row.name || '', price: row.price || '', note: row.note || '' }));
+      return menus;
+    }
+
+    function normalizeData(raw){
+      const data = raw || {};
+      const news = Array.isArray(data.news) && data.news.length ? data.news : siteData.news;
+      const lessonTimes = Array.isArray(data.lesson_times) && data.lesson_times.length ? data.lesson_times : siteData.lessonTimes;
+      const menuRows = Array.isArray(data.menus) && data.menus.length ? data.menus : siteData.menus;
+      return { news: news.filter(isVisible).slice(0, 3), lessonTimes: lessonTimes.filter(isVisible), menus: buildMenus(menuRows.filter(isVisible)) };
+    }
+
+    function renderSite(rawData){
+      const data = normalizeData(rawData);
+      document.getElementById('newsList').innerHTML = data.news.map(item => `
+        <article class="news-item glass"><div class="date">${escapeHtml(item.date)}</div><div>${escapeHtml(item.title)}</div></article>
+      `).join('');
+      document.getElementById('menuCards').innerHTML = data.menus.map(item => `
+        <article class="menu-card glass">
+          <h3>${escapeHtml(item.name)}</h3>
+          ${item.price ? `<div class="price">${escapeHtml(item.price)}</div>` : ''}
+          ${item.groupPrices ? `<div class="group-price-grid">${item.groupPrices.map(priceItem => `<div class="group-price-item"><div class="group-price-label">${escapeHtml(priceItem.label)}</div><div class="group-price-value">${escapeHtml(priceItem.price)}</div></div>`).join('')}</div>` : ''}
+          ${item.note ? `<p class="small">${escapeHtml(item.note)}</p>` : ''}
+        </article>
+      `).join('');
+      document.getElementById('lessonTimes').innerHTML = data.lessonTimes.map(item => `
+        <article class="lesson-time-item"><div class="lesson-day">${escapeHtml(item.day)}</div><div class="lesson-hour">${escapeHtml(item.time)}</div>${item.note ? `<p class="small">${escapeHtml(item.note)}</p>` : ''}</article>
+      `).join('');
+    }
+
+    function loadRemoteData(){
+      const callbackName = 'yogaFlowerCallback_' + Date.now();
+      const script = document.createElement('script');
+      const timeout = setTimeout(() => { renderSite(null); script.remove(); }, 5000);
+      window[callbackName] = function(response){
+        clearTimeout(timeout);
+        renderSite(response && response.data ? response.data : null);
+        script.remove();
+        delete window[callbackName];
+      };
+      script.src = siteData.apiUrl + '?action=getData&callback=' + callbackName + '&t=' + Date.now();
+      script.onerror = function(){ clearTimeout(timeout); renderSite(null); script.remove(); delete window[callbackName]; };
+      document.body.appendChild(script);
+    }
+
+    function startHeroSlideshow(){
+      const slides = Array.from(document.querySelectorAll('.hero-slide'));
+      if (slides.length <= 1) return;
+      let current = 0;
+      setInterval(() => {
+        slides[current].classList.remove('is-active');
+        current = (current + 1) % slides.length;
+        slides[current].classList.add('is-active');
+      }, 6000);
+    }
+
+    function setupPageTop(){
+      const pageTop = document.getElementById('pageTop');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 420) pageTop.classList.add('show');
+        else pageTop.classList.remove('show');
+      });
+    }
+
+    document.getElementById('accessName').textContent = siteData.access.name;
+    document.getElementById('accessAddress').textContent = siteData.access.address;
+    document.getElementById('accessParking').textContent = siteData.access.parking;
+    document.querySelectorAll('.js-line').forEach(link => { link.href = siteData.lineUrl; });
+    const calendarSrc = siteData.calendarUrl + '?v=20260601-3';
+    document.getElementById('calendarLink').href = calendarSrc;
+    document.getElementById('calendarFrame').src = calendarSrc;
+    document.getElementById('year').textContent = new Date().getFullYear();
+    renderSite(null);
+    loadRemoteData();
+    startHeroSlideshow();
+    setupPageTop();
+  </script>
+</body>
+</html>
