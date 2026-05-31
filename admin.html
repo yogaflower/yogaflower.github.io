@@ -90,12 +90,43 @@ h1,h2,h3{font-family:'Noto Serif JP',serif;line-height:1.45;letter-spacing:.04em
   .period-date{font-size:12px}
 }
 
+
+.btn,
+.save-top,
+.cal-btn{
+  transition:transform .12s ease, box-shadow .12s ease, opacity .12s ease;
+}
+.btn:active,
+.save-top:active,
+.cal-btn:active{
+  transform:translateY(2px) scale(.98);
+  box-shadow:0 4px 12px rgba(31,21,12,.16);
+}
+.btn.is-working,
+.save-top.is-working,
+.cal-btn.is-working{
+  opacity:.72;
+  pointer-events:none;
+}
+.btn.is-working::after,
+.save-top.is-working::after{
+  content:'…';
+  display:inline-block;
+  margin-left:4px;
+  animation:dotsBlink 1s infinite;
+}
+@keyframes dotsBlink{
+  0%,20%{opacity:.15}
+  50%{opacity:1}
+  100%{opacity:.15}
+}
+
 iframe[name="saveFrame"]{display:none}
 @media(max-width:720px){.tabs{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}.logo{width:130px}h1{font-size:22px}.news-preview-item{grid-template-columns:1fr;gap:2px}.lesson-preview-grid,.menu-preview-grid{grid-template-columns:1fr}.day{min-height:58px;padding:4px}.mark{font-size:10px}.circle-num{width:20px;height:20px}.cal-title{font-size:19px}.p-cell{min-height:68px;padding:4px}.capture-wrap{padding:12px}.capture-title{font-size:22px}}
 </style>
 </head>
 <body>
-<header><div class="header-inner"><img class="logo" src="images/logo.png" alt="Yoga Flower"><button class="save-top" type="button" onclick="saveAll()">保存</button></div></header>
+<header><div class="header-inner"><img class="logo" src="images/logo.png" alt="Yoga Flower"><button class="save-top" type="button" onclick="saveAll(this)">保存</button></div></header>
 <main>
 <h1>Yoga Flower 管理画面</h1>
 <p class="intro">管理データを編集します。編集後は「保存」を押してください。</p>
@@ -111,11 +142,11 @@ iframe[name="saveFrame"]{display:none}
 <section id="panel-menu" class="panel"><div class="preview"><div class="preview-title">現在の料金表表示</div><div class="menu-preview-grid" id="menuPreview"></div></div><p class="hint">下の欄で、今表示している料金や説明だけ変更できます。</p><div id="menuList"></div></section>
 
 <section id="panel-calendar" class="panel">
-<div class="preview"><div class="preview-title">表示する期間</div><p class="small">好きな開始日〜終了日を選ぶと、その期間だけのカレンダーを1枚で表示できます。</p><div class="grid"><div><label>表示開始日</label><input type="date" id="calendarStart" onchange="updateSettingFromInput('calendarStart',this.value)"></div><div><label>表示終了日</label><input type="date" id="calendarEnd" onchange="updateSettingFromInput('calendarEnd',this.value)"></div></div><div class="row-actions"><button class="btn btn-soft" type="button" onclick="renderPeriodPreview()">期間プレビュー更新</button><button class="btn btn-dark" type="button" onclick="saveCalendarImage()">画像で保存</button></div></div>
+<div class="preview"><div class="preview-title">表示する期間</div><p class="small">好きな開始日〜終了日を選ぶと、その期間だけのカレンダーを1枚で表示できます。</p><div class="grid"><div><label>表示開始日</label><input type="date" id="calendarStart" onchange="updateSettingFromInput('calendarStart',this.value)"></div><div><label>表示終了日</label><input type="date" id="calendarEnd" onchange="updateSettingFromInput('calendarEnd',this.value)"></div></div><div class="row-actions"><button class="btn btn-soft" type="button" onclick="renderPeriodPreview(this)">期間プレビュー更新</button><button class="btn btn-dark" type="button" onclick="saveCalendarImage(this)">画像で保存</button></div></div>
 <div id="calendarCapture" class="capture-wrap"><img class="capture-logo" src="images/logo.png" alt="Yoga Flower"><div class="capture-title">予約状況カレンダー</div><div class="capture-period" id="capturePeriod"></div><div id="periodPreview"></div></div>
 <p class="hint">下の月カレンダーの日付をタップして、丸囲み数字・空/満・夜・自由テキストを設定できます。</p><div class="admin-cal"><div class="cal-head"><button class="cal-btn" onclick="changeCalMonth(-1)" type="button">前の月</button><div class="cal-title" id="calTitle"></div><button class="cal-btn" onclick="changeCalMonth(1)" type="button">次の月</button></div><div class="cal-grid" id="calGrid"></div></div><div class="cal-editor" id="calEditor"><div class="preview-title">日付をタップしてください</div><p class="small">選んだ日付の内容をここで編集します。</p></div>
 </section>
-<button class="save-top" style="width:100%;margin-top:10px" type="button" onclick="saveAll()">保存</button>
+<button class="save-top" style="width:100%;margin-top:10px" type="button" onclick="saveAll(this)">保存</button>
 </main>
 <form id="saveForm" method="POST" action="https://script.google.com/macros/s/AKfycbzlyU2DNJtiQNL5gQ9Lex55qsXyxQ4mI9bghM3bhjcQX5adCDmAcahI_v5RzBuYDi4T/exec" target="saveFrame"><input type="hidden" name="action" value="saveAll"><input type="hidden" name="payload" id="payloadField"></form>
 <iframe name="saveFrame"></iframe><div class="status" id="status"></div>
@@ -154,6 +185,22 @@ function toDisplayDate(v){if(!v)return'';const t=String(v).trim();let m=t.match(
 function parseDate(s){if(!s)return null;const d=new Date(s+'T00:00:00');return isNaN(d)?null:d}
 function calKey(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
 function formatJP(s){const d=parseDate(s);return d?`${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日`:''}
+
+function buttonFeedback(btn,message,doneMessage){
+  if(!btn)return;
+  const original=btn.textContent;
+  btn.classList.add('is-working');
+  if(message)btn.textContent=message;
+  setTimeout(()=>{
+    if(doneMessage)btn.textContent=doneMessage;
+    showStatus(doneMessage || '完了しました');
+    setTimeout(()=>{
+      btn.textContent=original;
+      btn.classList.remove('is-working');
+    },900);
+  },350);
+}
+
 function showStatus(m){$('status').textContent=m;$('status').classList.add('show');setTimeout(()=>$('status').classList.remove('show'),2600)}
 function settingsRowsToObj(rows){const o={};(rows||[]).forEach(r=>{if(r.key)o[r.key]=r.value||''});return o}
 function settingsObjToRows(obj){return Object.keys(obj).map(k=>({key:k,value:obj[k]||''}))}
@@ -210,7 +257,7 @@ function clearCalendarDate(date){const idx=state.calendar.findIndex(r=>r.date===
 function renderCalendarSettings(){$('calendarStart').value=state.settings.calendarStart||'';$('calendarEnd').value=state.settings.calendarEnd||''}
 function updateSettingFromInput(k,v){state.settings[k]=v;renderPeriodPreview()}
 function eachDate(start,end,cb){let d=new Date(start);while(d<=end){cb(new Date(d));d.setDate(d.getDate()+1)}}
-function renderPeriodPreview(){const start=parseDate(state.settings.calendarStart),end=parseDate(state.settings.calendarEnd);if(!start||!end||start>end){$('capturePeriod').textContent='表示期間を選んでください';$('periodPreview').innerHTML='';return}$('capturePeriod').textContent=`${formatJP(state.settings.calendarStart)} 〜 ${formatJP(state.settings.calendarEnd)}`;$('periodPreview').innerHTML=renderOneContinuousPeriod(start,end)}
+function renderPeriodPreview(btn){if(btn)buttonFeedback(btn,'更新中','プレビュー更新済み');const start=parseDate(state.settings.calendarStart),end=parseDate(state.settings.calendarEnd);if(!start||!end||start>end){$('capturePeriod').textContent='表示期間を選んでください';$('periodPreview').innerHTML='';return}$('capturePeriod').textContent=`${formatJP(state.settings.calendarStart)} 〜 ${formatJP(state.settings.calendarEnd)}`;$('periodPreview').innerHTML=renderOneContinuousPeriod(start,end)}
 function renderOneContinuousPeriod(start,end){
   const dows=['日','月','火','水','木','金','土'];
   let html='<table class="period-table"><thead>';
@@ -244,11 +291,11 @@ function renderOneContinuousPeriod(start,end){
   return html;
 }
 function formatPeriodTitle(s,e){return s.getFullYear()===e.getFullYear()?`${s.getFullYear()}年${s.getMonth()+1}月${s.getDate()}日〜${e.getMonth()+1}月${e.getDate()}日`:`${s.getFullYear()}年${s.getMonth()+1}月${s.getDate()}日〜${e.getFullYear()}年${e.getMonth()+1}月${e.getDate()}日`}
-function saveCalendarImage(){renderPeriodPreview();html2canvas($('calendarCapture'),{backgroundColor:null,scale:2}).then(canvas=>{const a=document.createElement('a');a.download='yoga-flower-calendar.png';a.href=canvas.toDataURL('image/png');a.click()}).catch(()=>showStatus('画像保存に失敗しました'))}
+function saveCalendarImage(btn){if(btn)buttonFeedback(btn,'保存中','画像を保存しました');renderPeriodPreview();html2canvas($('calendarCapture'),{backgroundColor:null,scale:2}).then(canvas=>{const a=document.createElement('a');a.download='yoga-flower-calendar.png';a.href=canvas.toDataURL('image/png');a.click()}).catch(()=>showStatus('画像保存に失敗しました'))}
 function addNews(){const now=new Date();state.news.unshift({id:uid('n'),date:`${now.getFullYear()}.${now.getMonth()+1}.${now.getDate()}`,title:'',visible:'TRUE'});renderAll()}
 function deleteItem(kind,index){if(confirm('削除しますか？')){state[kind].splice(index,1);renderAll()}}
 function moveItem(kind,index,dir){const next=index+dir;if(next<0||next>=state[kind].length)return;[state[kind][index],state[kind][next]]=[state[kind][next],state[kind][index]];renderAll()}
-function saveAll(){const payload={news:state.news,lesson_times:state.lesson_times,menus:state.menus,calendar:state.calendar.filter(r=>r.date&&(r.number||r.status||r.text||String(r.night).toUpperCase()==='TRUE'||String(r.visible).toUpperCase()==='FALSE')),settings:settingsObjToRows(state.settings)};$('payloadField').value=JSON.stringify(payload);$('saveForm').submit();showStatus('保存しました')}
+function saveAll(btn){if(btn)buttonFeedback(btn,'保存中','保存しました');const payload={news:state.news,lesson_times:state.lesson_times,menus:state.menus,calendar:state.calendar.filter(r=>r.date&&(r.number||r.status||r.text||String(r.night).toUpperCase()==='TRUE'||String(r.visible).toUpperCase()==='FALSE')),settings:settingsObjToRows(state.settings)};$('payloadField').value=JSON.stringify(payload);$('saveForm').submit();showStatus('保存しました')}
 
 /* --- 期間カレンダー表示 強制修正版 ---
    月表記は各月1日のみ。
