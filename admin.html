@@ -410,7 +410,7 @@ textarea{min-height:86px;resize:vertical}
 <main>
 <h1>Yoga Flower 管理画面</h1>
 <p class="intro">スプレッドシートの内容を読み込んで編集します。編集後は「保存」を押してください。</p>
-<div class="debug-box" id="debugBox">修正版 2026-05-31 読み込み確認中...</div>
+<div class="debug-box" id="debugBox">修正版 2026-05-31 fallback対応 読み込み確認中...</div>
 
 <div class="tabs">
   <button class="tab active" data-tab="news">お知らせ</button>
@@ -551,11 +551,32 @@ function initDefaultPeriod(){
 }
 
 
+
+function cloneDefaultLessons(){
+  return [
+    {id:'l1',day:'毎週月曜日',time:'19:30〜20:45',note:'オンライン・対面どちらも可能',visible:'TRUE'},
+    {id:'l2',day:'毎週水曜日',time:'9:30〜10:45',note:'',visible:'TRUE'},
+    {id:'l3',day:'毎週金曜日',time:'9:30〜10:45',note:'',visible:'TRUE'}
+  ];
+}
+
+function cloneDefaultMenus(){
+  return [
+    {id:'m1',name:'グループレッスン',price:'4,000円',note:'月4回',type:'group',visible:'TRUE'},
+    {id:'m2',name:'グループレッスン',price:'3,300円',note:'月3回',type:'group',visible:'TRUE'},
+    {id:'m3',name:'グループレッスン',price:'2,200円',note:'月2回',type:'group',visible:'TRUE'},
+    {id:'m4',name:'グループレッスン',price:'1,500円',note:'1回',type:'group',visible:'TRUE'},
+    {id:'m5',name:'お友達同士',price:'1回 2,500円',note:'2〜3名でのレッスンです。料金は1名あたりです。',type:'normal',visible:'TRUE'},
+    {id:'m6',name:'お一人でゆっくりと',price:'1回 3,500円',note:'まわりを気にせず、ご自身のペースで受けたい方向けです。',type:'normal',visible:'TRUE'},
+    {id:'m7',name:'オンラインレッスン',price:'月4回 2,500円',note:'毎週月曜夜に行っています。',type:'normal',visible:'TRUE'}
+  ];
+}
+
 function updateDebugBox(message){
   const el=document.getElementById('debugBox');
   if(!el)return;
   el.innerHTML =
-    '<span>修正版 2026-05-31</span>' +
+    '<span>修正版 2026-05-31 fallback対応</span>' +
     '<span>' + message + '</span>' +
     '<span>お知らせ:' + state.news.length + '件</span>' +
     '<span>レッスン時間:' + state.lesson_times.length + '件</span>' +
@@ -578,8 +599,8 @@ function loadData(){
     clearTimeout(timer);
     const data=res&&res.data?res.data:{};
     state.news=Array.isArray(data.news)?data.news:[];
-    state.lesson_times=Array.isArray(data.lesson_times)?data.lesson_times:[];
-    state.menus=Array.isArray(data.menus)?data.menus:[];
+    state.lesson_times=Array.isArray(data.lesson_times)&&data.lesson_times.length?data.lesson_times:cloneDefaultLessons();
+    state.menus=Array.isArray(data.menus)&&data.menus.length?data.menus:cloneDefaultMenus();
     state.calendar=Array.isArray(data.calendar)?data.calendar:[];
     state.settings=settingsRowsToObj(data.settings||[]);
     initDefaultPeriod();
