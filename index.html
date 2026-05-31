@@ -100,12 +100,12 @@
       white-space:nowrap;
     }
 
-    .insta-mini{
+    .line-mini{
       padding:9px 16px;
       border-radius:999px;
-      background:var(--ink);
+      background:#7d9b84;
       color:#fffdf8;
-      box-shadow:0 10px 20px rgba(31,21,12,.16);
+      box-shadow:0 10px 20px rgba(125,155,132,.28);
     }
 
     .hero{
@@ -207,6 +207,18 @@
       background:rgba(255,253,248,.68);
       border:1px solid rgba(31,21,12,.14);
       color:var(--ink);
+    }
+
+    .btn-line{
+      background:#7d9b84;
+      color:#fffdf8;
+      box-shadow:0 14px 26px rgba(125,155,132,.28);
+    }
+
+    .btn-line-light{
+      background:rgba(125,155,132,.13);
+      border:1px solid rgba(125,155,132,.35);
+      color:#516f58;
     }
 
     section{
@@ -405,21 +417,45 @@
     .contact-box{
       text-align:center;
       padding:58px 24px;
-      background:rgba(31,21,12,.92);
-      color:#fffdf8;
+      background:rgba(255,253,248,.88);
+      color:var(--ink);
+      border:1px solid rgba(125,155,132,.26);
       border-radius:34px;
       box-shadow:var(--shadow);
+      backdrop-filter:blur(10px);
     }
 
     .contact-box p{
-      margin:14px auto 26px;
-      color:rgba(255,253,248,.78);
+      margin:14px auto 24px;
+      color:var(--sub);
       max-width:640px;
     }
 
-    .contact-box .btn-primary{
-      background:#fffdf8;
-      color:var(--ink);
+    .line-contact-layout{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:28px;
+      flex-wrap:wrap;
+      margin-top:24px;
+    }
+
+    .line-qr{
+      width:168px;
+      padding:12px;
+      border-radius:24px;
+      background:#fff;
+      border:1px solid rgba(125,155,132,.24);
+      box-shadow:0 14px 30px rgba(31,21,12,.10);
+    }
+
+    .line-contact-text{
+      text-align:left;
+      max-width:360px;
+    }
+
+    .line-contact-text .small{
+      margin-top:10px;
     }
 
     footer{
@@ -551,7 +587,7 @@
         address: '三重県〇〇市〇〇町 〇〇-〇〇',
         parking: '駐車場あり／詳しい場所はご予約時にご案内します。'
       },
-      instagram: 'https://www.instagram.com/mika.satou.17/',
+      lineUrl: 'https://lin.ee/7df2abF',
       calendarUrl: 'https://sanshi6453.github.io/memo-app/yoga-calendar.html'
     };
   </script>
@@ -567,7 +603,7 @@
         <a href="#menu">メニュー</a>
         <a href="#calendar">予約状況</a>
         <a href="#access">アクセス</a>
-        <a class="insta-mini js-instagram" href="#" target="_blank" rel="noopener">Instagram</a>
+        <a class="line-mini js-line" href="#" target="_blank" rel="noopener">LINE</a>
       </nav>
     </div>
   </header>
@@ -626,7 +662,7 @@
       <div class="container">
         <div class="section-head">
           <h2 class="section-title">予約状況カレンダー</h2>
-          <p class="section-copy">空き状況を確認して、Instagramからお問い合わせください。</p>
+          <p class="section-copy">空き状況を確認して、LINEからお問い合わせください。</p>
         </div>
 
         <div class="calendar-wrap">
@@ -641,7 +677,7 @@
               後から表示専用デザインに整える、またはスマホで更新できる管理ページを作ることもできます。
             </p>
             <a class="btn btn-primary" id="calendarLink" href="#" target="_blank" rel="noopener">カレンダーを開く</a>
-            <a class="btn btn-ghost js-instagram" href="#" target="_blank" rel="noopener">Instagramで問い合わせる</a>
+            <a class="btn btn-line-light js-line" href="#" target="_blank" rel="noopener">LINEで問い合わせる</a>
           </div>
         </div>
       </div>
@@ -676,9 +712,19 @@
         <div class="contact-box">
           <h2 class="section-title">お問い合わせ・ご予約</h2>
           <p>
-            レッスンのご予約やご質問は、InstagramのDMよりお願いいたします。
+            レッスンのご予約やご質問は、LINEよりお願いいたします。
           </p>
-          <a class="btn btn-primary js-instagram" href="#" target="_blank" rel="noopener">Instagramで問い合わせる</a>
+
+          <div class="line-contact-layout">
+            <img class="line-qr" src="images/line_qr.png" alt="Yoga Flower LINE QRコード">
+
+            <div class="line-contact-text">
+              <a class="btn btn-line js-line" href="#" target="_blank" rel="noopener">LINEで予約・お問い合わせ</a>
+              <p class="small">
+                友だち追加後、レッスン希望日やご質問をお気軽にメッセージください。
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -737,8 +783,8 @@
     document.getElementById('accessAddress').textContent = siteData.access.address;
     document.getElementById('accessParking').textContent = siteData.access.parking;
 
-    document.querySelectorAll('.js-instagram').forEach(link => {
-      link.href = siteData.instagram;
+    document.querySelectorAll('.js-line').forEach(link => {
+      link.href = siteData.lineUrl;
     });
 
     document.getElementById('calendarLink').href = siteData.calendarUrl;
