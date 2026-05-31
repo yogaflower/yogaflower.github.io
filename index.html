@@ -114,9 +114,67 @@
       display:flex;
       align-items:center;
       overflow:hidden;
-      background:
-        linear-gradient(90deg, rgba(255,253,248,.86) 0%, rgba(255,253,248,.54) 42%, rgba(255,253,248,.06) 72%),
-        url('images/yoga-main.jpg') center center / cover no-repeat;
+      background:#fbf7ef;
+    }
+
+    .hero-slideshow{
+      position:absolute;
+      inset:0;
+      z-index:0;
+      overflow:hidden;
+    }
+
+    .hero-slide{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      object-position:center center;
+      opacity:0;
+      transform:scale(1.02);
+      animation:heroFade 18s infinite;
+    }
+
+    .hero-slide:nth-child(1){
+      animation-delay:0s;
+    }
+
+    .hero-slide:nth-child(2){
+      animation-delay:6s;
+    }
+
+    .hero-slide:nth-child(3){
+      animation-delay:12s;
+    }
+
+    .hero-overlay{
+      position:absolute;
+      inset:0;
+      z-index:1;
+      background:linear-gradient(90deg, rgba(255,253,248,.86) 0%, rgba(255,253,248,.54) 42%, rgba(255,253,248,.06) 72%);
+      pointer-events:none;
+    }
+
+    @keyframes heroFade{
+      0%{
+        opacity:0;
+        transform:scale(1.02);
+      }
+      8%{
+        opacity:1;
+      }
+      33%{
+        opacity:1;
+        transform:scale(1.06);
+      }
+      41%{
+        opacity:0;
+      }
+      100%{
+        opacity:0;
+        transform:scale(1.06);
+      }
     }
 
     .hero::after{
@@ -465,6 +523,18 @@
       font-size:13px;
     }
 
+
+    @media (prefers-reduced-motion: reduce){
+      .hero-slide{
+        animation:none;
+      }
+
+      .hero-slide:first-child{
+        opacity:1;
+        transform:none;
+      }
+    }
+
     /* スマホ */
     @media (max-width:860px){
       header{
@@ -488,9 +558,26 @@
         min-height:92vh;
         align-items:end;
         padding-bottom:64px;
-        background:
-          linear-gradient(0deg, rgba(255,253,248,.92) 0%, rgba(255,253,248,.72) 42%, rgba(255,253,248,.10) 78%),
-          url('images/yoga-main.jpg') center top / cover no-repeat;
+      }
+
+      .hero-overlay{
+        background:linear-gradient(0deg, rgba(255,253,248,.92) 0%, rgba(255,253,248,.72) 42%, rgba(255,253,248,.10) 78%);
+      }
+
+      .hero-slide{
+        object-position:center center;
+      }
+
+      .hero-slide:nth-child(1){
+        object-position:center top;
+      }
+
+      .hero-slide:nth-child(2){
+        object-position:center center;
+      }
+
+      .hero-slide:nth-child(3){
+        object-position:center center;
       }
 
       .hero-content{
@@ -610,6 +697,13 @@
 
   <main id="top">
     <section class="hero">
+      <div class="hero-slideshow" aria-hidden="true">
+        <img class="hero-slide" src="images/yoga-main.jpg" alt="">
+        <img class="hero-slide" src="images/yoga-main-02.jpg" alt="">
+        <img class="hero-slide" src="images/yoga-main-03.jpg" alt="">
+      </div>
+      <div class="hero-overlay"></div>
+
       <div class="container">
         <div class="hero-content">
           <img class="hero-logo" src="images/logo.png" alt="Yoga Flower">
