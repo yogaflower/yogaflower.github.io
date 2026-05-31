@@ -187,7 +187,7 @@ iframe[name="saveFrame"]{display:none}
 <section id="panel-calendar" class="panel">
 <div class="preview"><div class="preview-title">表示する期間</div><p class="small">好きな開始日〜終了日を選ぶと、その期間だけのカレンダーを1枚で表示できます。</p><div class="grid"><div><label>表示開始日</label><input type="date" id="calendarStart" onchange="updateSettingFromInput('calendarStart',this.value)"></div><div><label>表示終了日</label><input type="date" id="calendarEnd" onchange="updateSettingFromInput('calendarEnd',this.value)"></div></div><div class="row-actions"><button class="btn btn-soft" type="button" onclick="renderPeriodPreview(this)">期間プレビュー更新</button><button class="btn btn-dark" type="button" onclick="saveCalendarImage(this)">画像で保存</button></div></div>
 <div id="calendarCapture" class="capture-wrap"><img class="capture-logo" src="images/logo.png" alt="Yoga Flower"><div class="capture-title">予約状況カレンダー</div><div class="capture-period" id="capturePeriod"></div><div id="periodPreview"></div></div>
-<p class="hint">下の月カレンダーの日付をタップして、丸囲み数字・空/満・夜・自由テキストを設定できます。</p><div class="admin-cal"><div class="cal-head"><button class="cal-btn" onclick="changeCalMonth(-1)" type="button">前の月</button><div class="cal-title" id="calTitle"></div><button class="cal-btn" onclick="changeCalMonth(1)" type="button">次の月</button></div><div class="cal-grid" id="calGrid"></div></div><div class="cal-editor" id="calEditor"><div class="preview-title">日付をタップしてください</div><p class="small">選んだ日付の内容をここで編集します。</p></div>
+<p class="hint">下の入力用カレンダーも、表示開始日〜表示終了日と同じ期間で表示されます。日付をタップして、丸囲み数字・空/満・休・夜・自由テキストを設定できます。</p><div class="admin-cal"><div class="cal-head"><div class="cal-title" id="calTitle"></div></div><div class="cal-grid" id="calGrid"></div></div><div class="cal-editor" id="calEditor"><div class="preview-title">日付をタップしてください</div><p class="small">選んだ日付の内容をここで編集します。</p></div>
 </section>
 <button class="save-top" style="width:100%;margin-top:10px" type="button" onclick="saveAll(this)">保存</button>
 </main>
@@ -293,12 +293,45 @@ function getCalRow(date){return state.calendar.find(r=>r.date===date)}
 function ensureCalRow(date){let r=getCalRow(date);if(!r){r={date,number:'',status:'',text:'',night:'FALSE',visible:'TRUE'};state.calendar.push(r)}return r}
 function changeCalMonth(diff){calCurrent.setMonth(calCurrent.getMonth()+diff);renderCalendar()}
 function selectDate(date){selectedDate=date;ensureCalRow(date);renderCalendar();renderCalendarEditor()}
-function renderCalendar(){const y=calCurrent.getFullYear(),m=calCurrent.getMonth();$('calTitle').textContent=`${y}年${m+1}月`;let html=['日','月','火','水','木','金','土'].map(d=>`<div class="dow">${d}</div>`).join('');const first=new Date(y,m,1),last=new Date(y,m+1,0);for(let i=0;i<first.getDay();i++)html+='<div class="day"></div>';for(let d=1;d<=last.getDate();d++){const date=calKey(new Date(y,m,d)),row=getCalRow(date),dow=new Date(y,m,d).getDay(),cls=dow===0?' sun':dow===6?' sat':'';html+=`<div class="day${cls} ${selectedDate===date?'selected':''}" onclick="selectDate('${date}')"><div class="day-num">${d}</div>${row&&isVisible(row)?renderDayMark(row):''}</div>`}$('calGrid').innerHTML=html}
+function renderCalendar(){
+  const start=parseDate(state.settings.calendarStart);
+  const end=parseDate(state.settings.calendarEnd);
+
+  if(!start || !end || start>end){
+    $('calTitle').textContent='入力用カレンダー';
+    $('calGrid').innerHTML='<div class="dow">日</div><div class="dow">月</div><div class="dow">火</div><div class="dow">水</div><div class="dow">木</div><div class="dow">金</div><div class="dow">土</div>';
+    return;
+  }
+
+  $('calTitle').textContent=formatPeriodTitle(start,end);
+
+  let html=['日','月','火','水','木','金','土'].map(d=>`<div class="dow">${d}</div>`).join('');
+
+  for(let i=0;i<start.getDay();i++){
+    html+='<div class="day"></div>';
+  }
+
+  eachDate(start,end,d=>{
+    const date=calKey(d);
+    const row=getCalRow(date);
+    const dow=d.getDay();
+    const cls=dow===0?' sun':dow===6?' sat':'';
+    const label=d.getDate()===1 ? `${d.getMonth()+1}/${d.getDate()}` : `${d.getDate()}`;
+
+    html+=`<div class="day${cls} ${selectedDate===date?'selected':''}" onclick="selectDate('${date}')"><div class="day-num">${label}</div>${row&&isVisible(row)?renderDayMark(row):''}</div>`;
+  });
+
+  while((html.match(/class="day/g)||[]).length % 7 !== 0){
+    html+='<div class="day"></div>';
+  }
+
+  $('calGrid').innerHTML=html;
+}
 function renderDayMark(row){let s='<div class="mark">';if(row.number)s+=`<span class="circle-num">${esc(row.number)}</span>`;if(row.status)s+=`<span class="badge ${row.status==='満'?'full':row.status==='空'?'empty':row.status==='休'?'off':''}">${esc(row.status)}</span>`;if(String(row.night).toUpperCase()==='TRUE')s+=' <span class="night">夜🌙</span>';if(row.text)s+=`<div>${esc(row.text)}</div>`;return s+'</div>'}
 function renderCalendarEditor(){if(!selectedDate){$('calEditor').innerHTML='<div class="preview-title">日付をタップしてください</div><p class="small">選んだ日付の内容をここで編集します。</p>';return}const row=ensureCalRow(selectedDate),idx=state.calendar.indexOf(row);$('calEditor').innerHTML=`<div class="preview-title">${selectedDate} の設定</div><div class="grid"><div><label>丸囲み数字</label><input inputmode="numeric" data-kind="calendar" data-i="${idx}" data-field="number" value="${esc(row.number)}" placeholder="例：1"></div><div><label>状態</label><select data-kind="calendar" data-i="${idx}" data-field="status"><option value="" ${!row.status?'selected':''}>なし</option><option value="空" ${row.status==='空'?'selected':''}>空</option><option value="満" ${row.status==='満'?'selected':''}>満</option><option value="休" ${row.status==='休'?'selected':''}>休</option></select></div><div><label>夜</label><select data-kind="calendar" data-i="${idx}" data-field="night"><option value="FALSE" ${String(row.night).toUpperCase()!=='TRUE'?'selected':''}>表示しない</option><option value="TRUE" ${String(row.night).toUpperCase()==='TRUE'?'selected':''}>夜🌙を表示</option></select></div><div><label>表示</label><select data-kind="calendar" data-i="${idx}" data-field="visible"><option value="TRUE" ${isVisible(row)?'selected':''}>表示する</option><option value="FALSE" ${!isVisible(row)?'selected':''}>非表示</option></select></div><div class="full"><label>自由テキスト</label><input data-kind="calendar" data-i="${idx}" data-field="text" value="${esc(row.text)}" placeholder="例：残1 / 午前のみ"></div></div><div class="row-actions"><button class="btn btn-delete" type="button" onclick="clearCalendarDate('${selectedDate}')">この日の入力を消す</button></div>`}
 function clearCalendarDate(date){const idx=state.calendar.findIndex(r=>r.date===date);if(idx>=0&&confirm('この日の入力を消しますか？')){state.calendar.splice(idx,1);selectedDate='';renderCalendar();renderCalendarEditor();renderPeriodPreview()}}
 function renderCalendarSettings(){$('calendarStart').value=state.settings.calendarStart||'';$('calendarEnd').value=state.settings.calendarEnd||''}
-function updateSettingFromInput(k,v){state.settings[k]=v;renderPeriodPreview()}
+function updateSettingFromInput(k,v){state.settings[k]=v;renderPeriodPreview();renderCalendar()}
 function eachDate(start,end,cb){let d=new Date(start);while(d<=end){cb(new Date(d));d.setDate(d.getDate()+1)}}
 function renderPeriodPreview(btn){if(btn)buttonFeedback(btn,'更新中','プレビュー更新済み');const start=parseDate(state.settings.calendarStart),end=parseDate(state.settings.calendarEnd);if(!start||!end||start>end){$('capturePeriod').textContent='表示期間を選んでください';$('periodPreview').innerHTML='';return}$('capturePeriod').textContent=`${formatJP(state.settings.calendarStart)} 〜 ${formatJP(state.settings.calendarEnd)}`;$('periodPreview').innerHTML=renderOneContinuousPeriod(start,end)}
 function renderOneContinuousPeriod(start,end){
