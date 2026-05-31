@@ -919,7 +919,7 @@
     document.getElementById('accessAddress').textContent = siteData.access.address;
     document.getElementById('accessParking').textContent = siteData.access.parking;
     document.querySelectorAll('.js-line').forEach(link => { link.href = siteData.lineUrl; });
-    const calendarSrc = siteData.calendarUrl + '?v=20260601-2';
+    const calendarSrc = siteData.calendarUrl + '?v=20260601-3';
     document.getElementById('calendarLink').href = calendarSrc;
     document.getElementById('calendarFrame').src = calendarSrc;
     document.getElementById('year').textContent = new Date().getFullYear();

@@ -37,8 +37,8 @@ h1{font-family:'Noto Serif JP',serif;text-align:center;margin:0 0 8px;font-size:
 .period-cell.sun .period-date{color:#b76f78}
 .period-cell.sat .period-date{color:#5f7f99}
 .mark{margin-top:5px;font-size:12px;line-height:1.35}
-.circle-num{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fffdf8;font-weight:700;font-size:13px;padding:0;margin-right:4px}
-.badge{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;font-weight:700;font-size:13px;padding:0}
+.circle-num{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fffdf8;font-weight:800;padding:0;margin-right:4pxfont-size:15px;line-height:1;}
+.badge{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;font-weight:800;padding:0font-size:15px;line-height:1;}
 .badge.full{background:#b66b73;color:#fff}
 .badge.empty{background:#6f8fa8;color:#fff}
 .badge.off{background:#e3e3e3;color:#5f5f5f}
@@ -54,9 +54,30 @@ h1{font-family:'Noto Serif JP',serif;text-align:center;margin:0 0 8px;font-size:
   .period-cell{height:66px;padding:4px}
   .period-date{font-size:12px}
   .mark{font-size:10px}
-  .circle-num{width:24px;height:24px;font-size:12px}
-  .badge{width:24px;height:24px;font-size:12px}
+  .circle-num{width:24px;height:24px;font-size:14px;line-height:1}
+  .badge{width:24px;height:24px;font-size:14px;line-height:1}
 }
+
+/* 丸内文字サイズ 強制調整 */
+.circle-num,
+.badge{
+  font-size:15px !important;
+  font-weight:800 !important;
+  line-height:1 !important;
+}
+@media(max-width:720px){
+  .circle-num,
+  .badge{
+    font-size:14px !important;
+  }
+}
+@media(max-width:700px){
+  .circle-num,
+  .badge{
+    font-size:14px !important;
+  }
+}
+
 </style>
 </head>
 <body>
