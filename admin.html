@@ -14,6 +14,7 @@
   --ink:#1f150c;
   --sub:#6f6257;
   --paper:rgba(255,253,248,.92);
+  --paper-solid:#fffdf8;
   --line:rgba(31,21,12,.14);
   --accent:#b88b6b;
   --red:#b75c5c;
@@ -273,6 +274,134 @@ textarea {
   border:1px solid var(--line);
 }
 
+.preview-wrap {
+  margin:0 0 20px;
+  padding:18px;
+  border-radius:24px;
+  background:rgba(255,253,248,.70);
+  border:1px solid var(--line);
+  box-shadow:0 10px 26px rgba(31,21,12,.08);
+}
+
+.preview-title {
+  font-family:'Noto Serif JP',serif;
+  font-weight:700;
+  font-size:19px;
+  margin:0 0 12px;
+  color:var(--ink);
+}
+
+.preview-sub {
+  color:var(--sub);
+  font-size:13px;
+  margin:0 0 12px;
+}
+
+.preview-news-list {
+  display:grid;
+  gap:10px;
+}
+
+.preview-news-item {
+  display:grid;
+  grid-template-columns:110px 1fr;
+  gap:12px;
+  padding:14px 16px;
+  border-radius:18px;
+  background:rgba(255,253,248,.82);
+  border:1px solid rgba(31,21,12,.10);
+}
+
+.preview-date {
+  color:var(--accent);
+  font-weight:700;
+  font-size:14px;
+}
+
+.preview-lesson-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+
+.preview-lesson-item {
+  padding:16px;
+  border-radius:20px;
+  background:rgba(255,253,248,.76);
+  border:1px solid rgba(31,21,12,.10);
+}
+
+.preview-lesson-day {
+  color:var(--accent);
+  font-weight:700;
+  margin-bottom:4px;
+}
+
+.preview-lesson-hour {
+  font-family:'Noto Serif JP',serif;
+  font-size:22px;
+  font-weight:700;
+  line-height:1.4;
+}
+
+.preview-small {
+  color:var(--sub);
+  font-size:13px;
+  margin:4px 0 0;
+}
+
+.preview-menu-grid {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+}
+
+.preview-menu-card {
+  padding:18px;
+  border-radius:20px;
+  background:rgba(255,253,248,.76);
+  border:1px solid rgba(31,21,12,.10);
+}
+
+.preview-menu-card h3 {
+  font-size:18px;
+  margin:0 0 8px;
+}
+
+.preview-price {
+  font-family:'Noto Serif JP',serif;
+  font-size:24px;
+  font-weight:700;
+  line-height:1.35;
+}
+
+.preview-group-grid {
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:8px;
+  margin-top:12px;
+}
+
+.preview-group-item {
+  text-align:center;
+  padding:10px 8px;
+  border-radius:15px;
+  background:rgba(255,253,248,.74);
+  border:1px solid rgba(31,21,12,.10);
+}
+
+.preview-group-label {
+  color:var(--accent);
+  font-size:13px;
+  font-weight:700;
+}
+
+.preview-group-price {
+  font-family:'Noto Serif JP',serif;
+  font-size:18px;
+  font-weight:700;
+}
+
 .menu-section-title {
   margin:18px 0 10px;
   font-family:'Noto Serif JP',serif;
@@ -300,6 +429,16 @@ iframe[name="saveFrame"] {
   h1 {
     font-size:22px;
   }
+
+  .preview-news-item {
+    grid-template-columns:1fr;
+    gap:2px;
+  }
+
+  .preview-lesson-grid,
+  .preview-menu-grid {
+    grid-template-columns:1fr;
+  }
 }
 </style>
 </head>
@@ -314,7 +453,7 @@ iframe[name="saveFrame"] {
 
 <main>
   <h1>Yoga Flower 管理画面</h1>
-  <p class="intro">お知らせ・レッスン時間・料金・予約状況をスマホから編集できます。お知らせはホームページに最新3件だけ表示されます。編集後は「保存」を押してください。</p>
+  <p class="intro">実際のホームページに近い表示を確認しながら編集できます。編集後は「保存」を押してください。</p>
 
   <div class="tabs">
     <button class="tab active" data-tab="news">お知らせ</button>
@@ -324,18 +463,34 @@ iframe[name="saveFrame"] {
   </div>
 
   <section id="panel-news" class="panel active">
-    <p class="hint">ホームページには上から最新3件だけ表示されます。新しいお知らせほど上に置いてください。</p>
+    <div class="preview-wrap">
+      <h2 class="preview-title">現在のお知らせ表示</h2>
+      <p class="preview-sub">ホームページには上から最新3件だけ表示されます。</p>
+      <div class="preview-news-list" id="newsPreview"></div>
+    </div>
+
+    <p class="hint">新しいお知らせほど上に置いてください。</p>
     <div id="newsList"></div>
     <button class="btn btn-add" type="button" onclick="addNews()">＋ お知らせを追加</button>
   </section>
 
   <section id="panel-lesson" class="panel">
-    <p class="fixed-note">レッスン時間は、今表示している内容を変更するだけです。追加・削除はできないようにしています。</p>
+    <div class="preview-wrap">
+      <h2 class="preview-title">現在のレッスン時間表示</h2>
+      <div class="preview-lesson-grid" id="lessonPreview"></div>
+    </div>
+
+    <p class="fixed-note">下の欄で、今表示しているレッスン時間を変更できます。追加・削除はできないようにしています。</p>
     <div id="lessonList"></div>
   </section>
 
   <section id="panel-menu" class="panel">
-    <p class="fixed-note">料金は、今表示している項目の金額や説明だけを変更してください。追加・削除はできないようにしています。</p>
+    <div class="preview-wrap">
+      <h2 class="preview-title">現在の料金表表示</h2>
+      <div class="preview-menu-grid" id="menuPreview"></div>
+    </div>
+
+    <p class="fixed-note">下の欄で、今表示している料金や説明を変更できます。追加・削除はできないようにしています。</p>
     <div id="menuList"></div>
   </section>
 
@@ -403,6 +558,10 @@ function esc(text) {
     .replace(/'/g,'&#039;');
 }
 
+function isVisible(item) {
+  return item.visible === undefined || item.visible === '' || String(item.visible).toUpperCase() === 'TRUE';
+}
+
 function toDateInputValue(value) {
   if (!value) return '';
   const text = String(value).trim();
@@ -444,7 +603,7 @@ document.querySelectorAll('.tab').forEach(button => {
 });
 
 function visibleChecked(item) {
-  return item.visible === undefined || item.visible === '' || String(item.visible).toUpperCase() === 'TRUE';
+  return isVisible(item);
 }
 
 function normalizeFixedRows(rows, defaults) {
@@ -507,6 +666,9 @@ function loadData() {
 }
 
 function renderAll() {
+  renderNewsPreview();
+  renderLessonPreview();
+  renderMenuPreview();
   renderNews();
   renderLesson();
   renderMenu();
@@ -515,6 +677,13 @@ function renderAll() {
 
 function field(kind, index, fieldName, value) {
   state[kind][index][fieldName] = value;
+  renderPreviewsOnly();
+}
+
+function renderPreviewsOnly() {
+  renderNewsPreview();
+  renderLessonPreview();
+  renderMenuPreview();
 }
 
 document.addEventListener('input', event => {
@@ -561,6 +730,81 @@ function actions(kind, index) {
       </div>
     </div>
   `;
+}
+
+function renderNewsPreview() {
+  const visibleNews = state.news.filter(isVisible).slice(0, 3);
+
+  newsPreview.innerHTML = visibleNews.length
+    ? visibleNews.map(item => `
+      <article class="preview-news-item">
+        <div class="preview-date">${esc(item.date)}</div>
+        <div>${esc(item.title)}</div>
+      </article>
+    `).join('')
+    : '<div class="preview-small">表示するお知らせがありません。</div>';
+}
+
+function renderLessonPreview() {
+  const visibleLessons = state.lesson_times.filter(isVisible);
+
+  lessonPreview.innerHTML = visibleLessons.map(item => `
+    <article class="preview-lesson-item">
+      <div class="preview-lesson-day">${esc(item.day)}</div>
+      <div class="preview-lesson-hour">${esc(item.time)}</div>
+      ${item.note ? `<p class="preview-small">${esc(item.note)}</p>` : ''}
+    </article>
+  `).join('');
+}
+
+function buildMenuPreviewRows() {
+  const visibleMenus = state.menus.filter(isVisible);
+  const groupRows = visibleMenus.filter(item => item.type === 'group');
+  const normalRows = visibleMenus.filter(item => item.type !== 'group');
+
+  const rows = [];
+
+  if (groupRows.length) {
+    rows.push({
+      name:'グループレッスン',
+      groupPrices: groupRows.map(item => ({
+        label:item.note,
+        price:item.price
+      }))
+    });
+  }
+
+  normalRows.forEach(item => {
+    rows.push({
+      name:item.name,
+      price:item.price,
+      note:item.note
+    });
+  });
+
+  return rows;
+}
+
+function renderMenuPreview() {
+  const rows = buildMenuPreviewRows();
+
+  menuPreview.innerHTML = rows.map(item => `
+    <article class="preview-menu-card">
+      <h3>${esc(item.name)}</h3>
+      ${item.price ? `<div class="preview-price">${esc(item.price)}</div>` : ''}
+      ${item.groupPrices ? `
+        <div class="preview-group-grid">
+          ${item.groupPrices.map(priceItem => `
+            <div class="preview-group-item">
+              <div class="preview-group-label">${esc(priceItem.label)}</div>
+              <div class="preview-group-price">${esc(priceItem.price)}</div>
+            </div>
+          `).join('')}
+        </div>
+      ` : ''}
+      ${item.note ? `<p class="preview-small">${esc(item.note)}</p>` : ''}
+    </article>
+  `).join('');
 }
 
 function renderNews() {
@@ -682,7 +926,7 @@ function addNews() {
     visible: 'TRUE'
   });
 
-  renderNews();
+  renderAll();
 }
 
 function addCalendar() {
