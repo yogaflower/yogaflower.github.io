@@ -146,24 +146,77 @@ color:#5f5f5f;
 iframe[name="saveFrame"]{display:none}
 @media(max-width:720px){.tabs{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}.logo{width:130px}h1{font-size:22px}.news-preview-item{grid-template-columns:1fr;gap:2px}.lesson-preview-grid,.menu-preview-grid{grid-template-columns:1fr}.day{min-height:58px;padding:4px}.mark{font-size:10px}.circle-num{width:24px;height:24px;font-size:14px;line-height:1}.cal-title{font-size:19px}.p-cell{min-height:68px;padding:4px}.capture-wrap{padding:12px}.capture-title{font-size:22px}}
 
-/* 丸内文字サイズ 強制調整 */
+
+/* カレンダー丸表示：PC/スマホ共通で見やすく固定 */
 .circle-num,
 .badge{
-  font-size:15px !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  width:32px !important;
+  height:32px !important;
+  min-width:32px !important;
+  min-height:32px !important;
+  border-radius:50% !important;
+  font-size:17px !important;
   font-weight:800 !important;
   line-height:1 !important;
+  padding:0 !important;
+  vertical-align:middle !important;
 }
+
+.circle-num{
+  background:#b88b6b !important;
+  color:#fffdf8 !important;
+  margin-right:4px !important;
+}
+
+.badge.full{
+  background:#b66b73 !important;
+  color:#fff !important;
+}
+
+.badge.empty{
+  background:#6f8fa8 !important;
+  color:#fff !important;
+}
+
+.badge.off{
+  background:#e3e3e3 !important;
+  color:#5f5f5f !important;
+}
+
 @media(max-width:720px){
   .circle-num,
   .badge{
-    font-size:14px !important;
+    width:32px !important;
+    height:32px !important;
+    min-width:32px !important;
+    min-height:32px !important;
+    font-size:17px !important;
   }
 }
-@media(max-width:700px){
-  .circle-num,
-  .badge{
-    font-size:14px !important;
-  }
+
+
+/* 画像保存時の表崩れ防止 */
+#calendarCapture .period-table{
+  width:100%;
+}
+
+#calendarCapture .period-cell{
+  min-height:118px;
+}
+
+#calendarCapture .period-title-cell{
+  font-size:34px;
+}
+
+#calendarCapture .period-date{
+  font-size:20px;
+}
+
+#calendarCapture .mark{
+  font-size:18px;
 }
 
 </style>
@@ -371,37 +424,53 @@ function saveCalendarImage(btn){
   if(btn)buttonFeedback(btn,'保存中','画像を保存しました');
 
   const target=$('calendarCapture');
+
   const beforeWidth=target.style.width;
+  const beforeMinWidth=target.style.minWidth;
   const beforeMaxWidth=target.style.maxWidth;
   const beforeMargin=target.style.margin;
+  const beforeTransform=target.style.transform;
+  const beforeTransformOrigin=target.style.transformOrigin;
 
-  target.style.width='1080px';
-  target.style.maxWidth='1080px';
+  target.style.width='1600px';
+  target.style.minWidth='1600px';
+  target.style.maxWidth='1600px';
   target.style.margin='16px auto';
+  target.style.transform='none';
+  target.style.transformOrigin='top left';
 
   renderPeriodPreview();
 
-  html2canvas(target,{
-    backgroundColor:null,
-    scale:2,
-    width:1080,
-    windowWidth:1200
-  }).then(canvas=>{
-    const a=document.createElement('a');
-    a.download='yoga-flower-calendar.png';
-    a.href=canvas.toDataURL('image/png');
-    a.click();
+  requestAnimationFrame(()=>{
+    html2canvas(target,{
+      backgroundColor:null,
+      scale:1,
+      width:1600,
+      windowWidth:1600,
+      useCORS:true
+    }).then(canvas=>{
+      const a=document.createElement('a');
+      a.download='yoga-flower-calendar.png';
+      a.href=canvas.toDataURL('image/png');
+      a.click();
 
-    target.style.width=beforeWidth;
-    target.style.maxWidth=beforeMaxWidth;
-    target.style.margin=beforeMargin;
-    renderPeriodPreview();
-  }).catch(()=>{
-    target.style.width=beforeWidth;
-    target.style.maxWidth=beforeMaxWidth;
-    target.style.margin=beforeMargin;
-    renderPeriodPreview();
-    showStatus('画像保存に失敗しました');
+      target.style.width=beforeWidth;
+      target.style.minWidth=beforeMinWidth;
+      target.style.maxWidth=beforeMaxWidth;
+      target.style.margin=beforeMargin;
+      target.style.transform=beforeTransform;
+      target.style.transformOrigin=beforeTransformOrigin;
+      renderPeriodPreview();
+    }).catch(()=>{
+      target.style.width=beforeWidth;
+      target.style.minWidth=beforeMinWidth;
+      target.style.maxWidth=beforeMaxWidth;
+      target.style.margin=beforeMargin;
+      target.style.transform=beforeTransform;
+      target.style.transformOrigin=beforeTransformOrigin;
+      renderPeriodPreview();
+      showStatus('画像保存に失敗しました');
+    });
   });
 }
 function addNews(){const now=new Date();state.news.unshift({id:uid('n'),date:`${now.getFullYear()}.${now.getMonth()+1}.${now.getDate()}`,title:'',visible:'TRUE'});renderAll()}
